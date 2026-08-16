@@ -23,7 +23,7 @@ import {
   AlertCircle
 } from 'lucide-react';
 import { CloudMediaItem, CloudSource, CloudSeriesGroup, CloudEpisode } from '../../types';
-import { groupCloudSeries, parseM3U, isTvCompatibleStream } from '../../utils/m3uParser';
+import { groupCloudSeries, parseM3U } from '../../utils/m3uParser';
 import { maskUrlPassword } from '../../utils/urlParser';
 import { CloudPlayerModal } from './CloudPlayerModal';
 import { CloudImportModal, CloudImportTab } from './CloudImportModal';
@@ -36,7 +36,6 @@ interface CloudViewProps {
   onDeleteSource: (sourceId: string) => void;
   onImportSuccess: (source: CloudSource, items: CloudMediaItem[], toastMessage?: string) => void;
   onShowToast?: (message: string) => void;
-  isTvMode?: boolean;
 }
 
 export type CloudNavSection = 'sources' | 'add' | 'channels' | 'movies' | 'series';
@@ -49,7 +48,6 @@ export const CloudView: React.FC<CloudViewProps> = ({
   onDeleteSource,
   onImportSuccess,
   onShowToast,
-  isTvMode = false,
 }) => {
   const [activeSection, setActiveSection] = useState<CloudNavSection>('channels');
   const [searchQuery, setSearchQuery] = useState('');
@@ -72,9 +70,8 @@ export const CloudView: React.FC<CloudViewProps> = ({
   // Filter items by active source
   const currentSourceItems = useMemo(() => {
     if (!activeSource) return [];
-    const sourceItems = cloudItems.filter((item) => item.sourceId === activeSource.id);
-    return isTvMode ? sourceItems.filter((item) => isTvCompatibleStream(item.streamUrl)) : sourceItems;
-  }, [cloudItems, activeSource, isTvMode]);
+    return cloudItems.filter((item) => item.sourceId === activeSource.id);
+  }, [cloudItems, activeSource]);
 
   // Separate items by type
   const channels = useMemo(() => currentSourceItems.filter((i) => i.type === 'channel'), [currentSourceItems]);
