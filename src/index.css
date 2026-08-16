@@ -69,3 +69,105 @@
   scrollbar-width: none;
 }
 
+
+
+/* Android TV mode: activated by ?tv=1 or an Android TV user agent. */
+.tv-mode {
+  min-width: 960px;
+  font-size: 18px;
+}
+
+.tv-mode button,
+.tv-mode input,
+.tv-mode select,
+.tv-mode textarea,
+.tv-mode [tabindex] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tv-mode button:focus-visible,
+.tv-mode input:focus-visible,
+.tv-mode select:focus-visible,
+.tv-mode textarea:focus-visible,
+.tv-mode [tabindex]:focus-visible {
+  outline: 4px solid #f08b8b;
+  outline-offset: 5px;
+  box-shadow: 0 0 0 8px rgba(139, 30, 30, 0.35), 0 0 28px rgba(245, 115, 115, 0.35);
+  position: relative;
+  z-index: 20;
+}
+
+.tv-mode header {
+  position: sticky;
+  top: 0;
+}
+
+.tv-mode header .h-20 {
+  height: 96px;
+}
+
+.tv-mode header nav button {
+  min-height: 56px;
+  padding-left: 22px;
+  padding-right: 22px;
+  font-size: 15px;
+}
+
+.tv-mode header input {
+  min-height: 54px;
+  font-size: 16px;
+}
+
+.tv-mode main > div,
+.tv-mode main > section,
+.tv-mode .max-w-7xl {
+  max-width: 1680px;
+}
+
+.tv-mode .catalog-section-row {
+  scroll-padding-inline: 48px;
+}
+
+.tv-mode .catalog-section-row > div {
+  width: 280px;
+}
+
+.tv-mode [id^="card-"] {
+  min-height: 490px;
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.tv-mode [id^="card-"]:focus-within,
+.tv-mode [id^="cloud-card-"]:focus-within {
+  transform: scale(1.04);
+  border-color: #f08b8b;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.55), 0 0 24px rgba(139, 30, 30, 0.3);
+}
+
+.tv-mode .tv-action {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.tv-mode .tv-hide-pointer-overlay {
+  display: none;
+}
+
+.tv-mode .tv-dialog {
+  max-width: 1180px;
+  max-height: 88vh;
+}
+
+.tv-mode .tv-player {
+  max-width: 1500px;
+}
+
+@media (max-width: 1100px) {
+  .tv-mode {
+    min-width: 800px;
+  }
+
+  .tv-mode .catalog-section-row > div {
+    width: 240px;
+  }
+}

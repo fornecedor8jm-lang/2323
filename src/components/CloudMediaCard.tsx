@@ -44,6 +44,15 @@ export const CloudMediaCard: React.FC<CloudMediaCardProps> = ({
   return (
     <div
       id={`cloud-card-${item.id}`}
+      tabIndex={0}
+      role="button"
+      aria-label={`${item.title} — ${isSeries ? 'abrir episódios' : 'assistir'}`}
+      onKeyDown={(event) => {
+        if ((event.key === 'Enter' || event.key === ' ') && event.currentTarget === event.target) {
+          event.preventDefault();
+          handleClick();
+        }
+      }}
       className="group relative flex flex-col bg-[#070e12] rounded-sm border border-[#162733] hover:border-[#8B1E1E]/80 transition-all duration-300 shadow-md hover:shadow-2xl hover:shadow-[#8B1E1E]/15 overflow-hidden"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
@@ -116,7 +125,7 @@ export const CloudMediaCard: React.FC<CloudMediaCardProps> = ({
 
         {/* Hover Quick Action Overlay */}
         <div
-          className={`absolute inset-0 bg-[#05090cee]/85 flex flex-col items-center justify-center gap-2 p-3 transition-opacity duration-200 ${
+          className={`tv-action absolute inset-0 bg-[#05090cee]/85 flex flex-col items-center justify-center gap-2 p-3 transition-opacity duration-200 ${
             isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'
           }`}
         >

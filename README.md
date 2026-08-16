@@ -71,3 +71,16 @@
    ```bash
    npm run build
    ```
+
+
+## Modo Android TV
+
+A aplicação possui uma interface adaptada para Android TV. Ela é ativada automaticamente quando o navegador informa que está em uma Android TV ou pode ser aberta manualmente adicionando `?tv=1` ao endereço do Cineclub.
+
+Exemplo:
+
+```text
+https://seu-dominio.exemplo/?tv=1
+```
+
+No modo TV, os cards ficam maiores, o foco recebe destaque visual, as ações principais continuam acessíveis sem mouse e as setas do controle remoto navegam entre os elementos visíveis. A tecla ou botão Enter abre os detalhes ou inicia a ação do card selecionado. A mesma base continua funcionando em celulares e computadores sem o parâmetro `tv=1`.

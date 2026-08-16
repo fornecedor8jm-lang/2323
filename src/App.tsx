@@ -26,7 +26,74 @@ import { Sparkles, Film, Tv, Flame, Compass, Star, Clock, Skull, Cloud, Radio, S
 export default function App() {
   // Navigation & View states
   const [activeTab, setActiveTab] = useState<NavTab>('home');
+  const [isTvMode] = useState(() => {
+    if (typeof window === 'undefined') return false;
+    const params = new URLSearchParams(window.location.search);
+    return params.get('tv') === '1' || /Android TV|GoogleTV|SMART-TV|BRAVIA|AFT[A-Z]?/i.test(navigator.userAgent);
+  });
   
+  useEffect(() => {
+    if (!isTvMode) return;
+
+    const isVisible = (element: HTMLElement) => {
+      const rect = element.getBoundingClientRect();
+      const style = window.getComputedStyle(element);
+      return rect.width > 0 && rect.height > 0 && style.visibility !== 'hidden' && style.display !== 'none';
+    };
+
+    const handleRemoteNavigation = (event: KeyboardEvent) => {
+      if (!['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(event.key)) return;
+
+      const focusable = Array.from(document.querySelectorAll<HTMLElement>(
+        '.tv-mode button:not([disabled]), .tv-mode [tabindex="0"], .tv-mode input, .tv-mode select, .tv-mode textarea'
+      )).filter(isVisible);
+      if (focusable.length === 0) return;
+
+      const active = document.activeElement as HTMLElement | null;
+      const current = active && focusable.includes(active) ? active : focusable[0];
+      if (!active || !focusable.includes(active)) {
+        current.focus();
+        event.preventDefault();
+        return;
+      }
+
+      const currentRect = current.getBoundingClientRect();
+      const currentCenter = {
+        x: currentRect.left + currentRect.width / 2,
+        y: currentRect.top + currentRect.height / 2,
+      };
+      const direction = event.key.replace('Arrow', '').toLowerCase();
+      let best: { element: HTMLElement; score: number } | null = null;
+
+      for (const candidate of focusable) {
+        if (candidate === current) continue;
+        const rect = candidate.getBoundingClientRect();
+        const center = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
+        const dx = center.x - currentCenter.x;
+        const dy = center.y - currentCenter.y;
+        const isInDirection = direction === 'right' ? dx > 8
+          : direction === 'left' ? dx < -8
+          : direction === 'down' ? dy > 8
+          : dy < -8;
+        if (!isInDirection) continue;
+
+        const primary = direction === 'right' || direction === 'left' ? Math.abs(dx) : Math.abs(dy);
+        const secondary = direction === 'right' || direction === 'left' ? Math.abs(dy) : Math.abs(dx);
+        const score = primary + secondary * 2.2;
+        if (!best || score < best.score) best = { element: candidate, score };
+      }
+
+      if (best) {
+        event.preventDefault();
+        best.element.focus({ preventScroll: true });
+        best.element.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+      }
+    };
+
+    window.addEventListener('keydown', handleRemoteNavigation);
+    return () => window.removeEventListener('keydown', handleRemoteNavigation);
+  }, [isTvMode]);
+
   // Mobile pair code query parameter detection (?pairCode=CCN-XXXX)
   const [activePairPortalCode, setActivePairPortalCode] = useState<string | null>(null);
 
@@ -438,7 +505,7 @@ export default function App() {
   const totalIntegratedResults = filteredCatalog.length + filteredCloudResults.length;
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#05080b] text-[#ded9cd] cinema-grain">
+    <div className={`min-h-screen flex flex-col bg-[#05080b] text-[#ded9cd] cinema-grain ${isTvMode ? 'tv-mode' : ''}`} data-device={isTvMode ? 'android-tv' : 'touch'}>
       
       {/* Toast Notification */}
       {toastMessage && (

@@ -119,7 +119,7 @@ export const CatalogSection: React.FC<CatalogSectionProps> = ({
         {viewMode === 'carousel' ? (
           <div
             ref={scrollContainerRef}
-            className="flex gap-4 sm:gap-5 overflow-x-auto no-scrollbar pb-3 pt-1 scroll-smooth"
+            className="catalog-section-row flex gap-4 sm:gap-5 overflow-x-auto no-scrollbar pb-3 pt-1 scroll-smooth"
             style={{ scrollSnapType: 'x mandatory' }}
           >
             {items.map((item) => (
