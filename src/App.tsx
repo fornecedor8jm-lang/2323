@@ -20,7 +20,7 @@ import { CloudView } from './components/cloud/CloudView';
 import { CloudPlayerModal } from './components/cloud/CloudPlayerModal';
 import { MobilePairPortal } from './components/cloud/MobilePairPortal';
 import { Footer } from './components/Footer';
-import { groupCloudSeries } from './utils/m3uParser';
+import { groupCloudSeries, isTvCompatibleStream } from './utils/m3uParser';
 import { Sparkles, Film, Tv, Flame, Compass, Star, Clock, Skull, Cloud, Radio, Search } from 'lucide-react';
 
 export default function App() {
@@ -463,7 +463,9 @@ export default function App() {
   const filteredCloudResults = useMemo(() => {
     if (sourceFilter === 'CATALOG' || cloudItems.length === 0) return [];
 
-    let result = [...cloudItems];
+    let result = isTvMode
+      ? cloudItems.filter((item) => isTvCompatibleStream(item.streamUrl))
+      : [...cloudItems];
 
     // Filter by type if applicable
     if (selectedType === 'Série' || activeTab === 'series') {
@@ -500,7 +502,7 @@ export default function App() {
     }
 
     return result;
-  }, [cloudItems, sourceFilter, selectedType, activeTab, selectedGenre, searchQuery, sortBy]);
+  }, [cloudItems, sourceFilter, selectedType, activeTab, selectedGenre, searchQuery, sortBy, isTvMode]);
 
   const totalIntegratedResults = filteredCatalog.length + filteredCloudResults.length;
 
@@ -541,6 +543,7 @@ export default function App() {
             onSelectSource={handleSelectCloudSource}
             onDeleteSource={handleDeleteCloudSource}
             onImportSuccess={handleImportSuccess}
+            isTvMode={isTvMode}
           />
         )}
 

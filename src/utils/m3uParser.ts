@@ -325,6 +325,19 @@ function isLikelyStreamUrl(value: string): boolean {
   return /^(https?:)?\/\//i.test(value) || /^(rtmp|rtsp|udp|p2p):/i.test(value);
 }
 
+/** Retorna se um item pode ser exibido no player web do modo Android TV. */
+export function isTvCompatibleStream(streamUrl: string): boolean {
+  const trimmed = String(streamUrl || '').trim();
+  if (!trimmed || !/^(https?:)?\/\//i.test(trimmed)) return false;
+  if (/^(rtsp|rtmp|udp|p2p):/i.test(trimmed)) return false;
+
+  const pathname = trimmed.toLowerCase().split(/[?#]/, 1)[0];
+  if (/\.(mkv|avi|wmv|flv|mpeg|mpg|3gp|asf|ts|m2ts)(?:$|\/)/i.test(pathname)) return false;
+  if (/\.(m3u|txt)(?:$|\/)/i.test(pathname)) return false;
+
+  return true;
+}
+
 function inferTitleFromUrl(url: string, index: number): string {
   try {
     const parsed = new URL(url);

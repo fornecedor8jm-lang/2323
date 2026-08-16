@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { parseM3U, groupCloudSeries } from '../src/utils/m3uParser';
+import { parseM3U, groupCloudSeries, isTvCompatibleStream } from '../src/utils/m3uParser';
 
 const sample = `\uFEFF#EXTM3U
 #EXTGRP: Canais Brasil
@@ -40,4 +40,11 @@ const standalone = parseM3U('#EXTM3U\nhttps://example.com/live.m3u8', 'standalon
 assert.equal(standalone.length, 1);
 assert.equal(standalone[0].type, 'channel');
 
-console.log('M3U parser tests passed:', items.length, 'items;', groups.length, 'series.');
+assert.equal(isTvCompatibleStream('https://example.com/live/master.m3u8'), true);
+assert.equal(isTvCompatibleStream('https://example.com/video/movie.mp4'), true);
+assert.equal(isTvCompatibleStream('rtsp://example.com/live'), false);
+assert.equal(isTvCompatibleStream('rtmp://example.com/live'), false);
+assert.equal(isTvCompatibleStream('https://example.com/video/movie.mkv'), false);
+assert.equal(isTvCompatibleStream('https://example.com/video/segment.ts'), false);
+
+console.log('M3U parser and Android TV compatibility tests passed:', items.length, 'items;', groups.length, 'series.');
