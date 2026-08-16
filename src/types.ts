@@ -57,3 +57,58 @@ export interface EditorialArticle {
   highlightQuote?: string;
   relatedMediaIds: string[];
 }
+
+export type CloudContentType = 'channel' | 'movie' | 'series';
+
+export interface CloudMediaItem {
+  id: string;
+  title: string;
+  type: CloudContentType;
+  group: string;
+  logo?: string;
+  streamUrl: string;
+  tvgId?: string;
+  tvgName?: string;
+  season?: number;
+  episode?: number;
+  seriesTitle?: string;
+  sourceId: string;
+  rawAttributes?: Record<string, string>;
+}
+
+export interface CloudEpisode {
+  id: string;
+  episodeNumber: number;
+  title: string;
+  streamUrl: string;
+  logo?: string;
+}
+
+export interface CloudSeason {
+  seasonNumber: number;
+  episodes: CloudEpisode[];
+}
+
+export interface CloudSeriesGroup {
+  id: string;
+  title: string;
+  group: string;
+  logo?: string;
+  sourceId: string;
+  seasons: CloudSeason[];
+  totalEpisodes: number;
+}
+
+export interface CloudSource {
+  id: string;
+  name: string;
+  type: 'url' | 'file' | 'pair' | 'sample';
+  url?: string;
+  createdAt: string;
+  updatedAt: string;
+  totalCount: number;
+  channelsCount: number;
+  moviesCount: number;
+  seriesCount: number;
+}
+

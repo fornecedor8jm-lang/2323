@@ -22,7 +22,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onExploreCatalog, onOpenRe
           Catálogo Independente & Experiência Mobile
         </h1>
         <p className="font-editorial text-xl sm:text-2xl text-[#9cb0bd] italic max-w-3xl">
-          Curadoria cinematográfica dedicada a filmes, séries, horror gótico, suspense e histórias sobrenaturais com links diretos em alta definição.
+          Plataforma dedicada a filmes, séries, horror gótico, suspense e histórias sobrenaturais com links diretos em alta definição.
         </p>
       </div>
 

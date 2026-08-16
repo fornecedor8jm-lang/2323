@@ -1,8 +1,8 @@
 import React from 'react';
-import { Search, Bookmark, Film, Tv, Sparkles, BookOpen, Smartphone, X } from 'lucide-react';
+import { Search, Bookmark, Film, Tv, Sparkles, BookOpen, Smartphone, X, Cloud } from 'lucide-react';
 import { MediaType } from '../types';
 
-export type NavTab = 'home' | 'series' | 'terror' | 'movies' | 'catalog' | 'recent' | 'watchlist' | 'about';
+export type NavTab = 'home' | 'series' | 'terror' | 'movies' | 'cloud' | 'catalog' | 'recent' | 'watchlist' | 'about';
 
 interface NavbarProps {
   activeTab: NavTab;
@@ -10,6 +10,7 @@ interface NavbarProps {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   watchlistCount: number;
+  cloudItemsCount?: number;
   onOpenApkGuide: () => void;
 }
 
@@ -26,6 +27,7 @@ export const Navbar: React.FC<NavbarProps> = ({
   searchQuery,
   setSearchQuery,
   watchlistCount,
+  cloudItemsCount = 0,
   onOpenApkGuide,
 }) => {
   const [isSearchOpen, setIsSearchOpen] = React.useState(false);
@@ -34,11 +36,12 @@ export const Navbar: React.FC<NavbarProps> = ({
   const navItems: NavItem[] = [
     { id: 'home', label: 'Início', icon: Sparkles },
     { id: 'series', label: 'Séries', icon: Tv },
-    { id: 'terror', label: 'Terror', icon: Film },
     { id: 'movies', label: 'Filmes', icon: Film },
+    { id: 'terror', label: 'Terror', icon: Film },
+    { id: 'cloud', label: 'Nuvem', icon: Cloud, badge: cloudItemsCount > 0 ? cloudItemsCount : undefined },
+    { id: 'recent', label: 'Adicionados recentemente', icon: Sparkles },
     { id: 'catalog', label: 'Acervo', icon: Film },
-    { id: 'recent', label: 'Recentes', icon: Sparkles },
-    { id: 'watchlist', label: 'Minha Lista', icon: Bookmark, badge: watchlistCount },
+    { id: 'watchlist', label: 'Minha lista', icon: Bookmark, badge: watchlistCount },
     { id: 'about', label: 'Sobre', icon: BookOpen },
   ];
 
@@ -47,7 +50,7 @@ export const Navbar: React.FC<NavbarProps> = ({
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Brand Logo & Editorial Title */}
+          {/* Brand Logo & Title */}
           <div className="flex items-center gap-6">
             <button
               id="cineclub-logo-btn"
@@ -66,11 +69,11 @@ export const Navbar: React.FC<NavbarProps> = ({
                     CINECLUB
                   </span>
                   <span className="hidden sm:inline-block px-1.5 py-0.5 text-[9px] uppercase tracking-widest font-mono-code bg-[#8B1E1E]/20 border border-[#8B1E1E]/50 text-[#f58a8a] rounded">
-                    Curadoria
+                    Catálogo
                   </span>
                 </div>
-                <span className="text-[10px] uppercase tracking-[0.25em] text-[#7d939f] font-sans">
-                  Revista & Streaming Autoral
+                <span className="text-[10px] uppercase tracking-[0.2em] text-[#7d939f] font-sans">
+                  Filmes e séries para assistir
                 </span>
               </div>
             </button>

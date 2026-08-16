@@ -5,28 +5,186 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { MEDIA_CATALOG } from './data/catalog';
-import { MediaItem, MediaType } from './types';
+import { MediaItem, MediaType, CloudSource, CloudMediaItem, CloudSeriesGroup, CloudEpisode } from './types';
 import { Navbar, NavTab } from './components/Navbar';
 import { HeroBanner } from './components/HeroBanner';
 import { EditorialSection } from './components/EditorialSection';
 import { MediaDetailModal } from './components/MediaDetailModal';
-import { CatalogFilters } from './components/CatalogFilters';
+import { CatalogFilters, ContentSourceFilter } from './components/CatalogFilters';
 import { MediaCard } from './components/MediaCard';
+import { CloudMediaCard } from './components/CloudMediaCard';
 import { WatchlistView } from './components/WatchlistView';
 import { AboutView } from './components/AboutView';
 import { ApkGuideModal } from './components/ApkGuideModal';
+import { CloudView } from './components/cloud/CloudView';
+import { CloudPlayerModal } from './components/cloud/CloudPlayerModal';
+import { MobilePairPortal } from './components/cloud/MobilePairPortal';
 import { Footer } from './components/Footer';
-import { Sparkles, Film, Tv, Flame, Compass, Star, Clock, Skull } from 'lucide-react';
+import { groupCloudSeries } from './utils/m3uParser';
+import { Sparkles, Film, Tv, Flame, Compass, Star, Clock, Skull, Cloud, Radio, Search } from 'lucide-react';
 
 export default function App() {
   // Navigation & View states
   const [activeTab, setActiveTab] = useState<NavTab>('home');
   
+  // Mobile pair code query parameter detection (?pairCode=CCN-XXXX)
+  const [activePairPortalCode, setActivePairPortalCode] = useState<string | null>(null);
+
+  useEffect(() => {
+    try {
+      // Check query param (?pairCode=XXXX)
+      const urlParams = new URLSearchParams(window.location.search);
+      const pairCodeParam = urlParams.get('pairCode');
+      if (pairCodeParam) {
+        setActivePairPortalCode(pairCodeParam.toUpperCase().trim());
+        return;
+      }
+
+      // Check path (/pair/XXXX)
+      const pathParts = window.location.pathname.split('/');
+      const pairIndex = pathParts.indexOf('pair');
+      if (pairIndex !== -1 && pathParts[pairIndex + 1]) {
+        setActivePairPortalCode(pathParts[pairIndex + 1].toUpperCase().trim());
+      }
+    } catch (e) {
+      console.error('URL params error:', e);
+    }
+  }, []);
+
   // Filter & Search states
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedType, setSelectedType] = useState<'ALL' | MediaType>('ALL');
+  const [selectedType, setSelectedType] = useState<'ALL' | MediaType | 'Canal'>('ALL');
   const [selectedGenre, setSelectedGenre] = useState('Todos');
+  const [sourceFilter, setSourceFilter] = useState<ContentSourceFilter>('ALL');
   const [sortBy, setSortBy] = useState<'curated' | 'rating' | 'year' | 'title'>('curated');
+
+  // Cloud (Nuvem) State persistence (localStorage)
+  const [cloudSources, setCloudSources] = useState<CloudSource[]>(() => {
+    try {
+      const saved = localStorage.getItem('cineclub_cloud_sources');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return [];
+  });
+
+  const [activeSourceId, setActiveSourceId] = useState<string | null>(() => {
+    try {
+      return localStorage.getItem('cineclub_cloud_active_source');
+    } catch (e) {
+      return null;
+    }
+  });
+
+  const [cloudItems, setCloudItems] = useState<CloudMediaItem[]>(() => {
+    try {
+      const saved = localStorage.getItem('cineclub_cloud_items');
+      if (saved) return JSON.parse(saved);
+    } catch (e) {
+      console.error(e);
+    }
+    return [];
+  });
+
+  const activeCloudSource = useMemo(() => {
+    if (cloudSources.length === 0) return null;
+    return cloudSources.find((s) => s.id === activeSourceId) || cloudSources[0] || null;
+  }, [cloudSources, activeSourceId]);
+
+  // Cloud Player Modal State
+  const [cloudPlayerItem, setCloudPlayerItem] = useState<CloudMediaItem | null>(null);
+  const [cloudPlayerSeries, setCloudPlayerSeries] = useState<CloudSeriesGroup | null>(null);
+  const [cloudPlayerEpisode, setCloudPlayerEpisode] = useState<CloudEpisode | null>(null);
+
+  const handleOpenCloudPlayer = (item: CloudMediaItem) => {
+    setCloudPlayerItem(item);
+    setCloudPlayerSeries(null);
+    setCloudPlayerEpisode(null);
+  };
+
+  const handleOpenCloudSeries = (series: CloudSeriesGroup) => {
+    setCloudPlayerSeries(series);
+    const firstEp = series.seasons[0]?.episodes[0] || null;
+    setCloudPlayerEpisode(firstEp);
+    setCloudPlayerItem(null);
+  };
+
+  const handleImportSuccess = (newSource: CloudSource, newItems: CloudMediaItem[], toastMessage?: string) => {
+    setCloudSources((prev) => {
+      const filtered = prev.filter((s) => s.id !== newSource.id);
+      const updated = [newSource, ...filtered];
+      try {
+        localStorage.setItem('cineclub_cloud_sources', JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
+
+    setCloudItems((prev) => {
+      const otherItems = prev.filter((i) => i.sourceId !== newSource.id);
+      const updated = [...otherItems, ...newItems];
+      try {
+        localStorage.setItem('cineclub_cloud_items', JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
+
+    setActiveSourceId(newSource.id);
+    try {
+      localStorage.setItem('cineclub_cloud_active_source', newSource.id);
+    } catch (e) {
+      console.error(e);
+    }
+
+    setActiveTab('cloud');
+    showToast(toastMessage || `Nuvem "${newSource.name}" adicionada com ${newItems.length} conteúdos!`);
+  };
+
+  const handleSelectCloudSource = (source: CloudSource) => {
+    setActiveSourceId(source.id);
+    try {
+      localStorage.setItem('cineclub_cloud_active_source', source.id);
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  const handleDeleteCloudSource = (sourceId: string) => {
+    setCloudSources((prev) => {
+      const updated = prev.filter((s) => s.id !== sourceId);
+      try {
+        localStorage.setItem('cineclub_cloud_sources', JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
+
+    setCloudItems((prev) => {
+      const updated = prev.filter((i) => i.sourceId !== sourceId);
+      try {
+        localStorage.setItem('cineclub_cloud_items', JSON.stringify(updated));
+      } catch (e) {
+        console.error(e);
+      }
+      return updated;
+    });
+
+    if (activeSourceId === sourceId) {
+      setActiveSourceId(null);
+      try {
+        localStorage.removeItem('cineclub_cloud_active_source');
+      } catch (e) {
+        console.error(e);
+      }
+    }
+
+    showToast('Fonte removida da Nuvem.');
+  };
 
   // Featured Item in Hero (Default: The Boys #1)
   const defaultFeatured = useMemo(() => {
@@ -171,8 +329,14 @@ export default function App() {
     return MEDIA_CATALOG.filter((m) => m.type === 'Filme');
   }, []);
 
-  // Filtered Catalog for Search / Tab Views
+  // =========================================================================
+  // INTEGRATED SEARCH: CONSULTA TANTO CATÁLOGO DE FÁBRICA QUANTO NUVEM ATIVA
+  // =========================================================================
+
+  // Filtered Factory Catalog
   const filteredCatalog = useMemo(() => {
+    if (sourceFilter === 'CLOUD' || selectedType === 'Canal') return [];
+
     let result = [...MEDIA_CATALOG];
 
     // Category tab overrides
@@ -195,7 +359,7 @@ export default function App() {
       );
     }
 
-    // Search query
+    // Search query: título, título original, elenco, diretor, tema
     if (searchQuery.trim() !== '') {
       const q = searchQuery.toLowerCase().trim();
       result = result.filter((m) => {
@@ -222,16 +386,56 @@ export default function App() {
     } else if (sortBy === 'title') {
       result.sort((a, b) => a.title.localeCompare(b.title));
     } else {
-      // Curated ranking order
-      result.sort((a, b) => {
-        const rA = a.ranking || 999;
-        const rB = b.ranking || 999;
-        return rA - rB;
-      });
+      result.sort((a, b) => (a.ranking || 999) - (b.ranking || 999));
     }
 
     return result;
-  }, [activeTab, selectedType, selectedGenre, searchQuery, sortBy]);
+  }, [activeTab, selectedType, selectedGenre, searchQuery, sortBy, sourceFilter]);
+
+  // Filtered Cloud Items (Consulta título, título original, canal, grupo M3U, temporada e episódio)
+  const filteredCloudResults = useMemo(() => {
+    if (sourceFilter === 'CATALOG' || cloudItems.length === 0) return [];
+
+    let result = [...cloudItems];
+
+    // Filter by type if applicable
+    if (selectedType === 'Série' || activeTab === 'series') {
+      result = result.filter((i) => i.type === 'series');
+    } else if (selectedType === 'Filme' || activeTab === 'movies') {
+      result = result.filter((i) => i.type === 'movie');
+    } else if (selectedType === 'Canal') {
+      result = result.filter((i) => i.type === 'channel');
+    }
+
+    // Genre / Group Filter
+    if (selectedGenre !== 'Todos') {
+      const gLower = selectedGenre.toLowerCase();
+      result = result.filter((i) => (i.group && i.group.toLowerCase().includes(gLower)));
+    }
+
+    // Search query: título, canal, grupo da M3U, temporada e episódio
+    if (searchQuery.trim() !== '') {
+      const q = searchQuery.toLowerCase().trim();
+      result = result.filter((i) => {
+        const inTitle = i.title.toLowerCase().includes(q);
+        const inGroup = i.group ? i.group.toLowerCase().includes(q) : false;
+        const inSeriesTitle = i.seriesTitle ? i.seriesTitle.toLowerCase().includes(q) : false;
+        const inTvgName = i.tvgName ? i.tvgName.toLowerCase().includes(q) : false;
+        const inSeason = i.season !== undefined && (`t${i.season}`.includes(q) || `temp ${i.season}`.includes(q) || `temporada ${i.season}`.includes(q));
+        const inEpisode = i.episode !== undefined && (`e${i.episode}`.includes(q) || `ep ${i.episode}`.includes(q) || `episodio ${i.episode}`.includes(q) || `episódio ${i.episode}`.includes(q));
+        return inTitle || inGroup || inSeriesTitle || inTvgName || inSeason || inEpisode;
+      });
+    }
+
+    // Sorting
+    if (sortBy === 'title') {
+      result.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    return result;
+  }, [cloudItems, sourceFilter, selectedType, activeTab, selectedGenre, searchQuery, sortBy]);
+
+  const totalIntegratedResults = filteredCatalog.length + filteredCloudResults.length;
 
   return (
     <div className="min-h-screen flex flex-col bg-[#05080b] text-[#ded9cd] cinema-grain">
@@ -254,12 +458,25 @@ export default function App() {
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         watchlistCount={watchlistIds.size}
+        cloudItemsCount={cloudItems.length}
         onOpenApkGuide={() => setIsApkGuideOpen(true)}
       />
 
       {/* Main Content Area */}
       <main className="flex-1">
         
+        {/* VIEW 0: NUVEM CINECLUB (Private Cloud Source / M3U / QR Sync) */}
+        {activeTab === 'cloud' && (
+          <CloudView
+            sources={cloudSources}
+            activeSource={activeCloudSource}
+            cloudItems={cloudItems}
+            onSelectSource={handleSelectCloudSource}
+            onDeleteSource={handleDeleteCloudSource}
+            onImportSuccess={handleImportSuccess}
+          />
+        )}
+
         {/* VIEW 1: HOME (Hero & All Curated Editorial Sections) */}
         {activeTab === 'home' && (
           <div className="space-y-4">
@@ -282,8 +499,8 @@ export default function App() {
               <EditorialSection
                 id="recentes"
                 title="Adicionados Recentemente"
-                subtitle="Novos títulos, temporadas atualizadas e lançamentos recém-chegados ao acervo."
-                curatorTag="Novidades no Acervo"
+                subtitle="Novos filmes, séries e temporadas disponíveis no Cineclub."
+                curatorTag="Disponíveis agora"
                 items={recentItems}
                 onOpenDetails={handleOpenDetails}
                 onOpenPlay={handleOpenPlay}
@@ -309,7 +526,7 @@ export default function App() {
                 id="sobrenatural"
                 title="Seleção Sobrenatural"
                 subtitle="Ocultismo, pactos arcanos e batalhas além do véu da realidade."
-                curatorTag="Curadoria Sombria"
+                curatorTag="Terror & Fantasia"
                 items={sobrenaturalItems}
                 onOpenDetails={handleOpenDetails}
                 onOpenPlay={handleOpenPlay}
@@ -374,7 +591,7 @@ export default function App() {
           </div>
         )}
 
-        {/* VIEW 2: CATALOG / SÉRIES / TERROR / FILMES / RECENTES (Filterable Grid & Search) */}
+        {/* VIEW 2: INTEGRATED CATALOG / SÉRIES / TERROR / FILMES / RECENTES / SEARCH */}
         {(activeTab === 'catalog' || activeTab === 'series' || activeTab === 'terror' || activeTab === 'movies' || activeTab === 'recent') && (
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8 animate-in fade-in duration-300">
             
@@ -383,7 +600,9 @@ export default function App() {
               <div className="flex items-center gap-2 text-[#8B1E1E]">
                 <Film className="w-5 h-5" />
                 <span className="text-xs uppercase font-mono-code tracking-[0.25em] font-bold">
-                  {activeTab === 'series'
+                  {searchQuery.trim() !== ''
+                    ? 'Busca Integrada'
+                    : activeTab === 'series'
                     ? 'Acervo de Séries'
                     : activeTab === 'terror'
                     ? 'Especial Terror & Sobrenatural'
@@ -395,7 +614,9 @@ export default function App() {
                 </span>
               </div>
               <h1 className="font-display font-black text-3xl sm:text-4xl text-[#f4ece0] tracking-tight">
-                {activeTab === 'series'
+                {searchQuery.trim() !== ''
+                  ? `Resultados para "${searchQuery}"`
+                  : activeTab === 'series'
                   ? 'Todas as Séries & Temporadas'
                   : activeTab === 'terror'
                   ? 'Terror, Horror Gótico & Sobrenatural'
@@ -406,13 +627,15 @@ export default function App() {
                   : 'Explorar Todo o Acervo Cineclub'}
               </h1>
               <p className="font-editorial text-lg text-[#92a6b2] italic">
-                {activeTab === 'recent'
+                {searchQuery.trim() !== ''
+                  ? 'Consulta simultânea no Catálogo de Fábrica e na Nuvem M3U ativa com identificação por selos.'
+                  : activeTab === 'recent'
                   ? 'Doctor Who, Pretty Little Liars, Se as Flores Falassem e novos lançamentos catalogados.'
-                  : 'Curadoria cinematográfica completa com reprodução estável e links organizados.'}
+                  : 'Catálogo completo com links diretos organizados por temporadas e episódios.'}
               </p>
             </div>
 
-            {/* Filter Bar */}
+            {/* Integrated Filter Bar */}
             <CatalogFilters
               searchQuery={searchQuery}
               setSearchQuery={setSearchQuery}
@@ -422,38 +645,96 @@ export default function App() {
               setSelectedGenre={setSelectedGenre}
               sortBy={sortBy}
               setSortBy={setSortBy}
-              totalResults={filteredCatalog.length}
+              sourceFilter={sourceFilter}
+              setSourceFilter={setSourceFilter}
+              totalResults={totalIntegratedResults}
+              catalogResultsCount={filteredCatalog.length}
+              cloudResultsCount={filteredCloudResults.length}
             />
 
-            {/* Results Grid */}
-            {filteredCatalog.length > 0 ? (
-              <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
-                {filteredCatalog.map((item) => (
-                  <MediaCard
-                    key={item.id}
-                    item={item}
-                    onOpenDetails={handleOpenDetails}
-                    onOpenPlay={handleOpenPlay}
-                    isWatchlisted={watchlistIds.has(item.id)}
-                    onToggleWatchlist={handleToggleWatchlist}
-                  />
-                ))}
+            {/* Results Grid: Shows Factory Catalog items AND Cloud items */}
+            {totalIntegratedResults > 0 ? (
+              <div className="space-y-8">
+                
+                {/* 1. Factory Catalog Section (if any results) */}
+                {filteredCatalog.length > 0 && (
+                  <div className="space-y-4">
+                    {filteredCloudResults.length > 0 && (
+                      <div className="flex items-center gap-2 pb-2 border-b border-[#142631]">
+                        <span className="w-2 h-2 rounded-full bg-[#8B1E1E]" />
+                        <h3 className="font-display font-bold text-base text-[#f0e8db]">
+                          Catálogo de Fábrica Cineclub ({filteredCatalog.length})
+                        </h3>
+                      </div>
+                    )}
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
+                      {filteredCatalog.map((item) => (
+                        <MediaCard
+                          key={item.id}
+                          item={item}
+                          onOpenDetails={handleOpenDetails}
+                          onOpenPlay={handleOpenPlay}
+                          isWatchlisted={watchlistIds.has(item.id)}
+                          onToggleWatchlist={handleToggleWatchlist}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
+                {/* 2. Cloud (Nuvem) Results Section (with mandatory "Nuvem" Badge) */}
+                {filteredCloudResults.length > 0 && (
+                  <div className="space-y-4">
+                    <div className="flex items-center justify-between pb-2 border-b border-[#142631]">
+                      <div className="flex items-center gap-2">
+                        <span className="p-1 rounded bg-[#8B1E1E] text-white">
+                          <Cloud className="w-3.5 h-3.5" />
+                        </span>
+                        <h3 className="font-display font-bold text-base text-[#f0e8db]">
+                          Resultados da Nuvem Privada ({filteredCloudResults.length})
+                        </h3>
+                      </div>
+                      <span className="text-xs font-mono-code text-[#76909f]">
+                        Fonte M3U/M3U8 do usuário
+                      </span>
+                    </div>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
+                      {filteredCloudResults.map((cloudItem) => (
+                        <CloudMediaCard
+                          key={cloudItem.id}
+                          item={cloudItem}
+                          onPlay={handleOpenCloudPlayer}
+                          onOpenSeries={(series) => handleOpenCloudSeries(series)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+
               </div>
             ) : (
-              <div className="text-center py-20 bg-[#070e12] border border-[#142631] rounded-sm space-y-4 max-w-lg mx-auto">
-                <p className="font-editorial text-xl text-[#9cb0bd] italic">
-                  Nenhum título encontrado para "{searchQuery || selectedGenre}".
+              <div className="text-center py-20 bg-[#070e12] border border-[#142631] rounded-sm space-y-4 max-w-lg mx-auto p-6">
+                <Search className="w-10 h-10 text-[#8B1E1E] mx-auto opacity-70" />
+                <h4 className="font-display font-bold text-lg text-[#f0e8da]">
+                  Nenhum título encontrado
+                </h4>
+                <p className="font-editorial text-sm text-[#9cb0bd] italic">
+                  Não localizamos conteúdos correspondentes a "{searchQuery || selectedGenre}" nem no Catálogo de Fábrica nem na Nuvem ativa.
                 </p>
-                <button
-                  onClick={() => {
-                    setSearchQuery('');
-                    setSelectedGenre('Todos');
-                    setSelectedType('ALL');
-                  }}
-                  className="px-5 py-2.5 bg-[#8B1E1E] text-white text-xs font-bold uppercase tracking-wider rounded-sm"
-                >
-                  Restaurar Filtros
-                </button>
+                <div className="pt-2">
+                  <button
+                    onClick={() => {
+                      setSearchQuery('');
+                      setSelectedGenre('Todos');
+                      setSelectedType('ALL');
+                      setSourceFilter('ALL');
+                    }}
+                    className="px-5 py-2.5 bg-[#8B1E1E] hover:bg-[#a62424] text-white text-xs font-bold uppercase tracking-wider rounded-sm transition-colors"
+                  >
+                    Restaurar Filtros & Buscar Novamente
+                  </button>
+                </div>
               </div>
             )}
 
@@ -482,7 +763,7 @@ export default function App() {
 
       </main>
 
-      {/* Title Details & Links Modal */}
+      {/* Title Details & Links Modal (Factory Catalog) */}
       <MediaDetailModal
         item={selectedMediaModal}
         isOpen={isDetailModalOpen}
@@ -496,11 +777,42 @@ export default function App() {
         initialMode={modalInitialMode}
       />
 
+      {/* Cloud Player Modal (Direct Nuvem Streaming & Episodes) */}
+      {(cloudPlayerItem || cloudPlayerEpisode) && (
+        <CloudPlayerModal
+          item={cloudPlayerItem}
+          activeSeries={cloudPlayerSeries}
+          currentEpisode={cloudPlayerEpisode}
+          onClose={() => {
+            setCloudPlayerItem(null);
+            setCloudPlayerSeries(null);
+            setCloudPlayerEpisode(null);
+          }}
+          onSelectEpisode={(ep) => setCloudPlayerEpisode(ep)}
+        />
+      )}
+
       {/* APK Roadmap & Specification Modal */}
       <ApkGuideModal
         isOpen={isApkGuideOpen}
         onClose={() => setIsApkGuideOpen(false)}
       />
+
+      {/* Mobile QR Companion Pairing Portal Modal */}
+      {activePairPortalCode && (
+        <MobilePairPortal
+          pairCode={activePairPortalCode}
+          onClose={() => {
+            setActivePairPortalCode(null);
+            // Clean URL
+            try {
+              const url = new URL(window.location.href);
+              url.searchParams.delete('pairCode');
+              window.history.replaceState({}, '', url.toString());
+            } catch (e) {}
+          }}
+        />
+      )}
 
       {/* Editorial Footer */}
       <Footer

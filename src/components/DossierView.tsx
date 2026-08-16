@@ -16,7 +16,7 @@ export const DossierView: React.FC<DossierViewProps> = ({
   const [copied, setCopied] = React.useState(false);
 
   const handleShare = (article: EditorialArticle) => {
-    navigator.clipboard.writeText(`${article.title} — Revista Cineclub: ${window.location.href}`);
+    navigator.clipboard.writeText(`${article.title} — Cineclub: ${window.location.href}`);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -24,19 +24,19 @@ export const DossierView: React.FC<DossierViewProps> = ({
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-12 animate-in fade-in duration-300">
       
-      {/* Editorial Header */}
+      {/* Header */}
       <div className="border-b border-[#142631] pb-8 space-y-3">
         <div className="flex items-center gap-2 text-[#8B1E1E]">
           <BookOpen className="w-5 h-5" />
           <span className="text-xs uppercase font-mono-code tracking-[0.25em] font-bold">
-            Revista Cultural & Crítica de Cinema
+            Conteúdos especiais
           </span>
         </div>
         <h1 className="font-display font-black text-3xl sm:text-5xl text-[#f6eee2] tracking-tight">
-          Dossiê & Bastidores Cineclub
+          Artigos sobre cinema
         </h1>
         <p className="font-editorial text-xl sm:text-2xl text-[#99adb9] italic max-w-3xl">
-          Ensaios críticos, análises de cena, reflexões sobre horror gótico e a anatomia dos grandes clássicos da televisão e do cinema autoral.
+          Análises de cena, curiosidades de bastidores e reflexões sobre os grandes clássicos da televisão e do cinema.
         </p>
       </div>
 
@@ -103,7 +103,7 @@ export const DossierView: React.FC<DossierViewProps> = ({
                 </span>
 
                 <span className="text-[#8B1E1E] group-hover:text-[#db4242] font-semibold uppercase tracking-wider flex items-center gap-1">
-                  <span>Ler Dossiê Completo</span>
+                  <span>Ler artigo</span>
                   <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
                 </span>
               </div>
@@ -180,7 +180,7 @@ export const DossierView: React.FC<DossierViewProps> = ({
                 <div className="pt-8 border-t border-[#12232d] space-y-3">
                   <h4 className="font-display font-bold text-sm uppercase tracking-wider text-[#d5c7b3] flex items-center gap-2">
                     <Sparkles className="w-3.5 h-3.5 text-[#8B1E1E]" />
-                    <span>Títulos Citados no Dossiê (Acesse no Cineclub)</span>
+                    <span>Títulos relacionados</span>
                   </h4>
                   <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
                     {selectedArticle.relatedMediaIds.map((id) => {

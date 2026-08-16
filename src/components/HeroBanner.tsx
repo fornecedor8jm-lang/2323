@@ -125,7 +125,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 className="flex items-center gap-2.5 px-6 py-3 bg-[#8B1E1E] hover:bg-[#a62424] active:scale-95 text-[#fbf7f0] font-sans font-bold text-sm uppercase tracking-wider rounded-sm shadow-xl shadow-[#8B1E1E]/30 border border-[#be2e2e] transition-all"
               >
                 <Play className="w-4 h-4 fill-current" />
-                <span>Assistir / Acessar Título</span>
+                <span>Assistir / Acessar título</span>
               </button>
 
               {/* View Details Button */}
@@ -160,11 +160,11 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
             <div className="bg-[#071116]/85 border border-[#162c38] p-4 rounded-sm shadow-2xl backdrop-blur-md">
               <div className="flex items-center justify-between pb-3 mb-3 border-b border-[#142630]">
                 <span className="text-[11px] uppercase tracking-[0.2em] font-mono-code text-[#738d9c] flex items-center gap-1.5">
-                  <Sparkles className="w-3 h-3 text-[#8B1E1E]" />
-                  Destaques da Curadoria
+                  <Sparkles className="w-3.5 h-3.5 text-[#8B1E1E]" />
+                  Destaques do catálogo
                 </span>
                 <span className="text-[10px] font-mono-code text-[#556d7b]">
-                  {featuredList.length} Obras
+                  {featuredList.length} Títulos
                 </span>
               </div>
 

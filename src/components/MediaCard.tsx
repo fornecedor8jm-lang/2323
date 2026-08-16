@@ -1,5 +1,5 @@
 import React from 'react';
-import { Star, Play, Info, Bookmark, Check, Layers } from 'lucide-react';
+import { Star, Play, Info, Bookmark, Check, Layers, ImageOff } from 'lucide-react';
 import { MediaItem } from '../types';
 
 interface MediaCardProps {
@@ -18,6 +18,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
   onToggleWatchlist,
 }) => {
   const [isHovered, setIsHovered] = React.useState(false);
+  const [imgError, setImgError] = React.useState(false);
 
   // Type badge styling
   const getTypeColor = () => {
@@ -32,6 +33,27 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     }
   };
 
+  // Format streaming availability label
+  const getAvailabilityLabel = () => {
+    if (item.durationOrSeasons) {
+      return item.durationOrSeasons;
+    }
+    if (item.type === 'Série') {
+      const seasonLinks = item.accessLinks.filter((l) => l.season !== undefined);
+      if (seasonLinks.length > 1) {
+        return `${seasonLinks.length} temporadas`;
+      }
+      if (item.accessLinks.length > 1) {
+        return `${item.accessLinks.length} episódios`;
+      }
+      return 'Temporadas disponíveis';
+    }
+    if (item.type === 'Filme') {
+      return 'Assistir filme';
+    }
+    return `${item.accessLinks.length} episódios`;
+  };
+
   return (
     <div
       id={`card-${item.id}`}
@@ -41,22 +63,28 @@ export const MediaCard: React.FC<MediaCardProps> = ({
     >
       {/* Poster Image Container */}
       <div 
-        className="relative aspect-[2/3] w-full overflow-hidden bg-[#0a141a] cursor-pointer"
+        className="relative aspect-[2/3] w-full overflow-hidden bg-[#0a141a] cursor-pointer flex items-center justify-center"
         onClick={() => onOpenDetails(item)}
       >
-        <img
-          src={item.posterUrl}
-          alt={item.title}
-          loading="lazy"
-          className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 filter brightness-[0.92] contrast-[1.05]"
-          onError={(e) => {
-            // fallback placeholder if remote url is inaccessible
-            (e.target as HTMLImageElement).src = 'https://images.unsplash.com/photo-1485846234645-a62644f84728?auto=format&fit=crop&w=600&q=80';
-          }}
-        />
+        {!imgError && item.posterUrl ? (
+          <img
+            src={item.posterUrl}
+            alt={item.title}
+            loading="lazy"
+            className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 filter brightness-[0.92] contrast-[1.05]"
+            onError={() => setImgError(true)}
+          />
+        ) : (
+          <div className="w-full h-full flex flex-col items-center justify-center p-4 bg-[#081217] text-center border border-[#162732] space-y-2">
+            <ImageOff className="w-8 h-8 text-[#546b77]" />
+            <span className="text-xs font-mono-code text-[#7e97a5] uppercase tracking-wider">
+              Pôster não disponível
+            </span>
+          </div>
+        )}
 
         {/* Dark film tint vignette */}
-        <div className="absolute inset-0 bg-gradient-to-t from-[#060c10] via-[#060c10]/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity" />
+        <div className="absolute inset-0 bg-gradient-to-t from-[#060c10] via-[#060c10]/20 to-transparent opacity-80 group-hover:opacity-60 transition-opacity pointer-events-none" />
 
         {/* Top Badges: Type Pill & Ranking */}
         <div className="absolute top-2 left-2 right-2 flex items-center justify-between pointer-events-none">
@@ -79,7 +107,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
         </div>
 
         {/* Hover Quick Action Overlay */}
-        <div className={`absolute inset-0 bg-[#05090cee]/80 flex flex-col items-center justify-center gap-2.5 p-4 transition-opacity duration-200 ${
+        <div className={`absolute inset-0 bg-[#05090cee]/85 flex flex-col items-center justify-center gap-2.5 p-4 transition-opacity duration-200 ${
           isHovered ? 'opacity-100' : 'opacity-0 pointer-events-none'
         }`}>
           <button
@@ -122,11 +150,11 @@ export const MediaCard: React.FC<MediaCardProps> = ({
           </p>
         </div>
 
-        {/* Bottom bar with seasons / links count & watchlist toggle */}
+        {/* Bottom bar with seasons / availability & watchlist toggle */}
         <div className="flex items-center justify-between pt-1 border-t border-[#101d24]">
-          <div className="flex items-center gap-1 text-[10px] font-mono-code text-[#627a87]">
+          <div className="flex items-center gap-1 text-[10px] font-mono-code text-[#7892a0]">
             <Layers className="w-3 h-3 text-[#8B1E1E]" />
-            <span>{item.accessLinks.length} {item.accessLinks.length === 1 ? 'link' : 'links'}</span>
+            <span>{getAvailabilityLabel()}</span>
           </div>
 
           <button

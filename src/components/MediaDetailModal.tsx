@@ -199,7 +199,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                     : 'text-[#7e95a3] hover:text-[#ded5c5]'
                 }`}
               >
-                Links & Episódios ({item.accessLinks.length})
+                Onde assistir ({item.accessLinks.length})
               </button>
               <button
                 onClick={() => setActiveTab('synopsis')}
@@ -209,7 +209,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                     : 'text-[#7e95a3] hover:text-[#ded5c5]'
                 }`}
               >
-                Sinopse & Detalhes
+                Informações
               </button>
               <button
                 onClick={() => setActiveTab('cast')}
@@ -233,10 +233,10 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                 <div>
                   <h3 className="font-display font-bold text-lg text-[#f4eee3] flex items-center gap-2">
                     <FolderOpen className="w-4 h-4 text-[#8B1E1E]" />
-                    <span>Servidores & Pastas de Transmissão</span>
+                    <span>Onde assistir</span>
                   </h3>
                   <p className="text-xs text-[#728c9b]">
-                    Links diretos organizados por temporadas e episódios para reprodução imediata.
+                    Escolha uma temporada ou episódio para acessar o título.
                   </p>
                 </div>
 
@@ -335,7 +335,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                           </>
                         ) : (
                           <span className="text-[11px] font-mono-code text-[#627783] italic px-2">
-                            Curadoria
+                            Informação não disponível
                           </span>
                         )}
                       </div>
@@ -352,13 +352,13 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
             </div>
           )}
 
-          {/* TAB 2: SYNOPSIS & CURATOR NOTE */}
+          {/* TAB 2: SYNOPSIS & ABOUT */}
           {activeTab === 'synopsis' && (
             <div className="space-y-5">
               {item.editorialCuratorNote && (
                 <div className="p-4 bg-[#0a1820] border-l-4 border-[#8B1E1E] rounded-r-sm space-y-1">
                   <span className="text-[10px] uppercase font-mono-code tracking-[0.2em] text-[#e07575] font-bold">
-                    Nota do Curador Cineclub
+                    Destaque do Título
                   </span>
                   <p className="font-editorial text-xl text-[#ebdcc6] italic leading-snug">
                     “{item.editorialCuratorNote}”
@@ -402,7 +402,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                     Direção / Criador
                   </span>
                   <p className="font-medium text-[#f0e8dc] text-sm mt-0.5">
-                    {item.directorOrCreator || 'Curadoria Oficial'}
+                    {item.directorOrCreator || 'Dados do título'}
                   </p>
                 </div>
 
@@ -459,7 +459,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
             <div className="pt-6 border-t border-[#12232d] space-y-3">
               <h4 className="font-display font-bold text-sm text-[#e6ddcd] uppercase tracking-wider flex items-center gap-2">
                 <Sparkles className="w-3.5 h-3.5 text-[#8B1E1E]" />
-                <span>Títulos Recomendados</span>
+                <span>Você também pode gostar</span>
               </h4>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">

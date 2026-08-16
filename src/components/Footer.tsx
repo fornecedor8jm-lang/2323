@@ -27,7 +27,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenApkGuide
             </div>
 
             <p className="font-editorial text-base text-[#9fb3bf] italic leading-relaxed max-w-md">
-              Streaming independente e catálogo editorial com estética de cinema autoral, horror gótico e obras de culto. Curadoria humana com links diretos em alta definição.
+              Plataforma independente de filmes e séries com estética de cinema, horror gótico, produções cult e acesso direto aos servidores em alta definição.
             </p>
 
             <div className="flex items-center gap-4 text-[11px] font-mono-code text-[#607986] pt-1">
@@ -65,6 +65,14 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenApkGuide
                   className="hover:text-[#f4ebd9] transition-colors"
                 >
                   Terror & Sobrenatural
+                </button>
+              </li>
+              <li>
+                <button
+                  onClick={() => onSelectCategory('cloud')}
+                  className="hover:text-[#f4ebd9] transition-colors flex items-center gap-1.5 text-[#f0dfcc]"
+                >
+                  <span>Nuvem (Segunda Fonte)</span>
                 </button>
               </li>
               <li>
@@ -139,11 +147,11 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenApkGuide
 
         {/* Bottom Bar */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-3 text-[11px] font-mono-code text-[#556e7c]">
-          <p>© 2026 Cineclub — Todos os direitos de curadoria e design cinematográfico reservados.</p>
+          <p>© 2026 Cineclub — Todos os direitos reservados.</p>
           <div className="flex items-center gap-1.5">
             <span>Estética Cinematográfica</span>
             <span>•</span>
-            <span className="text-[#8B1E1E]">Curadoria Humana</span>
+            <span className="text-[#8B1E1E]">Catálogo Cineclub.</span>
           </div>
         </div>
 

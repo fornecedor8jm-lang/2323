@@ -1,6 +1,6 @@
 {
   "name": "Cineclub",
-  "description": "Plataforma de streaming independente e catálogo de filmes e séries com acesso direto a servidores, sinopses detalhadas e lista personalizada.",
+  "description": "Plataforma de streaming independente e catálogo de filmes, séries e Nuvem M3U/M3U8 com transmissões ao vivo, acesso direto a servidores e pareamento QR Code.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

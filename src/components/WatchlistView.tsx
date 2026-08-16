@@ -189,7 +189,7 @@ export const WatchlistView: React.FC<WatchlistViewProps> = ({
               Sua lista está vazia
             </h3>
             <p className="font-editorial text-lg text-[#889ea9] italic max-w-md mx-auto">
-              Explore nossa curadoria independente de terror, fantasia e suspense e salve obras para assistir quando quiser.
+              Explore filmes e séries de terror, fantasia e suspense e salve o que quiser assistir depois.
             </p>
           </div>
           <button
