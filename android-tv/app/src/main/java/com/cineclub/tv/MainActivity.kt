@@ -7,6 +7,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.Typeface
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -72,12 +73,14 @@ class MainActivity : Activity() {
         val header = LinearLayout(this).apply { gravity = Gravity.CENTER_VERTICAL }
         val brand = TextView(this).apply {
             text = "CINECLUB"
-            textSize = 29f
+            textSize = 28f
             setTextColor(textColor)
             setTypeface(Typeface.DEFAULT, Typeface.BOLD)
-            letterSpacing = 0.08f
+            letterSpacing = 0.10f
+            gravity = Gravity.CENTER_VERTICAL
+            includeFontPadding = false
         }
-        header.addView(brand, LinearLayout.LayoutParams(0, 62, 1f))
+        header.addView(brand, LinearLayout.LayoutParams(170, 62))
         header.addView(navButton("Início", "home"))
         header.addView(navButton("Filmes", "movies"))
         header.addView(navButton("Séries", "series"))
@@ -93,16 +96,27 @@ class MainActivity : Activity() {
 
     private fun navButton(label: String, tab: String) = Button(this).apply {
         text = label
-        textSize = 14f
+        textSize = 15f
         isAllCaps = false
-        minHeight = 58
+        minHeight = 0
         minWidth = 0
-        setPadding(22, 0, 22, 0)
+        stateListAnimator = null
+        includeFontPadding = false
+        setPadding(20, 0, 20, 0)
         setTextColor(if (currentTab == tab) textColor else muted)
+        background = cineclubButtonBackground(false)
+        setOnFocusChangeListener { view, focused -> view.background = cineclubButtonBackground(focused) }
         setOnClickListener { currentTab = tab; renderTab() }
-        val params = LinearLayout.LayoutParams(-2, 62)
-        params.setMargins(4, 0, 4, 0)
+        val params = LinearLayout.LayoutParams(-2, 54)
+        params.setMargins(4, 4, 4, 4)
         layoutParams = params
+    }
+
+    private fun cineclubButtonBackground(active: Boolean): GradientDrawable = GradientDrawable().apply {
+        shape = GradientDrawable.RECTANGLE
+        cornerRadius = 8f
+        setColor(if (active) Color.rgb(125, 38, 48) else Color.rgb(25, 29, 38))
+        setStroke(1, if (active) Color.rgb(223, 91, 100) else Color.rgb(62, 67, 78))
     }
 
     private fun renderTab() {
@@ -230,7 +244,20 @@ class MainActivity : Activity() {
         return content
     }
 
-    private fun actionButton(label: String, action: () -> Unit) = Button(this).apply { text = label; isAllCaps = false; minHeight = 58; setOnClickListener { action() }; layoutParams = LinearLayout.LayoutParams(-2, 58).apply { setMargins(0, 0, 12, 0) } }
+    private fun actionButton(label: String, action: () -> Unit) = Button(this).apply {
+        text = label
+        textSize = 16f
+        isAllCaps = false
+        minHeight = 0
+        stateListAnimator = null
+        includeFontPadding = false
+        setTextColor(textColor)
+        setPadding(26, 0, 26, 0)
+        background = cineclubButtonBackground(false)
+        setOnFocusChangeListener { view, focused -> view.background = cineclubButtonBackground(focused) }
+        setOnClickListener { action() }
+        layoutParams = LinearLayout.LayoutParams(-2, 64).apply { setMargins(0, 0, 14, 0) }
+    }
 
     private fun askSearch(items: List<CatalogItem>, section: String) {
         val input = EditText(this).apply { hint = "Título, gênero ou ano"; setSingleLine(true) }

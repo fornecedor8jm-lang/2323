@@ -33,3 +33,33 @@
 - [x] Portar busca, filtros, ordenação e Minha Lista
 - [x] Manter Nuvem M3U como aba complementar, não como tela principal
 - [x] Remover aparência de IPTV genérico da versão Android TV
+
+# Aproximação visual ao repositório
+
+- [ ] Recriar cabeçalho visual do Cineclub com marca completa e navegação escura
+- [ ] Adicionar hero/banner com pôster de destaque e informações do título
+- [ ] Aplicar paleta, bordas, estados de foco e espaçamentos do site
+- [ ] Trocar botões genéricos por controles visuais coerentes com streaming
+- [ ] Corrigir a tela Nuvem para manter o mesmo acabamento do catálogo
+- [ ] Gerar APK visualmente atualizado para novo teste na TV
+
+# Ajuste da interface TV
+
+- [ ] Exibir CINECLUB completo no cabeçalho
+- [ ] Substituir botões Android padrão por componentes escuros do Cineclub
+- [ ] Corrigir altura, padding e tipografia dos controles
+- [ ] Criar estado vazio visual para a Nuvem
+- [ ] Melhorar foco do controle remoto e destaque da aba ativa
+
+# Referência de player
+
+- [ ] Analisar vídeo de referência do Google Drive
+- [ ] Documentar comportamento de tela cheia, controles e retorno
+- [ ] Adaptar o player Media3 nativo ao comportamento observado
+
+# Build solicitado pelo usuário
+
+- [x] Revisar arquivos Android TV rastreados no repositório
+- [x] Compilar todos os módulos e assets do APK
+- [x] Validar assinatura e manifesto do APK gerado
+- [x] Entregar o APK compilado ao usuário

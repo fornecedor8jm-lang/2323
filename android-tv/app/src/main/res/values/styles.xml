@@ -6,5 +6,15 @@
         <item name="android:colorAccent">#D86666</item>
         <item name="android:windowActionModeOverlay">true</item>
         <item name="android:windowNoTitle">true</item>
+        <item name="android:buttonStyle">@style/CineclubButton</item>
+    </style>
+
+    <style name="CineclubButton" parent="@android:style/Widget.Material.Button">
+        <item name="android:background">@drawable/cineclub_button</item>
+        <item name="android:textColor">#F6F3EE</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:minHeight">64dp</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:fontFamily">sans</item>
     </style>
 </resources>
