@@ -167,6 +167,8 @@ export const CloudImportModal: React.FC<CloudImportModalProps> = ({
           }
         } catch (e) {
           console.error('Pairing poll error:', e);
+          setIsPairingPolling(false);
+          setErrorMsg('Atenção: a TV perdeu a conexão com o servidor de pareamento. Gere um novo QR Code ou use a aba Arquivo para importar a lista diretamente.');
         }
       }, 2500);
     }
@@ -211,7 +213,8 @@ export const CloudImportModal: React.FC<CloudImportModalProps> = ({
       }
     } catch (err: any) {
       setPairStatus('idle');
-      setErrorMsg('Não foi possível iniciar a sessão de pareamento na TV.');
+      setIsPairingPolling(false);
+      setErrorMsg('Atenção: não foi possível conectar ao servidor do Cineclub para gerar o QR Code. Verifique a internet e tente novamente. Se continuar, use a aba Arquivo ou URL manual.');
     }
   };
 
@@ -292,7 +295,10 @@ export const CloudImportModal: React.FC<CloudImportModalProps> = ({
       onImportSuccess(newSource, parsedItems, successToast);
       onClose();
     } catch (err: any) {
-      setErrorMsg(err.message || 'Não foi possível ler esta lista. Verifique se o arquivo é M3U ou M3U8 válido.');
+      const message = err instanceof TypeError || err?.message === 'Failed to fetch'
+        ? 'Atenção: não foi possível buscar a lista pela internet. Verifique a URL, sua conexão e se o servidor permite acesso externo. Você também pode baixar a lista e usar a aba Arquivo.'
+        : (err.message || 'Não foi possível ler esta lista. Verifique se o arquivo é M3U ou M3U8 válido.');
+      setErrorMsg(message);
     } finally {
       setIsLoading(false);
     }

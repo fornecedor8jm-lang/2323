@@ -125,7 +125,10 @@ export const MobilePairPortal: React.FC<MobilePairPortalProps> = ({
 
       setIsSuccess(true);
     } catch (err: any) {
-      setErrorMsg(err.message || 'Erro ao enviar lista para a TV.');
+      const message = err instanceof TypeError || err?.message === 'Failed to fetch'
+        ? 'Atenção: não foi possível conectar ao servidor do Cineclub. Verifique a internet, confirme o código da TV e tente enviar novamente. Se continuar, use a importação manual na própria TV.'
+        : (err.message || 'Erro ao enviar lista para a TV.');
+      setErrorMsg(message);
     } finally {
       setIsLoading(false);
     }
