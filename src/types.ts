@@ -13,12 +13,12 @@ export interface AccessLink {
   note?: string;
 }
 
-export type EditorialCategory = 
-  | 'sobrenatural' 
-  | 'terror' 
-  | 'maratonar' 
-  | 'historias' 
-  | 'filmes' 
+export type CatalogCategory =
+  | 'sobrenatural'
+  | 'terror'
+  | 'maratonar'
+  | 'historias'
+  | 'filmes'
   | 'animes';
 
 export interface MediaItem {
@@ -28,34 +28,20 @@ export interface MediaItem {
   type: MediaType;
   posterUrl: string;
   heroUrl?: string;
-  rating: number; // IMDb rating
+  rating: number;
   year: number | string;
   genres: string[];
   synopsis: string;
-  editorialCuratorNote?: string;
-  ranking?: number; // e.g. 1 for The Boys
+  catalogNote?: string;
+  ranking?: number;
   isFeatured?: boolean;
   isRecentlyAdded?: boolean;
-  editorialCategory: EditorialCategory;
+  catalogCategory: CatalogCategory;
   durationOrSeasons?: string;
   directorOrCreator?: string;
   cast?: string[];
   ageRating?: string;
   accessLinks: AccessLink[];
-}
-
-export interface EditorialArticle {
-  id: string;
-  title: string;
-  subtitle: string;
-  author: string;
-  category: string;
-  readTime: string;
-  date: string;
-  coverImage: string;
-  content: string;
-  highlightQuote?: string;
-  relatedMediaIds: string[];
 }
 
 export type CloudContentType = 'channel' | 'movie' | 'series';
@@ -111,4 +97,3 @@ export interface CloudSource {
   moviesCount: number;
   seriesCount: number;
 }
-

@@ -3,7 +3,7 @@ import { ChevronLeft, ChevronRight, Grid, List, Sparkles } from 'lucide-react';
 import { MediaItem } from '../types';
 import { MediaCard } from './MediaCard';
 
-interface EditorialSectionProps {
+interface CatalogSectionProps {
   id: string;
   title: string;
   subtitle: string;
@@ -15,7 +15,7 @@ interface EditorialSectionProps {
   onToggleWatchlist: (item: MediaItem) => void;
 }
 
-export const EditorialSection: React.FC<EditorialSectionProps> = ({
+export const CatalogSection: React.FC<CatalogSectionProps> = ({
   id,
   title,
   subtitle,
@@ -46,7 +46,7 @@ export const EditorialSection: React.FC<EditorialSectionProps> = ({
     <section id={`section-${id}`} className="py-8 sm:py-10 border-b border-[#0f1d24]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        {/* Section Header with Editorial Styling */}
+        {/* Section Header with Catalog Styling */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between pb-5 gap-3">
           <div className="space-y-1">
             <div className="flex items-center gap-2">
@@ -60,7 +60,7 @@ export const EditorialSection: React.FC<EditorialSectionProps> = ({
                 </span>
               )}
             </div>
-            <p className="font-editorial text-base sm:text-lg text-[#95a8b4] italic pl-4">
+            <p className="font-cinematic text-base sm:text-lg text-[#95a8b4] italic pl-4">
               {subtitle}
             </p>
           </div>

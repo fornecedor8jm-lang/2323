@@ -3,7 +3,7 @@
 @layer base {
   :root {
     --font-display: 'Cinzel', serif;
-    --font-editorial: 'Cormorant Garamond', Georgia, serif;
+    --font-cinematic: 'Cormorant Garamond', Georgia, serif;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
   }
@@ -22,8 +22,8 @@
     letter-spacing: 0.04em;
   }
 
-  .font-editorial {
-    font-family: var(--font-editorial);
+  .font-cinematic {
+    font-family: var(--font-cinematic);
   }
 
   .font-mono-code {

@@ -47,7 +47,7 @@ export const ApkGuideModal: React.FC<ApkGuideModalProps> = ({ isOpen, onClose })
             <h3 className="font-display font-bold text-base text-[#f5ecd8]">
               Diretriz Visual Oficial do Streaming Mobile
             </h3>
-            <p className="font-editorial text-lg text-[#b8cbd6] italic">
+            <p className="font-cinematic text-lg text-[#b8cbd6] italic">
               “A plataforma mantém estritamente a mesma experiência de streaming: fundo escuro em alto contraste, pôsteres verticais, navegação ágil por temporadas e episódios, filtros por gênero, Minha Lista persistente e acesso direto aos servidores de transmissão.”
             </p>
           </div>

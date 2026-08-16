@@ -26,7 +26,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenApkGuide
               </span>
             </div>
 
-            <p className="font-editorial text-base text-[#9fb3bf] italic leading-relaxed max-w-md">
+            <p className="font-cinematic text-base text-[#9fb3bf] italic leading-relaxed max-w-md">
               Plataforma independente de filmes e séries com estética de cinema, horror gótico, produções cult e acesso direto aos servidores em alta definição.
             </p>
 
@@ -110,7 +110,7 @@ export const Footer: React.FC<FooterProps> = ({ onSelectCategory, onOpenApkGuide
             </ul>
           </div>
 
-          {/* Editorial & App */}
+          {/* About & App */}
           <div className="md:col-span-4 space-y-2.5">
             <h4 className="font-display font-bold text-xs uppercase tracking-widest text-[#d5c7b4]">
               Sobre & Aplicativo

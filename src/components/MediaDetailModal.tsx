@@ -75,7 +75,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
 
   const relatedTitles = allCatalog
     .filter((other) => other.id !== item.id && (
-      other.editorialCategory === item.editorialCategory ||
+      other.catalogCategory === item.catalogCategory ||
       other.genres.some((g) => item.genres.includes(g))
     ))
     .slice(0, 4);
@@ -345,7 +345,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
               </div>
 
               {filteredLinks.length === 0 && (
-                <div className="text-center py-8 text-[#6d8492] font-editorial italic">
+                <div className="text-center py-8 text-[#6d8492] font-cinematic italic">
                   Nenhum link encontrado para o filtro selecionado.
                 </div>
               )}
@@ -355,13 +355,13 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
           {/* TAB 2: SYNOPSIS & ABOUT */}
           {activeTab === 'synopsis' && (
             <div className="space-y-5">
-              {item.editorialCuratorNote && (
+              {item.catalogNote && (
                 <div className="p-4 bg-[#0a1820] border-l-4 border-[#8B1E1E] rounded-r-sm space-y-1">
                   <span className="text-[10px] uppercase font-mono-code tracking-[0.2em] text-[#e07575] font-bold">
                     Destaque do Título
                   </span>
-                  <p className="font-editorial text-xl text-[#ebdcc6] italic leading-snug">
-                    “{item.editorialCuratorNote}”
+                  <p className="font-cinematic text-xl text-[#ebdcc6] italic leading-snug">
+                    “{item.catalogNote}”
                   </p>
                 </div>
               )}

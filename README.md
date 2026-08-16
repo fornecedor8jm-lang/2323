@@ -13,8 +13,8 @@
 
 - **Catálogo & Seções Temáticas**:
   - **Adicionados Recentemente**: Títulos recém-chegados ao acervo (*Doctor Who 15 Temporadas*, *Pretty Little Liars*, *Se as Flores Falassem*, *Ratched*, *Todo Mundo em Pânico 2026*, etc.).
-  - **Top Recomendados pelo IMDb**: Filmes e séries com as melhores notas da crítica.
-  - **Seleção Sobrenatural & Noites de Terror**: Obras com temática gótica, mistério e suspense.
+  - **Top Recomendados pelo IMDb**: Filmes e séries com as melhores notas disponíveis no catálogo.
+  - **Sobrenatural & Noites de Terror**: Obras com temática gótica, mistério e suspense.
   - **Para Maratonar & Mais Histórias**: Séries completas organizadas por temporadas.
   - **Filmes**: Longas-metragens catalogados.
 
@@ -31,7 +31,7 @@
 
 - **Busca e Filtros Dinâmicos**:
   - Pesquisa em tempo real por título, ator, criador ou gênero.
-  - Ordenação por Ordem da Curadoria, Nota IMDb, Ano de Lançamento e Ordem Alfabética (A-Z).
+  - Ordenação por Recomendados, Nota IMDb, Ano de Lançamento e Ordem Alfabética (A-Z).
   - Filtro interativo por gêneros e formatos.
 
 ---

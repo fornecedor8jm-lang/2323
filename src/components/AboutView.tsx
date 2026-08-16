@@ -21,7 +21,7 @@ export const AboutView: React.FC<AboutViewProps> = ({ onExploreCatalog, onOpenRe
         <h1 className="font-display font-black text-3xl sm:text-5xl text-[#f6eee2] tracking-tight">
           Catálogo Independente & Experiência Mobile
         </h1>
-        <p className="font-editorial text-xl sm:text-2xl text-[#9cb0bd] italic max-w-3xl">
+        <p className="font-cinematic text-xl sm:text-2xl text-[#9cb0bd] italic max-w-3xl">
           Plataforma dedicada a filmes, séries, horror gótico, suspense e histórias sobrenaturais com links diretos em alta definição.
         </p>
       </div>

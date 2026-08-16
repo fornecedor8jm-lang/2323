@@ -55,7 +55,7 @@ export const WatchlistView: React.FC<WatchlistViewProps> = ({
           <h1 className="font-display font-black text-3xl sm:text-4xl text-[#f5ebd9] tracking-tight">
             Títulos Salvos para Assistir
           </h1>
-          <p className="font-editorial text-lg text-[#90a3ae] italic">
+          <p className="font-cinematic text-lg text-[#90a3ae] italic">
             Suas séries e filmes favoritos reunidos em um só lugar para maratonar.
           </p>
         </div>
@@ -168,7 +168,7 @@ export const WatchlistView: React.FC<WatchlistViewProps> = ({
         </div>
       ) : watchlistItems.length > 0 ? (
         <div className="text-center py-16 bg-[#081216] border border-[#132631] rounded-sm space-y-3">
-          <p className="font-editorial text-xl text-[#9cb0bd] italic">
+          <p className="font-cinematic text-xl text-[#9cb0bd] italic">
             Nenhum título encontrado nesta categoria da sua lista.
           </p>
           <button
@@ -188,7 +188,7 @@ export const WatchlistView: React.FC<WatchlistViewProps> = ({
             <h3 className="font-display font-bold text-2xl text-[#f3ece0]">
               Sua lista está vazia
             </h3>
-            <p className="font-editorial text-lg text-[#889ea9] italic max-w-md mx-auto">
+            <p className="font-cinematic text-lg text-[#889ea9] italic max-w-md mx-auto">
               Explore filmes e séries de terror, fantasia e suspense e salve o que quiser assistir depois.
             </p>
           </div>

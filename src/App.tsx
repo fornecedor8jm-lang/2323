@@ -8,7 +8,7 @@ import { MEDIA_CATALOG } from './data/catalog';
 import { MediaItem, MediaType, CloudSource, CloudMediaItem, CloudSeriesGroup, CloudEpisode } from './types';
 import { Navbar, NavTab } from './components/Navbar';
 import { HeroBanner } from './components/HeroBanner';
-import { EditorialSection } from './components/EditorialSection';
+import { CatalogSection } from './components/CatalogSection';
 import { MediaDetailModal } from './components/MediaDetailModal';
 import { CatalogFilters, ContentSourceFilter } from './components/CatalogFilters';
 import { MediaCard } from './components/MediaCard';
@@ -299,28 +299,28 @@ export default function App() {
   // Section 3: Seleção Sobrenatural
   const sobrenaturalItems = useMemo(() => {
     return MEDIA_CATALOG.filter(
-      (m) => m.editorialCategory === 'sobrenatural' || m.genres.includes('Sobrenatural') || m.genres.includes('Fantasia Sombria')
+      (m) => m.catalogCategory === 'sobrenatural' || m.genres.includes('Sobrenatural') || m.genres.includes('Fantasia Sombria')
     );
   }, []);
 
   // Section 4: Noites de Terror
   const terrorItems = useMemo(() => {
     return MEDIA_CATALOG.filter(
-      (m) => m.editorialCategory === 'terror' || m.genres.includes('Terror') || m.genres.includes('Terror Gótico')
+      (m) => m.catalogCategory === 'terror' || m.genres.includes('Terror') || m.genres.includes('Terror Gótico')
     );
   }, []);
 
   // Section 5: Para Maratonar
   const maratonarItems = useMemo(() => {
     return MEDIA_CATALOG.filter(
-      (m) => m.editorialCategory === 'maratonar' || (m.type === 'Série' && m.rating >= 7.8)
+      (m) => m.catalogCategory === 'maratonar' || (m.type === 'Série' && m.rating >= 7.8)
     );
   }, []);
 
   // Section 6: Mais Histórias & Clássicos Cult
   const historiasItems = useMemo(() => {
     return MEDIA_CATALOG.filter(
-      (m) => m.editorialCategory === 'historias' || m.genres.includes('Mistério') || m.genres.includes('Cult')
+      (m) => m.catalogCategory === 'historias' || m.genres.includes('Mistério') || m.genres.includes('Cult')
     );
   }, []);
 
@@ -345,7 +345,7 @@ export default function App() {
     } else if (activeTab === 'movies') {
       result = result.filter((m) => m.type === 'Filme');
     } else if (activeTab === 'terror') {
-      result = result.filter((m) => m.editorialCategory === 'terror' || m.genres.includes('Terror') || m.genres.includes('Sobrenatural'));
+      result = result.filter((m) => m.catalogCategory === 'terror' || m.genres.includes('Terror') || m.genres.includes('Sobrenatural'));
     } else if (activeTab === 'recent') {
       result = result.filter((m) => m.isRecentlyAdded || m.year === 2026 || m.year === 2025 || m.id === 'doctor-who' || m.id === 'pretty-little-liars' || m.id === 'se-as-flores-falassem');
     } else if (selectedType !== 'ALL') {
@@ -477,7 +477,7 @@ export default function App() {
           />
         )}
 
-        {/* VIEW 1: HOME (Hero & All Curated Editorial Sections) */}
+        {/* VIEW 1: HOME (Hero & All Catalog Sections) */}
         {activeTab === 'home' && (
           <div className="space-y-4">
             
@@ -496,7 +496,7 @@ export default function App() {
             <div className="space-y-2">
               
               {/* Section: Adicionados Recentemente */}
-              <EditorialSection
+              <CatalogSection
                 id="recentes"
                 title="Adicionados Recentemente"
                 subtitle="Novos filmes, séries e temporadas disponíveis no Cineclub."
@@ -509,7 +509,7 @@ export default function App() {
               />
 
               {/* Section: Top Recomendados pelo IMDb */}
-              <EditorialSection
+              <CatalogSection
                 id="top-imdb"
                 title="Top Recomendados pelo IMDb"
                 subtitle="As maiores notas e aclamações críticas da história do cinema e da televisão."
@@ -522,7 +522,7 @@ export default function App() {
               />
 
               {/* Section: Seleção Sobrenatural */}
-              <EditorialSection
+              <CatalogSection
                 id="sobrenatural"
                 title="Seleção Sobrenatural"
                 subtitle="Ocultismo, pactos arcanos e batalhas além do véu da realidade."
@@ -535,7 +535,7 @@ export default function App() {
               />
 
               {/* Section: Noites de Terror */}
-              <EditorialSection
+              <CatalogSection
                 id="terror"
                 title="Noites de Terror"
                 subtitle="Horror vitoriano, lendas urbanas aterrorizantes e contágios mortais."
@@ -548,7 +548,7 @@ export default function App() {
               />
 
               {/* Section: Para Maratonar */}
-              <EditorialSection
+              <CatalogSection
                 id="maratonar"
                 title="Para Maratonar"
                 subtitle="Sagas envolventes, ficção científica cult e sagas que prendem até o último segundo."
@@ -561,7 +561,7 @@ export default function App() {
               />
 
               {/* Section: Mais Histórias */}
-              <EditorialSection
+              <CatalogSection
                 id="historias"
                 title="Mais Histórias"
                 subtitle="Suspenses adolescentes, mistérios rurais e investigações fascinantes."
@@ -574,7 +574,7 @@ export default function App() {
               />
 
               {/* Section: Filmes em Destaque */}
-              <EditorialSection
+              <CatalogSection
                 id="filmes"
                 title="Filmes"
                 subtitle="Grandes produções, dramas premiados, paródias e odisseias cinematográficas."
@@ -626,7 +626,7 @@ export default function App() {
                   ? 'Títulos Recém-Adicionados'
                   : 'Explorar Todo o Acervo Cineclub'}
               </h1>
-              <p className="font-editorial text-lg text-[#92a6b2] italic">
+              <p className="font-cinematic text-lg text-[#92a6b2] italic">
                 {searchQuery.trim() !== ''
                   ? 'Consulta simultânea no Catálogo de Fábrica e na Nuvem M3U ativa com identificação por selos.'
                   : activeTab === 'recent'
@@ -719,7 +719,7 @@ export default function App() {
                 <h4 className="font-display font-bold text-lg text-[#f0e8da]">
                   Nenhum título encontrado
                 </h4>
-                <p className="font-editorial text-sm text-[#9cb0bd] italic">
+                <p className="font-cinematic text-sm text-[#9cb0bd] italic">
                   Não localizamos conteúdos correspondentes a "{searchQuery || selectedGenre}" nem no Catálogo de Fábrica nem na Nuvem ativa.
                 </p>
                 <div className="pt-2">
@@ -814,7 +814,7 @@ export default function App() {
         />
       )}
 
-      {/* Editorial Footer */}
+      {/* Catalog Footer */}
       <Footer
         onSelectCategory={(tab) => {
           setActiveTab(tab);

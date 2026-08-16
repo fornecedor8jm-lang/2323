@@ -50,7 +50,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
           {/* Left Column: Title, Metadata, Synopsis, Actions */}
           <div className="lg:col-span-8 space-y-5">
             
-            {/* Badges Bar: Ranking, Editorial Badge, Type */}
+            {/* Badges Bar: Ranking, Catalog Badge, Type */}
             <div className="flex flex-wrap items-center gap-2.5 sm:gap-3">
               {featuredItem.ranking && (
                 <div className="flex items-center gap-1.5 px-3 py-1 bg-[#8B1E1E] text-white font-mono-code text-xs font-bold uppercase tracking-wider rounded-sm shadow-md shadow-[#8B1E1E]/40 border border-[#b82a2a]">
@@ -80,7 +80,7 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
               )}
             </div>
 
-            {/* Giant Editorial Title */}
+            {/* Giant Catalog Title */}
             <div>
               <h1 className="font-display font-black text-4xl sm:text-6xl lg:text-7xl text-[#f9f5ed] tracking-tight leading-[1.05] drop-shadow-lg">
                 {featuredItem.title}
@@ -92,10 +92,10 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
               )}
             </div>
 
-            {/* Curator Quote / Editorial Note */}
-            {featuredItem.editorialCuratorNote && (
-              <div className="border-l-2 border-[#8B1E1E] pl-3.5 py-0.5 text-[#d5c7b3] font-editorial text-lg sm:text-xl italic leading-snug">
-                “{featuredItem.editorialCuratorNote}”
+            {/* Catalog Note */}
+            {featuredItem.catalogNote && (
+              <div className="border-l-2 border-[#8B1E1E] pl-3.5 py-0.5 text-[#d5c7b3] font-cinematic text-lg sm:text-xl italic leading-snug">
+                “{featuredItem.catalogNote}”
               </div>
             )}
 
