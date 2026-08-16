@@ -1,252 +1,363 @@
 import { CloudMediaItem, CloudSeriesGroup, CloudContentType } from '../types';
 
+interface ParsedExtInf {
+  attributes: Record<string, string>;
+  title: string;
+}
+
+interface SeriesDetection {
+  seriesTitle?: string;
+  season?: number;
+  episode?: number;
+  episodeTitle?: string;
+}
+
+const SERIES_GROUP_WORDS = [
+  'SERIE', 'SÉRIE', 'SERIES', 'SEASON', 'TEMPORADA', 'NOVELA', 'ANIME', 'ANIMES', 'DORAMA',
+];
+
+const MOVIE_GROUP_WORDS = [
+  'FILME', 'FILMES', 'MOVIE', 'MOVIES', 'CINEMA', 'VOD', 'LANCAMENTO', 'LANÇAMENTO',
+  '4K', 'ANIMACAO', 'ANIMAÇÃO', 'TERROR', 'SUSPENSE', 'ACAO', 'AÇÃO', 'KIDS MOVIES',
+];
+
+const CHANNEL_GROUP_WORDS = [
+  'CANAL', 'CANAIS', 'AO VIVO', 'LIVE', 'ABERTO', 'NOTICIA', 'NOTÍCIA', 'ESPORTE',
+  'SPORT', '24H', 'IPTV', 'INFANTIL', 'DOCUMENTARIO', 'DOCUMENTÁRIO', 'RADIO', 'RÁDIO',
+];
+
 /**
- * Parses raw M3U / M3U8 playlist text into structured CloudMediaItems
+ * Lê playlists M3U/M3U8 de provedores reais. A função aceita listas IPTV com
+ * #EXTINF, #EXTGRP, atributos sem aspas, URLs relativas e entradas sem metadados.
+ * O terceiro argumento é opcional e serve para resolver URLs relativas.
  */
-export function parseM3U(content: string, sourceId: string): CloudMediaItem[] {
-  const lines = content.split(/\r?\n/);
+export function parseM3U(content: string, sourceId: string, playlistUrl?: string): CloudMediaItem[] {
+  const normalized = normalizePlaylistText(content);
+  if (!normalized) return [];
+
+  const lines = normalized.split('\n');
   const items: CloudMediaItem[] = [];
+  const seen = new Set<string>();
+  let pendingExtInf: ParsedExtInf | null = null;
+  let pendingGroup = '';
+  let pendingAttributes: Record<string, string> = {};
+  let mediaPlaylist = false;
 
-  let currentExtInf: string | null = null;
-  let currentExtGrp: string | null = null;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-
+  for (const rawLine of lines) {
+    const line = rawLine.trim();
     if (!line) continue;
 
-    if (line.startsWith('#EXTINF:')) {
-      currentExtInf = line;
-    } else if (line.startsWith('#EXTGRP:')) {
-      currentExtGrp = line.substring(8).trim();
-    } else if (!line.startsWith('#')) {
-      // This is a stream URL line
-      if (currentExtInf) {
-        const parsed = parseExtInfLine(currentExtInf, line, currentExtGrp, sourceId, items.length + 1);
-        if (parsed) {
-          items.push(parsed);
-        }
-      } else if (line.startsWith('http://') || line.startsWith('https://')) {
-        // Standalone stream URL without EXTINF
-        const fallbackTitle = `Transmissão #${items.length + 1}`;
-        items.push({
-          id: `cloud-${sourceId}-${items.length + 1}`,
-          title: fallbackTitle,
-          type: 'channel',
-          group: currentExtGrp || 'Geral',
-          streamUrl: line,
-          sourceId,
-        });
-      }
-
-      currentExtInf = null;
-      currentExtGrp = null;
+    if (line.startsWith('#EXT-X-TARGETDURATION') || line.startsWith('#EXT-X-MEDIA-SEQUENCE')) {
+      mediaPlaylist = true;
+      continue;
     }
+
+    if (line.startsWith('#EXTINF:')) {
+      pendingExtInf = parseExtInf(line);
+      pendingAttributes = { ...pendingExtInf.attributes };
+      continue;
+    }
+
+    if (line.startsWith('#EXTGRP:')) {
+      pendingGroup = cleanText(line.slice(8));
+      continue;
+    }
+
+    if (line.startsWith('#EXTVLCOPT:') || line.startsWith('#KODIPROP:')) {
+      const separator = line.indexOf(':', line.indexOf(':') + 1);
+      if (separator !== -1) {
+        const key = normalizeKey(line.slice(line.indexOf(':') + 1, separator));
+        pendingAttributes[key] = cleanText(line.slice(separator + 1));
+      }
+      continue;
+    }
+
+    if (line.startsWith('#')) continue;
+
+    const streamUrl = resolveStreamUrl(line, playlistUrl);
+    if (!isLikelyStreamUrl(streamUrl)) {
+      resetPendingMetadata();
+      continue;
+    }
+
+    // An HLS media playlist contains segments, not catalog entries. Do not turn
+    // every .ts segment into a channel card.
+    if (mediaPlaylist && !pendingExtInf) continue;
+
+    const parsed = pendingExtInf
+      ? buildItem(pendingExtInf.title, pendingAttributes, pendingGroup, streamUrl, sourceId, items.length)
+      : buildItem(inferTitleFromUrl(streamUrl, items.length + 1), pendingAttributes, pendingGroup, streamUrl, sourceId, items.length);
+
+    const dedupeKey = `${normalizeForKey(parsed.title)}|${normalizeUrlForKey(parsed.streamUrl)}`;
+    if (!seen.has(dedupeKey)) {
+      seen.add(dedupeKey);
+      items.push(parsed);
+    }
+
+    resetPendingMetadata();
   }
 
   return items;
+
+  function resetPendingMetadata() {
+    pendingExtInf = null;
+    pendingGroup = '';
+    pendingAttributes = {};
+  }
 }
 
-/**
- * Parses a single #EXTINF line and extracts metadata
- */
-function parseExtInfLine(
-  extinf: string,
-  url: string,
-  groupOverride: string | null,
-  sourceId: string,
-  index: number
-): CloudMediaItem {
-  // Extract attributes (tvg-name="...", tvg-logo="...", group-title="...", etc.)
-  const attributes: Record<string, string> = {};
-  const attrRegex = /([a-zA-Z0-9_-]+)="([^"]*)"/g;
-  let match;
+function normalizePlaylistText(content: string): string {
+  return String(content || '')
+    .replace(/^\uFEFF/, '')
+    .replace(/\r\n?/g, '\n')
+    .replace(/[\u0000-\u0008\u000B\u000C\u000E-\u001F]/g, '');
+}
 
-  while ((match = attrRegex.exec(extinf)) !== null) {
-    attributes[match[1].toLowerCase()] = match[2];
+function parseExtInf(line: string): ParsedExtInf {
+  const body = line.slice('#EXTINF:'.length);
+  const commaIndex = findTitleSeparator(body);
+  const metadata = commaIndex >= 0 ? body.slice(0, commaIndex) : body;
+  const title = commaIndex >= 0 ? body.slice(commaIndex + 1).trim() : '';
+  const attributes = parseAttributes(metadata);
+  return { attributes, title: cleanText(title) || attributes['tvg-name'] || 'Transmissão' };
+}
+
+function findTitleSeparator(value: string): number {
+  let quote: string | null = null;
+  for (let i = 0; i < value.length; i += 1) {
+    const char = value[i];
+    if ((char === '"' || char === "'") && value[i - 1] !== '\\') {
+      quote = quote === char ? null : quote || char;
+    } else if (char === ',' && !quote) {
+      return i;
+    }
   }
+  return -1;
+}
 
-  // Extract raw display title after the last comma
-  const commaIndex = extinf.lastIndexOf(',');
-  let rawTitle = commaIndex !== -1 ? extinf.substring(commaIndex + 1).trim() : `Canal #${index}`;
+function parseAttributes(value: string): Record<string, string> {
+  const attributes: Record<string, string> = {};
+  const regex = /([\w:-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s]+))/g;
+  let match: RegExpExecArray | null;
+  while ((match = regex.exec(value)) !== null) {
+    const key = normalizeKey(match[1]);
+    attributes[key] = cleanText(match[2] ?? match[3] ?? match[4] ?? '');
+  }
+  return attributes;
+}
 
-  // Clean title
-  rawTitle = rawTitle.replace(/^-\s*/, '').trim();
-
-  const tvgId = attributes['tvg-id'];
-  const tvgName = attributes['tvg-name'];
-  const logo = attributes['tvg-logo'] || attributes['logo'];
-  const group = groupOverride || attributes['group-title'] || 'Geral';
-
-  // Detect content type & series details
-  const { type, seriesTitle, season, episode, cleanTitle } = detectContentTypeAndSeries(rawTitle, group, url);
+function buildItem(
+  rawTitle: string,
+  attributes: Record<string, string>,
+  groupOverride: string,
+  streamUrl: string,
+  sourceId: string,
+  index: number,
+): CloudMediaItem {
+  const group = cleanText(groupOverride || attributes['group-title'] || attributes['group'] || attributes['category'] || 'Geral');
+  const title = cleanText(rawTitle) || attributes['tvg-name'] || inferTitleFromUrl(streamUrl, index + 1);
+  const detection = detectSeries(title, group, attributes, streamUrl);
+  const type = detectContentType(title, group, attributes, streamUrl, detection);
+  const cleanTitle = detection.episodeTitle || cleanDisplayTitle(title);
+  const logo = firstNonEmpty(attributes['tvg-logo'], attributes['logo'], attributes['logo-url'], attributes['icon']);
 
   return {
-    id: `cloud-${sourceId}-${index}-${Math.random().toString(36).substring(2, 7)}`,
-    title: cleanTitle || rawTitle,
+    id: `cloud-${sourceId}-${index + 1}`,
+    title: cleanTitle,
     type,
     group,
     logo: logo || undefined,
-    streamUrl: url,
-    tvgId: tvgId || undefined,
-    tvgName: tvgName || undefined,
-    season,
-    episode,
-    seriesTitle,
+    streamUrl,
+    tvgId: attributes['tvg-id'] || undefined,
+    tvgName: attributes['tvg-name'] || undefined,
+    season: detection.season,
+    episode: detection.episode,
+    seriesTitle: detection.seriesTitle,
     sourceId,
     rawAttributes: attributes,
   };
 }
 
-/**
- * Smart detection of Content Type (Channel vs Movie vs Series) and SxxExx parsing
- */
-function detectContentTypeAndSeries(
-  rawTitle: string,
-  group: string,
-  url: string
-): {
-  type: CloudContentType;
-  seriesTitle?: string;
-  season?: number;
-  episode?: number;
-  cleanTitle: string;
-} {
-  const upperGroup = group.toUpperCase();
-  const lowerUrl = url.toLowerCase();
+function detectSeries(title: string, group: string, attributes: Record<string, string>, streamUrl: string): SeriesDetection {
+  const source = title.replace(/[\[\]{}]/g, ' ').replace(/\s+/g, ' ').trim();
+  const patterns: RegExp[] = [
+    /^(.*?)\s*[\[({-]?\s*[Ss](\d{1,2})\s*[-_. ]?[Ee](\d{1,3})(?:\s*[-_.: ]?\s*(.*))?$/i,
+    /^(.*?)\s*[\[({-]?\s*(\d{1,2})\s*[xX]\s*(\d{1,3})(?:\s*[-_.: ]?\s*(.*))?$/i,
+    /^(.*?)\s*[\[({-]?\s*(?:Temporada|Season|Temp)\s*(\d{1,2})\s*[-_.: ]?\s*(?:Episódio|Episodio|Episode|Ep|Cap)\s*(\d{1,3})(?:\s*[-_.: ]?\s*(.*))?$/i,
+  ];
 
-  // 1. Check for Series Pattern in Title: S01E02, S1 E2, T01E02, T1 E2, Temporada 1 Ep 2, etc.
-  const seriesPattern1 = /^(.*?)\s*[-:|/]?\s*[SsTt](\d{1,2})\s*[-_. ]?[Ee](\d{1,3})(.*)$/i;
-  const seriesPattern2 = /^(.*?)\s*[-:|/]?\s*(?:Temporada|Season|Temp)\s*(\d{1,2})\s*[-_. ]?(?:Episódio|Episodio|Episode|Ep|Cap)\s*(\d{1,3})(.*)$/i;
-  const seriesPattern3 = /^(.*?)\s*[-:|/]?\s*(?:Episódio|Episodio|Episode|Ep|Cap)\s*(\d{1,3})(.*)$/i;
-
-  let match = rawTitle.match(seriesPattern1) || rawTitle.match(seriesPattern2);
-
-  if (match) {
-    const seriesTitle = match[1].trim() || 'Série';
-    const season = parseInt(match[2], 10);
-    const episode = parseInt(match[3], 10);
-    const extra = match[4]?.replace(/^[-: ]+/, '').trim();
-    const cleanTitle = extra ? `T${season}:E${episode} - ${extra}` : `Temporada ${season}, Episódio ${episode}`;
-
-    return {
-      type: 'series',
-      seriesTitle,
-      season,
-      episode,
-      cleanTitle,
-    };
+  for (const pattern of patterns) {
+    const match = source.match(pattern);
+    if (match) {
+      const seriesTitle = cleanSeriesTitle(match[1]);
+      const season = Number(match[2]);
+      const episode = Number(match[3]);
+      const episodeName = cleanEpisodeTitle(match[4] || `Episódio ${episode}`);
+      return { seriesTitle, season, episode, episodeTitle: episodeName };
+    }
   }
 
-  // Pattern with only episode
-  const matchEpOnly = rawTitle.match(seriesPattern3);
-  if (matchEpOnly && (upperGroup.includes('SERIE') || upperGroup.includes('SÉRIE') || upperGroup.includes('ANIME'))) {
-    const seriesTitle = matchEpOnly[1].trim() || 'Série';
-    const episode = parseInt(matchEpOnly[2], 10);
-    const extra = matchEpOnly[3]?.replace(/^[-: ]+/, '').trim();
-    const cleanTitle = extra ? `Episódio ${episode} - ${extra}` : `Episódio ${episode}`;
-
+  const episodeOnly = source.match(/^(.*?)\s*[-|:]?\s*(?:Episódio|Episodio|Episode|Ep|Cap)\s*(\d{1,3})(?:\s*[-_.: ]?\s*(.*))?$/i);
+  const groupUpper = normalizeForKey(group);
+  if (episodeOnly && SERIES_GROUP_WORDS.some((word) => groupUpper.includes(normalizeForKey(word)))) {
+    const episode = Number(episodeOnly[2]);
     return {
-      type: 'series',
-      seriesTitle,
+      seriesTitle: cleanSeriesTitle(episodeOnly[1]),
       season: 1,
       episode,
-      cleanTitle,
+      episodeTitle: cleanEpisodeTitle(episodeOnly[3] || `Episódio ${episode}`),
     };
   }
 
-  // 2. Explicit Group Tag Heuristics
-  const isSeriesGroup = 
-    upperGroup.includes('SERIE') || 
-    upperGroup.includes('SÉRIE') || 
-    upperGroup.includes('SEASON') || 
-    upperGroup.includes('NOVELA') || 
-    upperGroup.includes('ANIMES') ||
-    upperGroup.includes('DORAMA');
-
-  if (isSeriesGroup) {
+  const seasonFromAttributes = firstNumber(attributes['season'], attributes['season-number'], attributes['tvg-season']);
+  const episodeFromAttributes = firstNumber(attributes['episode'], attributes['episode-number'], attributes['tvg-episode']);
+  if (seasonFromAttributes !== undefined || episodeFromAttributes !== undefined) {
     return {
-      type: 'series',
-      seriesTitle: rawTitle,
-      season: 1,
-      episode: 1,
-      cleanTitle: rawTitle,
+      seriesTitle: cleanSeriesTitle(attributes['series-title'] || attributes['tvg-name'] || title),
+      season: seasonFromAttributes ?? 1,
+      episode: episodeFromAttributes ?? 1,
+      episodeTitle: cleanEpisodeTitle(title),
     };
   }
 
-  const isMovieGroup = 
-    upperGroup.includes('FILME') || 
-    upperGroup.includes('MOVIE') || 
-    upperGroup.includes('CINEMA') || 
-    upperGroup.includes('VOD') || 
-    upperGroup.includes('LANCAMENTO') || 
-    upperGroup.includes('LANÇAMENTO') || 
-    upperGroup.includes('4K') || 
-    upperGroup.includes('ANIMACAO') || 
-    upperGroup.includes('ANIMAÇÃO') ||
-    upperGroup.includes('TERROR') ||
-    upperGroup.includes('SUSPENSE') ||
-    upperGroup.includes('ACAO') ||
-    upperGroup.includes('AÇÃO');
-
-  if (isMovieGroup) {
+  const pathMatch = decodeURIComponent(streamUrl).match(/[\\/]s(\d{1,2})[ex](\d{1,3})[\\/]/i);
+  if (pathMatch) {
     return {
-      type: 'movie',
-      cleanTitle: rawTitle,
+      seriesTitle: cleanSeriesTitle(attributes['series-title'] || attributes['tvg-name'] || title),
+      season: Number(pathMatch[1]),
+      episode: Number(pathMatch[2]),
+      episodeTitle: cleanEpisodeTitle(title),
     };
   }
 
-  const isChannelGroup = 
-    upperGroup.includes('CANAL') || 
-    upperGroup.includes('CANAIS') || 
-    upperGroup.includes('AO VIVO') || 
-    upperGroup.includes('LIVE') || 
-    upperGroup.includes('ABERTO') || 
-    upperGroup.includes('NOTICIA') || 
-    upperGroup.includes('NOTÍCIA') || 
-    upperGroup.includes('ESPORTE') || 
-    upperGroup.includes('24H') || 
-    upperGroup.includes('IPTV') ||
-    upperGroup.includes('INFANTIL') ||
-    upperGroup.includes('DOCUMENTARIOS');
-
-  if (isChannelGroup) {
-    return {
-      type: 'channel',
-      cleanTitle: rawTitle,
-    };
+  if (SERIES_GROUP_WORDS.some((word) => normalizeForKey(group).includes(normalizeForKey(word)))) {
+    return { seriesTitle: cleanSeriesTitle(title), season: 1, episode: 1, episodeTitle: cleanEpisodeTitle(title) };
   }
 
-  // 3. File extension & URL Heuristics
-  if (lowerUrl.endsWith('.mp4') || lowerUrl.endsWith('.mkv') || lowerUrl.endsWith('.avi')) {
-    return {
-      type: 'movie',
-      cleanTitle: rawTitle,
-    };
-  }
-
-  // Default fallback is channel
-  return {
-    type: 'channel',
-    cleanTitle: rawTitle,
-  };
+  return {};
 }
 
-/**
- * Groups series items into structured Series -> Seasons -> Episodes
- */
+function detectContentType(
+  title: string,
+  group: string,
+  attributes: Record<string, string>,
+  url: string,
+  series: SeriesDetection,
+): CloudContentType {
+  if (series.seriesTitle) return 'series';
+
+  const explicit = normalizeForKey(attributes['tvg-type'] || attributes['type'] || attributes['content-type'] || '');
+  if (explicit.includes('series') || explicit.includes('serie') || explicit.includes('show')) return 'series';
+  if (explicit.includes('movie') || explicit.includes('filme') || explicit.includes('vod')) return 'movie';
+  if (explicit.includes('channel') || explicit.includes('live') || explicit.includes('canal')) return 'channel';
+
+  const normalizedGroup = normalizeForKey(group);
+  if (MOVIE_GROUP_WORDS.some((word) => normalizedGroup.includes(normalizeForKey(word)))) return 'movie';
+  if (SERIES_GROUP_WORDS.some((word) => normalizedGroup.includes(normalizeForKey(word)))) return 'series';
+  if (CHANNEL_GROUP_WORDS.some((word) => normalizedGroup.includes(normalizeForKey(word)))) return 'channel';
+
+  const lowerUrl = url.toLowerCase().split('?')[0];
+  if (/\.(mp4|m4v|webm|mkv|avi|mov|wmv)$/.test(lowerUrl)) return 'movie';
+  if (/\.(m3u8|ts|aac|mp3|ogg)$/.test(lowerUrl)) return 'channel';
+
+  const normalizedTitle = normalizeForKey(title);
+  if (/\b(s\d{1,2}e\d{1,3}|\d{1,2}x\d{1,3})\b/i.test(title)) return 'series';
+  if (normalizedTitle.includes('trailer') || normalizedTitle.includes('filme')) return 'movie';
+  return 'channel';
+}
+
+function cleanDisplayTitle(title: string): string {
+  return title
+    .replace(/\s*[|•]\s*(?:4K|8K|FHD|HD|SD|H265|HEVC|Dublado|Legendado).*$/i, '')
+    .replace(/\s*\((?:4K|8K|FHD|HD|SD|H265|HEVC)\)\s*$/i, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
+function cleanSeriesTitle(value: string): string {
+  return cleanText(value)
+    .replace(/\s*[|•-]\s*(?:Série|Serie|Series|Temporada|Season).*$/i, '')
+    .replace(/\s+/g, ' ')
+    .trim() || 'Série';
+}
+
+function cleanEpisodeTitle(value: string): string {
+  return cleanText(value).replace(/^[-_.:| ]+/, '').replace(/\s+/g, ' ').trim() || 'Episódio';
+}
+
+function cleanText(value: string): string {
+  return String(value || '').replace(/\s+/g, ' ').trim();
+}
+
+function normalizeKey(value: string): string {
+  return value.toLowerCase().trim().replace(/_/g, '-');
+}
+
+function normalizeForKey(value: string): string {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toUpperCase()
+    .replace(/[^A-Z0-9]+/g, ' ')
+    .trim();
+}
+
+function normalizeUrlForKey(value: string): string {
+  try {
+    const parsed = new URL(value);
+    parsed.hash = '';
+    return parsed.toString().replace(/\/$/, '').toLowerCase();
+  } catch {
+    return value.trim().toLowerCase();
+  }
+}
+
+function resolveStreamUrl(value: string, playlistUrl?: string): string {
+  if (!playlistUrl || /^https?:\/\//i.test(value) || value.startsWith('//')) return value;
+  try {
+    return new URL(value, playlistUrl).toString();
+  } catch {
+    return value;
+  }
+}
+
+function isLikelyStreamUrl(value: string): boolean {
+  return /^(https?:)?\/\//i.test(value) || /^(rtmp|rtsp|udp|p2p):/i.test(value);
+}
+
+function inferTitleFromUrl(url: string, index: number): string {
+  try {
+    const parsed = new URL(url);
+    const part = decodeURIComponent(parsed.pathname.split('/').filter(Boolean).pop() || '').replace(/\.[a-z0-9]+$/i, '');
+    return cleanText(part.replace(/[._-]+/g, ' ')) || `Transmissão ${index}`;
+  } catch {
+    return `Transmissão ${index}`;
+  }
+}
+
+function firstNonEmpty(...values: Array<string | undefined>): string | undefined {
+  return values.find((value) => Boolean(value && value.trim()));
+}
+
+function firstNumber(...values: Array<string | undefined>): number | undefined {
+  for (const value of values) {
+    if (value && /^\d+$/.test(value.trim())) return Number(value.trim());
+  }
+  return undefined;
+}
+
+/** Agrupa itens de série por título normalizado e ordena temporadas/episódios. */
 export function groupCloudSeries(items: CloudMediaItem[]): CloudSeriesGroup[] {
   const seriesItems = items.filter((item) => item.type === 'series');
-  const seriesMap: Map<string, CloudSeriesGroup> = new Map();
+  const seriesMap = new Map<string, CloudSeriesGroup>();
 
   for (const item of seriesItems) {
-    const rawSeriesTitle = (item.seriesTitle || item.title).trim();
-    // Normalize series key
-    const normalizedKey = rawSeriesTitle.toLowerCase().replace(/[^a-z0-9]/g, '');
+    const rawSeriesTitle = cleanText(item.seriesTitle || item.title) || 'Série';
+    const normalizedKey = normalizeForKey(rawSeriesTitle).replace(/\s/g, '');
 
     if (!seriesMap.has(normalizedKey)) {
       seriesMap.set(normalizedKey, {
-        id: `series-${item.sourceId}-${normalizedKey}`,
+        id: `series-${item.sourceId}-${normalizedKey.toLowerCase()}`,
         title: rawSeriesTitle,
         group: item.group,
         logo: item.logo,
@@ -257,78 +368,47 @@ export function groupCloudSeries(items: CloudMediaItem[]): CloudSeriesGroup[] {
     }
 
     const series = seriesMap.get(normalizedKey)!;
-    const seasonNum = item.season || 1;
-    const episodeNum = item.episode || 1;
+    const seasonNumber = item.season || 1;
+    const episodeNumber = item.episode || series.totalEpisodes + 1;
+    let season = series.seasons.find((entry) => entry.seasonNumber === seasonNumber);
 
-    let season = series.seasons.find((s) => s.seasonNumber === seasonNum);
     if (!season) {
-      season = {
-        seasonNumber: seasonNum,
-        episodes: [],
-      };
+      season = { seasonNumber, episodes: [] };
       series.seasons.push(season);
     }
 
-    season.episodes.push({
-      id: item.id,
-      episodeNumber: episodeNum,
-      title: item.title,
-      streamUrl: item.streamUrl,
-      logo: item.logo,
-    });
-
-    series.totalEpisodes += 1;
-  }
-
-  // Sort seasons and episodes numerically
-  const result = Array.from(seriesMap.values());
-  for (const series of result) {
-    series.seasons.sort((a, b) => a.seasonNumber - b.seasonNumber);
-    for (const season of series.seasons) {
-      season.episodes.sort((a, b) => a.episodeNumber - b.episodeNumber);
+    if (!season.episodes.some((episode) => episode.streamUrl === item.streamUrl)) {
+      season.episodes.push({
+        id: item.id,
+        episodeNumber,
+        title: item.title,
+        streamUrl: item.streamUrl,
+        logo: item.logo,
+      });
+      series.totalEpisodes += 1;
     }
   }
 
-  // Sort series alphabetically
-  result.sort((a, b) => a.title.localeCompare(b.title));
-
-  return result;
+  return Array.from(seriesMap.values())
+    .map((series) => ({
+      ...series,
+      seasons: series.seasons
+        .sort((a, b) => a.seasonNumber - b.seasonNumber)
+        .map((season) => ({
+          ...season,
+          episodes: season.episodes.sort((a, b) => a.episodeNumber - b.episodeNumber),
+        })),
+    }))
+    .sort((a, b) => a.title.localeCompare(b.title, 'pt-BR'));
 }
 
-/**
- * Sample Demo M3U Playlist for instant testing of Nuvem features
- */
 export const SAMPLE_DEMO_M3U = `#EXTM3U
 #EXTINF:-1 tvg-id="tvbrasil" tvg-name="TV Brasil" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/TV_Brasil_logo_2023.svg/320px-TV_Brasil_logo_2023.svg.png" group-title="Canais Abertos",TV Brasil HD
 https://tvbrasil-live.ebc.com.br/hls/tvbrasil/index.m3u8
-
-#EXTINF:-1 tvg-id="cultura" tvg-name="TV Cultura" tvg-logo="https://upload.wikimedia.org/wikipedia/pt/thumb/d/d4/Logotipo_da_TV_Cultura.svg/320px-Logotipo_da_TV_Cultura.svg.png" group-title="Canais Abertos",TV Cultura
-https://stream.tvbrasil.ebc.com.br/hls/tvbrasil/index.m3u8
-
-#EXTINF:-1 tvg-id="nasatv" tvg-name="NASA TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/NASA_logo.svg/320px-NASA_logo.svg.png" group-title="Notícias & Ciência",NASA TV Public Channel (Ao Vivo)
-https://ntv1.akamaized.net/hls/live/2014075/NASA-NTV1-HLS/master.m3u8
-
-#EXTINF:-1 tvg-id="redbull" tvg-name="Red Bull TV" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Red_Bull_TV_logo.svg/320px-Red_Bull_TV_logo.svg.png" group-title="Esportes & Aventura",Red Bull TV Live
-https://rbmn-live.akamaized.net/hls/live/590964/BoRB-AT/master.m3u8
-
-#EXTINF:-1 tvg-id="dw" tvg-name="DW Brasil" tvg-logo="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/Deutsche_Welle_logo.svg/320px-Deutsche_Welle_logo.svg.png" group-title="Notícias & Mundo",DW Português (Documentários)
-https://dwamdstream102.akamaized.net/hls/live/2015525/dwstream102/index.m3u8
-
 #EXTINF:-1 tvg-id="nosferatu1922" tvg-name="Nosferatu" tvg-logo="https://images.unsplash.com/photo-1509248961158-e54f6934749c?auto=format&fit=crop&w=600&q=80" group-title="Filmes de Culto & Terror",Nosferatu (1922) - Versão Restaurada HD
 https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4
-
-#EXTINF:-1 tvg-id="nightdead" tvg-name="A Noite dos Mortos-Vivos" tvg-logo="https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80" group-title="Filmes de Culto & Terror",A Noite dos Mortos-Vivos (1968)
-https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4
-
-#EXTINF:-1 tvg-id="sintel" tvg-name="Sintel - A Jornada" tvg-logo="https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80" group-title="Filmes de Fantasia",Sintel - O Dragão e o Destino (4K)
-https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/Sintel.mp4
-
-#EXTINF:-1 tvg-id="twilightzone" tvg-name="Além da Imaginação" tvg-logo="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=600&q=80" group-title="Séries de Suspense",Além da Imaginação S01E01 - Onde Estão Todos?
+#EXTINF:-1 tvg-id="twilightzone1" tvg-name="Além da Imaginação" tvg-logo="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=600&q=80" group-title="Séries de Suspense",Além da Imaginação S01E01 - Onde Estão Todos?
 https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/TearsOfSteel.mp4
-
 #EXTINF:-1 tvg-id="twilightzone2" tvg-name="Além da Imaginação" tvg-logo="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=600&q=80" group-title="Séries de Suspense",Além da Imaginação S01E02 - Um por Um
 https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4
-
-#EXTINF:-1 tvg-id="twilightzone3" tvg-name="Além da Imaginação" tvg-logo="https://images.unsplash.com/photo-1478760329108-5c3ed9d495a0?auto=format&fit=crop&w=600&q=80" group-title="Séries de Suspense",Além da Imaginação S02E01 - O Homem no Castelo
-https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4
 `;
