@@ -171,3 +171,120 @@
     width: 240px;
   }
 }
+
+
+/* Android TV typography and contrast system. */
+.tv-mode {
+  --tv-text-primary: #fff8ed;
+  --tv-text-secondary: #d2dee2;
+  --tv-text-muted: #a9bbc3;
+  --tv-accent: #f08b8b;
+  --tv-panel: #0b171e;
+  --tv-panel-strong: #10232d;
+  color: var(--tv-text-primary);
+  font-family: var(--font-sans);
+}
+
+.tv-mode h1,
+.tv-mode h2,
+.tv-mode h3,
+.tv-mode h4,
+.tv-mode .font-display {
+  color: var(--tv-text-primary);
+  text-shadow: 0 2px 14px rgba(0, 0, 0, 0.65);
+}
+
+.tv-mode h1 {
+  font-size: clamp(2.4rem, 3.5vw, 4.6rem);
+  line-height: 1.08;
+}
+
+.tv-mode h2 {
+  font-size: clamp(2rem, 2.8vw, 3.2rem);
+  line-height: 1.12;
+}
+
+.tv-mode h3 {
+  font-size: clamp(1.1rem, 1.5vw, 1.55rem);
+  line-height: 1.2;
+}
+
+.tv-mode p,
+.tv-mode label,
+.tv-mode li,
+.tv-mode [class*="text-[#9"],
+.tv-mode [class*="text-[#8"] {
+  color: var(--tv-text-secondary);
+}
+
+.tv-mode .font-cinematic {
+  color: var(--tv-text-secondary);
+  font-size: clamp(1.2rem, 1.7vw, 1.7rem);
+  line-height: 1.45;
+  text-shadow: 0 1px 8px rgba(0, 0, 0, 0.7);
+}
+
+.tv-mode .font-mono-code {
+  font-size: 0.82rem;
+  letter-spacing: 0.08em;
+}
+
+.tv-mode [class*="text-[9px"],
+.tv-mode [class*="text-[10px"],
+.tv-mode [class*="text-[11px"],
+.tv-mode [class*="text-xs"] {
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.tv-mode [class*="text-sm"] {
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+.tv-mode [class*="text-lg"] {
+  font-size: 1.35rem;
+}
+
+.tv-mode .text-[#5d7380],
+.tv-mode .text-[#718894],
+.tv-mode .text-[#738b97],
+.tv-mode .text-[#7892a0],
+.tv-mode .text-[#7d939f],
+.tv-mode .text-[#809ba9],
+.tv-mode .text-[#869da9],
+.tv-mode .text-[#8da0ab],
+.tv-mode .text-[#92a6b2],
+.tv-mode .text-[#95a8b4],
+.tv-mode .text-[#9cb0bd] {
+  color: var(--tv-text-muted) !important;
+}
+
+.tv-mode .bg-[#091318],
+.tv-mode .bg-[#081014],
+.tv-mode .bg-[#070e12],
+.tv-mode .bg-[#0b151a] {
+  background-color: var(--tv-panel) !important;
+}
+
+.tv-mode .border-[#13252f],
+.tv-mode .border-[#142631],
+.tv-mode .border-[#162731],
+.tv-mode .border-[#182b36] {
+  border-color: #29414d !important;
+}
+
+.tv-mode .bg-[#8B1E1E] {
+  background-color: #a92b2b !important;
+}
+
+.tv-mode .text-[#8B1E1E],
+.tv-mode .text-[#f57a7a],
+.tv-mode .text-[#f58a8a] {
+  color: var(--tv-accent) !important;
+}
+
+.tv-mode input::placeholder {
+  color: #a9bbc3;
+  opacity: 1;
+}
