@@ -1,0 +1,1918 @@
+[
+  {
+    "id": "the-boys",
+    "title": "The Boys",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/the-boys_2cd5b6af.jpg",
+    "heroUrl": "https://cineclub2-ashy.vercel.app/posters/cineclub-hero_437f5ca1.jpg",
+    "type": "Série",
+    "rating": 8.7,
+    "year": "2019–2024",
+    "genres": [
+      "Ação",
+      "Sátira",
+      "Super-heróis",
+      "Ficção Científica",
+      "Violência Estilizada"
+    ],
+    "catalogCategory": "maratonar",
+    "durationOrSeasons": "5 Temporadas",
+    "ageRating": "+18",
+    "synopsis": "Quando super-heróis abusam de seus superpoderes em vez de usá-los para o bem, um grupo informal de vigilantes corajosos, conhecidos como \"The Boys\", embarca em uma missão heroica para expor a verdade sobre Os Sete e a Vought International.",
+    "originalTitle": "The Boys",
+    "directorOrCreator": "Eric Kripke",
+    "cast": [
+      "Karl Urban",
+      "Jack Quaid",
+      "Antony Starr",
+      "Erin Moriarty",
+      "Dominique McElligott"
+    ],
+    "accessLinks": [
+      {
+        "id": "tb-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/10srwgb-q2GnIHTAm4nzt6hw5G-lJvsTm"
+      },
+      {
+        "id": "tb-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/10zC5lwD-GX6aB8CfrHLMRz25JLw4lkZX"
+      },
+      {
+        "id": "tb-s3",
+        "label": "Temporada 3 (Drive)",
+        "provider": "drive",
+        "season": 3,
+        "url": "https://drive.google.com/drive/folders/1-3hru5GZYwWmuOX6Hj1o4j_ZZsx2baYX"
+      },
+      {
+        "id": "tb-s4",
+        "label": "Temporada 4 (Drive)",
+        "provider": "drive",
+        "season": 4,
+        "url": "https://drive.google.com/drive/folders/11Bm6aM5GJERqq_ucV8yeRuk4WTuHtYdy"
+      },
+      {
+        "id": "tb-s5",
+        "label": "Temporada 5 (Drive)",
+        "provider": "drive",
+        "season": 5,
+        "url": "https://drive.google.com/drive/folders/1J8MrqEOPDP3rpgIYkG4fhdYOB-eMwa4A?usp=sharing"
+      }
+    ]
+  },
+  {
+    "id": "constantine",
+    "title": "Constantine",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/constantine_505e654a.jpg",
+    "heroUrl": "https://cineclub2-ashy.vercel.app/posters/cineclub-hero_437f5ca1.jpg",
+    "type": "Série",
+    "rating": 7.5,
+    "year": "2014",
+    "genres": [
+      "Sobrenatural",
+      "Terror",
+      "Fantasia Sombria",
+      "Investigação"
+    ],
+    "catalogCategory": "sobrenatural",
+    "durationOrSeasons": "1 Temporada",
+    "ageRating": "+16",
+    "synopsis": "John Constantine, um mestre do ocultismo atormentado pelos pecados de seu passado, luta para salvar sua própria alma condenada enquanto protege inocentes contra forças demoníacas e a escuridão crescente.",
+    "originalTitle": "Constantine",
+    "directorOrCreator": "Daniel Cerone, David S. Goyer",
+    "cast": [
+      "Matt Ryan",
+      "Harold Perrineau",
+      "Angélica Celaya",
+      "Charles Halford"
+    ],
+    "accessLinks": [
+      {
+        "id": "cst-all",
+        "label": "Abrir Temporada Completa (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/10WW3MIWFkGkwum0Q-gmvnJH5C8chHkbi?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "penny-dreadful",
+    "title": "Penny Dreadful",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/penny-dreadful_9b35e5ec.jpg",
+    "type": "Série",
+    "rating": 8.2,
+    "year": "2014–2016",
+    "genres": [
+      "Terror Gótico",
+      "Drama",
+      "Sobrenatural",
+      "Mistério"
+    ],
+    "catalogCategory": "terror",
+    "durationOrSeasons": "3 Temporadas",
+    "ageRating": "+18",
+    "synopsis": "Nas sombras da Londres vitoriana do século XIX, personagens lendários da literatura gótica como Dr. Frankenstein, Dorian Gray e Drácula cruzam seus caminhos e enfrentam seus próprios monstros internos.",
+    "originalTitle": "Penny Dreadful",
+    "directorOrCreator": "John Logan",
+    "cast": [
+      "Eva Green",
+      "Timothy Dalton",
+      "Josh Hartnett",
+      "Rory Kinnear",
+      "Billie Piper"
+    ],
+    "accessLinks": [
+      {
+        "id": "pd-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/1hLYxAu5bz3kJjSr9ZUO8QnwLAh0yDqTz?usp=drive_link"
+      },
+      {
+        "id": "pd-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/1FIxTxPi-NK5Rh0ms6SQ9ysWmrYF8Rj_e?usp=drive_link"
+      },
+      {
+        "id": "pd-s3",
+        "label": "Temporada 3 (Drive)",
+        "provider": "drive",
+        "season": 3,
+        "url": "https://drive.google.com/drive/folders/1brL4CDqZ9RB2QWQjk-vSF-yZnu9N2d7Q?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "supernatural",
+    "title": "Supernatural",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/supernatural_c1d4f0e7.jpg",
+    "type": "Série",
+    "rating": 8.4,
+    "year": "2005–2020",
+    "genres": [
+      "Sobrenatural",
+      "Terror",
+      "Ação",
+      "Drama"
+    ],
+    "catalogCategory": "sobrenatural",
+    "durationOrSeasons": "15 Temporadas",
+    "ageRating": "+16",
+    "synopsis": "Os irmãos Sam e Dean Winchester cruzam os Estados Unidos a bordo do lendário Impala 67, caçando criaturas sombrias, demônios, deuses e lendas urbanas na busca incansável por respostas e redenção.",
+    "originalTitle": "Supernatural",
+    "directorOrCreator": "Eric Kripke",
+    "cast": [
+      "Jared Padalecki",
+      "Jensen Ackles",
+      "Misha Collins",
+      "Mark Sheppard"
+    ],
+    "accessLinks": [
+      {
+        "id": "spn-s1",
+        "label": "1ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 1,
+        "url": "https://photos.app.goo.gl/2vGytkk5hVmmvFPZ9"
+      },
+      {
+        "id": "spn-s2",
+        "label": "2ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 2,
+        "url": "https://photos.app.goo.gl/2C9yJuAbSWv1dexR7"
+      },
+      {
+        "id": "spn-s3",
+        "label": "3ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 3,
+        "url": "https://photos.app.goo.gl/WZsuNzVUaY6EtzRLA"
+      },
+      {
+        "id": "spn-s4",
+        "label": "4ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 4,
+        "url": "https://photos.app.goo.gl/YxCmXwU1JJGNK82H8"
+      },
+      {
+        "id": "spn-s5",
+        "label": "5ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 5,
+        "url": "https://photos.app.goo.gl/BmQRYsD2ZQQzz2NY9"
+      },
+      {
+        "id": "spn-s6",
+        "label": "6ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 6,
+        "url": "https://photos.app.goo.gl/CBk6FSJeRrrFPbjGA"
+      },
+      {
+        "id": "spn-s7",
+        "label": "7ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 7,
+        "url": "https://photos.app.goo.gl/GXsVe8GbCJTPFKRN7"
+      },
+      {
+        "id": "spn-s8",
+        "label": "8ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 8,
+        "url": "https://photos.app.goo.gl/XhY8afzR3fmEaKPz8"
+      },
+      {
+        "id": "spn-s9",
+        "label": "9ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 9,
+        "url": "https://photos.app.goo.gl/Wh3ubVqXEuWB69Jf6"
+      },
+      {
+        "id": "spn-s10",
+        "label": "10ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 10,
+        "url": "https://photos.app.goo.gl/VquD3MSSpK99VTdv7"
+      },
+      {
+        "id": "spn-s11",
+        "label": "11ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 11,
+        "url": "https://photos.app.goo.gl/zaKHfNNeJJRWeoBU7"
+      },
+      {
+        "id": "spn-s12",
+        "label": "12ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 12,
+        "url": "https://photos.app.goo.gl/hzgLqJwiwq5iVKZd6"
+      },
+      {
+        "id": "spn-s13",
+        "label": "13ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 13,
+        "url": "https://photos.app.goo.gl/odGMBHfK8aDcS6C5A"
+      },
+      {
+        "id": "spn-s14",
+        "label": "14ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 14,
+        "url": "https://photos.app.goo.gl/6RgbEwkLyjK5QcMa6"
+      },
+      {
+        "id": "spn-s15",
+        "label": "15ª Temporada (Photos)",
+        "provider": "photos",
+        "season": 15,
+        "url": "https://photos.app.goo.gl/GLeaeaoadd2ewrXD8"
+      }
+    ]
+  },
+  {
+    "id": "sandman",
+    "title": "Sandman",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/sandman_929c7277.jpg",
+    "type": "Série",
+    "rating": 7.7,
+    "year": "2022",
+    "genres": [
+      "Fantasia Sombria",
+      "Drama",
+      "Sobrenatural"
+    ],
+    "catalogCategory": "sobrenatural",
+    "durationOrSeasons": "1 Temporada",
+    "ageRating": "+16",
+    "synopsis": "Após anos de aprisionamento involuntário, Morpheus, o Rei dos Sonhos, escapa e embarca em uma jornada épica entre mundos para recuperar seus artefatos sagrados e reconstruir seu reino decadente.",
+    "originalTitle": "The Sandman",
+    "directorOrCreator": "Neil Gaiman, David S. Goyer, Allan Heinberg",
+    "cast": [
+      "Tom Sturridge",
+      "Boyd Holbrook",
+      "Vivienne Acheampong",
+      "Patton Oswalt"
+    ],
+    "accessLinks": [
+      {
+        "id": "snd-all",
+        "label": "Abrir Temporadas (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/1XsiXMTy59xFUMLroCXrQCXocPzZ4sJ3i"
+      }
+    ]
+  },
+  {
+    "id": "ratched",
+    "title": "Ratched",
+    "posterUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663045162143/BxcifJENYyDhlVtz.jpg",
+    "type": "Série",
+    "rating": 7.3,
+    "year": "2020",
+    "genres": [
+      "Suspense Psicológico",
+      "Terror",
+      "Drama de Época"
+    ],
+    "catalogCategory": "terror",
+    "durationOrSeasons": "8 Episódios",
+    "ageRating": "+18",
+    "synopsis": "Em 1947, Mildred Ratched começa a trabalhar como enfermeira em um prestigiado hospital psiquiátrico na Califórnia, escondendo motivações obscuras sob uma fachada de elegância perfeita.",
+    "originalTitle": "Ratched",
+    "directorOrCreator": "Ryan Murphy, Evan Romansky",
+    "cast": [
+      "Sarah Paulson",
+      "Finn Wittrock",
+      "Judy Davis",
+      "Sharon Stone",
+      "Cynthia Nixon"
+    ],
+    "accessLinks": [
+      {
+        "id": "rtc-ep1",
+        "label": "Episódio 01 (Drive)",
+        "provider": "drive",
+        "episode": 1,
+        "url": "https://drive.google.com/file/d/1rj5bol_PpQg_aZ5XpiUrPKAgii85qcgZ/view?usp=drivesdk"
+      },
+      {
+        "id": "rtc-ep2",
+        "label": "Episódio 02 (Drive)",
+        "provider": "drive",
+        "episode": 2,
+        "url": "https://drive.google.com/file/d/1Jm9S5Ce70biyzZy9-5eR7hxxWwUjAT2E/view?usp=drivesdk"
+      },
+      {
+        "id": "rtc-ep3",
+        "label": "Episódio 03 (Drive)",
+        "provider": "drive",
+        "episode": 3,
+        "url": "https://drive.google.com/file/d/1NiIuOdrdm9lzlaAgdqnBH40YSsVN-TWs/view?usp=drivesdk"
+      },
+      {
+        "id": "rtc-ep4",
+        "label": "Episódio 04 (Drive)",
+        "provider": "drive",
+        "episode": 4,
+        "url": "https://drive.google.com/file/d/1lDGxWcJ0GiAG0SIgt17Rqog4VZk6DQ4J/view?usp=drivesdk"
+      },
+      {
+        "id": "rtc-ep5",
+        "label": "Episódio 05 (Drive)",
+        "provider": "drive",
+        "episode": 5,
+        "url": "https://drive.google.com/file/d/1coEUI-ckr8JWH-ddP4pnFW7HnA1WCO6f/view?usp=drivesdk"
+      },
+      {
+        "id": "rtc-ep6",
+        "label": "Episódio 06 (Drive)",
+        "provider": "drive",
+        "episode": 6,
+        "url": "https://drive.google.com/file/d/1IpPrC17fU8uB3RuE6-g13n7ZlIbqzgeH/view?usp=drivesdk"
+      },
+      {
+        "id": "rtc-ep7",
+        "label": "Episódio 07 (Drive)",
+        "provider": "drive",
+        "episode": 7,
+        "url": "https://drive.google.com/file/d/1fzetyV6WjC07rMCWIwT1exFw0bZumyRi/view?usp=drivesdk"
+      },
+      {
+        "id": "rtc-ep8",
+        "label": "Episódio 08 (Drive)",
+        "provider": "drive",
+        "episode": 8,
+        "url": "https://drive.google.com/file/d/1Apzo4uFi_vNnhsDXs66e-eo7kL6V_HxL/view?usp=drivesdk"
+      }
+    ]
+  },
+  {
+    "id": "into-the-dark",
+    "title": "Into the Dark",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/into-the-dark_681a33ca.jpg",
+    "type": "Série",
+    "rating": 6.4,
+    "year": "2018–2021",
+    "genres": [
+      "Terror",
+      "Antologia",
+      "Suspense"
+    ],
+    "catalogCategory": "terror",
+    "durationOrSeasons": "2 Temporadas",
+    "ageRating": "+18",
+    "synopsis": "Uma série antológica mensal de terror onde cada episódio de longa-metragem é inspirado em um feriado do mês em que foi lançado, revelando o lado mais perverso das comemorações humanas.",
+    "originalTitle": "Into the Dark",
+    "directorOrCreator": "Jason Blum (Blumhouse Productions)",
+    "cast": [
+      "Aurora Perrineau",
+      "Diane Sellers",
+      "Martha Higareda",
+      "Adelaide Kane"
+    ],
+    "accessLinks": [
+      {
+        "id": "itd-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/1pZOqC0tiJxwXyhAtHdUR2RMb3of7m-xT?usp=drive_link"
+      },
+      {
+        "id": "itd-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/1Th9LbLl9t2M2oSvF275SS5DuoEEi9BZ3?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "50-states-of-fright",
+    "title": "50 States of Fright",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/50-states-of-fright_0036072a.jpg",
+    "type": "Série",
+    "rating": 6.5,
+    "year": "2020",
+    "genres": [
+      "Terror",
+      "Folclore",
+      "Antologia"
+    ],
+    "catalogCategory": "terror",
+    "durationOrSeasons": "2 Temporadas",
+    "ageRating": "+16",
+    "synopsis": "Histórias assustadoras baseadas em lendas urbanas e mitos populares de diferentes estados dos Estados Unidos, explorando os medos mais profundos enraizados na cultura local.",
+    "originalTitle": "50 States of Fright",
+    "directorOrCreator": "Sam Raimi",
+    "cast": [
+      "Rachel Brosnahan",
+      "Travis Fimmel",
+      "Taissa Farmiga",
+      "Christina Ricci"
+    ],
+    "accessLinks": [
+      {
+        "id": "50s-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/1cZ0SybV1TFmaguOnEL8HrhPiM_OkJMh4?usp=drive_link"
+      },
+      {
+        "id": "50s-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/11IAPiVkqw_0cvIoqrYzNWGbEFBqRc0Xw?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "helix",
+    "title": "Helix",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/helix_a7d3b031.jpg",
+    "type": "Série",
+    "rating": 6.7,
+    "year": "2014–2015",
+    "genres": [
+      "Ficção Científica",
+      "Terror Biológico",
+      "Suspense"
+    ],
+    "catalogCategory": "terror",
+    "durationOrSeasons": "2 Temporadas",
+    "ageRating": "+16",
+    "synopsis": "Cientistas do Centro de Controle de Doenças (CDC) viajam a uma base de pesquisas no Ártico para conter o surto de um patógeno mortal, mas descobrem uma batalha biológica de proporções catastróficas.",
+    "originalTitle": "Helix",
+    "directorOrCreator": "Cameron Porsandeh, Ronald D. Moore",
+    "cast": [
+      "Billy Campbell",
+      "Hiroyuki Sanada",
+      "Kyra Zagorsky",
+      "Mark Ghanimé"
+    ],
+    "accessLinks": [
+      {
+        "id": "hlx-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/11II_djSaEChhQ1rmgcuGuYoNqGXsH5wz?usp=drive_link"
+      },
+      {
+        "id": "hlx-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/11pK7-JE1HUpBRSbsMRKPochaLvDlz3TT?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "se-desejos-matassem",
+    "title": "Se Desejos Matassem",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/se-desejos-matassem_58a983b5.jpg",
+    "type": "Série",
+    "rating": 6.9,
+    "year": "2021",
+    "genres": [
+      "Suspense",
+      "Drama",
+      "Mistério"
+    ],
+    "catalogCategory": "historias",
+    "durationOrSeasons": "1 Temporada",
+    "ageRating": "+16",
+    "synopsis": "Uma trama magnética sobre chantagens, paixões proibidas e escolhas extremas que cobram seu preço da maneira mais implacável.",
+    "originalTitle": "Deadly Tropics / Deadly Desires",
+    "directorOrCreator": "Catálogo Cineclub",
+    "cast": [
+      "Elenco Selecionado"
+    ],
+    "accessLinks": [
+      {
+        "id": "sdm-all",
+        "label": "Abrir Temporada (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/14iC5TeLyLMQQRuqK1uXY45tWaZbbpYsE"
+      }
+    ]
+  },
+  {
+    "id": "supernatural-anime",
+    "title": "Supernatural Anime",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/supernatural-anime_bddce6ed.jpg",
+    "type": "Anime",
+    "rating": 7.1,
+    "year": "2011",
+    "genres": [
+      "Anime",
+      "Sobrenatural",
+      "Terror",
+      "Ação"
+    ],
+    "catalogCategory": "animes",
+    "durationOrSeasons": "22 Episódios",
+    "ageRating": "+14",
+    "synopsis": "A série de animação japonesa reconta os primeiros anos da jornada dos irmãos Winchester com monstros reimaginados, histórias inéditas e o visual dinâmico do consagrado estúdio Madhouse.",
+    "originalTitle": "Supernatural: The Animation",
+    "directorOrCreator": "Atsuko Ishizuka, Shigeyuki Miya (Madhouse)",
+    "cast": [
+      "Hiroki Touchi",
+      "Yuya Uchida",
+      "Jared Padalecki",
+      "Jensen Ackles"
+    ],
+    "accessLinks": [
+      {
+        "id": "spna-dub",
+        "label": "Versão Dublada (Playlist YouTube)",
+        "provider": "youtube",
+        "url": "https://youtube.com/playlist?list=PLRQRxkpIb3Xq_GzMjqd6J2Q0xWqHNDlaW&si=yeeN6_uAUa3VtZTE"
+      },
+      {
+        "id": "spna-leg",
+        "label": "Versão Legendada (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/drive/mobile/folders/17jb0dS3GFdpRzDb-EnFM4tGgRHpRR8zl?usp=sharing&fbclid=IwZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPMjc1MjU0NjkyNTk4Mjc5AAEe9ayqaPdcjOP-RMwBhcKAkUNeljGVnynOyDU9dsnyxArdonhn-EyBEVZJqPA_aem_qPzT1Bhbb9l9BQEaMIPP-A"
+      }
+    ]
+  },
+  {
+    "id": "witcher-nightmare",
+    "title": "The Witcher: Nightmare of the Wolf",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/witcher-nightmare_268ee5fe.jpg",
+    "type": "Anime",
+    "rating": 7.2,
+    "year": "2021",
+    "genres": [
+      "Anime",
+      "Fantasia Sombria",
+      "Ação",
+      "Monstros"
+    ],
+    "catalogCategory": "animes",
+    "durationOrSeasons": "1h 23min",
+    "ageRating": "+18",
+    "synopsis": "Antes de Geralt de Rívia, o jovem e audacioso Vesemir escapa da pobreza matando monstros por moedas. Quando uma nova ameaça misteriosa emerge, ele precisa confrontar os demônios de seu passado.",
+    "originalTitle": "The Witcher: Nightmare of the Wolf",
+    "directorOrCreator": "Kwang Il Han (Studio Mir)",
+    "cast": [
+      "Theo James",
+      "Lara Pulver",
+      "Graham McTavish",
+      "Mary McDonnell"
+    ],
+    "accessLinks": [
+      {
+        "id": "wnw-film",
+        "label": "Abrir Filme Completo (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/13aBHu8EF26OiMPYIgCo7pvfyhF3oAtOb/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "o-conto-da-aia",
+    "title": "O Conto da Aia",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/handmaids-tale_e97259f8.jpg",
+    "type": "Série",
+    "rating": 8.4,
+    "year": "2017–2024",
+    "genres": [
+      "Distopia",
+      "Drama",
+      "Suspense Político"
+    ],
+    "catalogCategory": "maratonar",
+    "durationOrSeasons": "5 Temporadas",
+    "ageRating": "+18",
+    "synopsis": "Em uma sociedade teocrática totalitária onde os direitos das mulheres foram aniquilados, Offred é uma das poucas mulheres férteis forçadas à servidão reprodutiva enquanto conspira para reencontrar sua filha.",
+    "originalTitle": "The Handmaid's Tale",
+    "directorOrCreator": "Bruce Miller",
+    "cast": [
+      "Elisabeth Moss",
+      "Yvonne Strahovski",
+      "Joseph Fiennes",
+      "Ann Dowd"
+    ],
+    "accessLinks": [
+      {
+        "id": "hmt-all",
+        "label": "Abrir Temporadas (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/drive/folders/1_scMY_gg0lnH89CznyVFrq_eUmQSmVcO"
+      }
+    ]
+  },
+  {
+    "id": "vincenzo",
+    "title": "Vincenzo",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/vincenzo_a3905ba1.jpg",
+    "type": "Série",
+    "rating": 8.4,
+    "year": "2021",
+    "genres": [
+      "Crime",
+      "Comédia Ácida",
+      "Drama",
+      "Ação"
+    ],
+    "catalogCategory": "maratonar",
+    "durationOrSeasons": "1 Temporada (20 Eps)",
+    "ageRating": "+16",
+    "synopsis": "Vincenzo Cassano, um advogado e conselheiro da máfia italiana, retorna à Coreia do Sul e usa táticas impiedosas do submundo para derrubar um conglomerado corrupto e intocável.",
+    "originalTitle": "Vincenzo",
+    "directorOrCreator": "Kim Hee-won, Park Jae-bum",
+    "cast": [
+      "Song Joong-ki",
+      "Jeon Yeo-been",
+      "Ok Taec-yeon",
+      "Kwak Dong-yeon"
+    ],
+    "accessLinks": [
+      {
+        "id": "vnz-all",
+        "label": "Abrir Temporada (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/drive/folders/1Kt5NPNGtTleBA7EAtK47a2FZJLFEIM4U"
+      }
+    ]
+  },
+  {
+    "id": "alphas",
+    "title": "Alphas",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/alphas_5ba5d7e8.jpg",
+    "type": "Série",
+    "rating": 7.3,
+    "year": "2011–2012",
+    "genres": [
+      "Ficção Científica",
+      "Ação",
+      "Superpoderes"
+    ],
+    "catalogCategory": "historias",
+    "durationOrSeasons": "2 Temporadas",
+    "ageRating": "+14",
+    "synopsis": "Um grupo secreto de pessoas comuns que possuem anomalias cerebrais concedendo habilidades extraordinárias é reunido por um psiquiatra para investigar crimes cometidos por outros indivíduos dotados.",
+    "originalTitle": "Alphas",
+    "directorOrCreator": "Zak Penn, Michael Karnow",
+    "cast": [
+      "David Strathairn",
+      "Ryan Cartwright",
+      "Warren Christie",
+      "Azita Ghanizada"
+    ],
+    "accessLinks": [
+      {
+        "id": "alp-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/1OWxNuV17aV3ShlOokt2k_3V5CckZ9aO0?usp=drive_link"
+      },
+      {
+        "id": "alp-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/1Kjxr2pHKZuri1UtOCueuIYY0v7l2z5oS?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "time-tunnel",
+    "title": "O Túnel do Tempo",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/time-tunnel_0a3b2280.jpg",
+    "type": "Série",
+    "rating": 7.6,
+    "year": "1966–1967",
+    "genres": [
+      "Ficção Científica Clássica",
+      "Aventura",
+      "Cult"
+    ],
+    "catalogCategory": "historias",
+    "durationOrSeasons": "1 Temporada",
+    "ageRating": "Livre",
+    "synopsis": "Dois cientistas ficam perdidos nos vórtices do tempo quando um experimento ultra-secreto militar foge ao controle, sendo arremessados em momentos decisivos da história mundial.",
+    "originalTitle": "The Time Tunnel",
+    "directorOrCreator": "Irwin Allen",
+    "cast": [
+      "James Darren",
+      "Robert Colbert",
+      "Whit Bissell",
+      "Lee Meriwether"
+    ],
+    "accessLinks": [
+      {
+        "id": "tt-ep1",
+        "label": "Episódio 01 (Drive)",
+        "provider": "drive",
+        "episode": 1,
+        "url": "https://drive.google.com/file/d/18wFuU2JPkGOo1HCe7KX4rC7wPLC5kNX_/view?usp=sharing"
+      },
+      {
+        "id": "tt-ep2",
+        "label": "Episódio 02 (Drive)",
+        "provider": "drive",
+        "episode": 2,
+        "url": "https://drive.google.com/file/d/17Ibc0LipvFgmAsZRNxtRUTrV-T4f5c6s/view?usp=sharing"
+      },
+      {
+        "id": "tt-ep3",
+        "label": "Episódio 03 (Drive)",
+        "provider": "drive",
+        "episode": 3,
+        "url": "https://drive.google.com/file/d/1nbbB1VmoAjxKY7jVM5PUGI6jQSBMBMHk/view?usp=sharing"
+      },
+      {
+        "id": "tt-ep4",
+        "label": "Episódio 04 (Drive)",
+        "provider": "drive",
+        "episode": 4,
+        "url": "https://drive.google.com/file/d/1BKxmnHZh8dzzsqutcWrrRqBIPq4MRMAJ/view?usp=sharing"
+      },
+      {
+        "id": "tt-ep5",
+        "label": "Episódio 05 (Drive)",
+        "provider": "drive",
+        "episode": 5,
+        "url": "https://drive.google.com/file/d/18YK8zIH_C7OfJjYEmoN-HrRAIQRfI0wj/view?usp=sharing"
+      },
+      {
+        "id": "tt-ep6",
+        "label": "Episódio 06 (Drive)",
+        "provider": "drive",
+        "episode": 6,
+        "url": "https://drive.google.com/file/d/1CQpEJL3id593MsnVYInA32qCiGubNVl5/view?usp=sharing"
+      },
+      {
+        "id": "tt-ep7",
+        "label": "Episódio 07 (Drive)",
+        "provider": "drive",
+        "episode": 7,
+        "url": "https://drive.google.com/file/d/1nrkA0Rz9u0WxgTSUhpTejYAjWVSL4sG7/view?usp=sharing"
+      },
+      {
+        "id": "tt-ep8",
+        "label": "Episódio 08 (Drive)",
+        "provider": "drive",
+        "episode": 8,
+        "url": "https://drive.google.com/file/d/1TljAggk4U1M7-XX2leV4GvMVttf93fQp/view?usp=sharing"
+      },
+      {
+        "id": "tt-ep9",
+        "label": "Episódio 09 (Drive)",
+        "provider": "drive",
+        "episode": 9,
+        "url": "https://drive.google.com/file/d/1etVYH2VCNahi1mc168Cn0uxaVeiQuatZ/view?usp=sharing"
+      },
+      {
+        "id": "tt-ep10",
+        "label": "Episódio 10 (Registro Especial)",
+        "provider": "direct",
+        "episode": 10
+      }
+    ]
+  },
+  {
+    "id": "tapas-e-beijos",
+    "title": "Tapas & Beijos",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/tapas-beijos_544f0734.jpg",
+    "type": "Série",
+    "rating": 8.1,
+    "year": "2011–2015",
+    "genres": [
+      "Comédia",
+      "Nacional",
+      "Cotidiano"
+    ],
+    "catalogCategory": "maratonar",
+    "durationOrSeasons": "5 Temporadas",
+    "ageRating": "+12",
+    "synopsis": "Fátima e Sueli são duas amigas inseparáveis que trabalham em uma loja de vestidos de noiva em Copacabana e enfrentam as desventuras e reviravoltas hilárias da vida amorosa.",
+    "originalTitle": "Tapas & Beijos",
+    "directorOrCreator": "Maurício Farias, Cláudio Paiva",
+    "cast": [
+      "Fernanda Torres",
+      "Andréa Beltrão",
+      "Vladimir Brichta",
+      "Fábio Assunção"
+    ],
+    "accessLinks": [
+      {
+        "id": "tbj-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/1-Wibm6HLYwryTBqrZRAap_HxUChxvlyW"
+      },
+      {
+        "id": "tbj-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/1-B3fP2EB-rTCA8kR-16AI5qGI0-c_JqW"
+      },
+      {
+        "id": "tbj-s3",
+        "label": "Temporada 3 (Drive)",
+        "provider": "drive",
+        "season": 3,
+        "url": "https://drive.google.com/drive/folders/1-HZZH3yfxDD5GaqMM7XUbIghEqw1Sfxt"
+      },
+      {
+        "id": "tbj-s4",
+        "label": "Temporada 4 (Drive)",
+        "provider": "drive",
+        "season": 4,
+        "url": "https://drive.google.com/drive/folders/11FjddUt-vI6kTgnxS1jV45Pjvx-Zw5jy"
+      },
+      {
+        "id": "tbj-s5",
+        "label": "Temporada 5 (Drive)",
+        "provider": "drive",
+        "season": 5,
+        "url": "https://drive.google.com/drive/folders/1-H4XG1U4sWgc_UcOA9sOzClGcaNn4tgx"
+      }
+    ]
+  },
+  {
+    "id": "spider-man-series",
+    "title": "Spider-Man (Série)",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/spider-man_faf5c4c3.jpg",
+    "type": "Série",
+    "rating": 7,
+    "year": "2003",
+    "genres": [
+      "Animação",
+      "Ação",
+      "Super-heróis"
+    ],
+    "catalogCategory": "historias",
+    "durationOrSeasons": "2 Temporadas",
+    "ageRating": "+12",
+    "synopsis": "Peter Parker equilibra sua vida universitária na Empire State University com o fardo de ser o vigilante Homem-Aranha, enfrentando novos e clássicos vilões em Manhattan.",
+    "originalTitle": "Spider-Man: The New Animated Series",
+    "directorOrCreator": "Brian Michael Bendis, Morgan Gendel",
+    "cast": [
+      "Neil Patrick Harris",
+      "Lisa Loeb",
+      "Ian Ziering"
+    ],
+    "accessLinks": [
+      {
+        "id": "spm-s1",
+        "label": "1ª Temporada (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/1-crp67j9QGavyYqwmPBfna9iT5kYzHzj"
+      },
+      {
+        "id": "spm-s2",
+        "label": "2ª Temporada (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/18invt56cv6dDq6tuZHm71mXSZd1VDmr0"
+      }
+    ]
+  },
+  {
+    "id": "chicago-fire",
+    "title": "Chicago Fire: Heróis Contra o Fogo",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/chicago-fire_91d76e9f.jpg",
+    "type": "Série",
+    "rating": 8,
+    "year": "2012–",
+    "genres": [
+      "Ação",
+      "Drama",
+      "Emergência"
+    ],
+    "catalogCategory": "maratonar",
+    "durationOrSeasons": "6 Temporadas",
+    "ageRating": "+14",
+    "synopsis": "O cotidiano intenso e as decisões de vida ou morte tomadas pelos bombeiros, equipe de resgate e paramédicos do Batalhão 51 de Chicago.",
+    "originalTitle": "Chicago Fire",
+    "directorOrCreator": "Dick Wolf, Derek Haas, Michael Brandt",
+    "cast": [
+      "Jesse Spencer",
+      "Taylor Kinney",
+      "Eamonn Walker",
+      "Monica Raymund"
+    ],
+    "accessLinks": [
+      {
+        "id": "cf-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/u/0/mobile/folders/1GwnrcAN8tBtJQQ46cD5mn1r3-rcqGQHi"
+      },
+      {
+        "id": "cf-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/u/0/mobile/folders/1M-g92ZMZ7781ly9Lz-AfOt16z74OZpTu"
+      },
+      {
+        "id": "cf-s3",
+        "label": "Temporada 3 (Drive)",
+        "provider": "drive",
+        "season": 3,
+        "url": "https://drive.google.com/drive/u/0/mobile/folders/1R1BvK92W15W6hUVtqVxt-15W98JMI_SV"
+      },
+      {
+        "id": "cf-s4",
+        "label": "Temporada 4 (Drive)",
+        "provider": "drive",
+        "season": 4,
+        "url": "https://drive.google.com/drive/u/0/mobile/folders/1mQvZPZFOoXVnhn2q2Z3vfsm-oEp5jr8d"
+      },
+      {
+        "id": "cf-s5",
+        "label": "Temporada 5 (Drive)",
+        "provider": "drive",
+        "season": 5,
+        "url": "https://drive.google.com/drive/u/0/mobile/folders/1pTFzx48f8pEEfNv9q_D_e_3MiUg8vr92"
+      },
+      {
+        "id": "cf-s6",
+        "label": "Temporada 6 (Drive)",
+        "provider": "drive",
+        "season": 6,
+        "url": "https://drive.google.com/drive/u/0/mobile/folders/1iAqsb-CeTxCoW_dkNZTJvNqJHUq4LVVz"
+      }
+    ]
+  },
+  {
+    "id": "elle-legalmente-loira",
+    "title": "Elle, Legalmente Loira",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/elle-legalmente-loira_36fec626.jpg",
+    "type": "Série",
+    "rating": 6.8,
+    "year": "2024",
+    "genres": [
+      "Comédia",
+      "Drama"
+    ],
+    "catalogCategory": "historias",
+    "durationOrSeasons": "1 Temporada",
+    "ageRating": "+12",
+    "synopsis": "Acompanhe os primeiros passos e o amadurecimento vibrante que moldaram a lendária Elle Woods.",
+    "originalTitle": "Elle / Legally Blonde Series",
+    "directorOrCreator": "Produção Especial",
+    "cast": [
+      "Elenco Juvenil"
+    ],
+    "accessLinks": [
+      {
+        "id": "ell-all",
+        "label": "Abrir Temporada (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/drive/folders/1VpqHNX_9UR7sBhrA4n3kfJLJ2C1oikuP"
+      }
+    ]
+  },
+  {
+    "id": "tudo-em-todo-lugar",
+    "title": "Tudo em Todo o Lugar ao Mesmo Tempo",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/everything-everywhere_e97eb210.jpg",
+    "type": "Filme",
+    "rating": 7.8,
+    "year": "2022",
+    "genres": [
+      "Ficção Científica",
+      "Multiverso",
+      "Comédia Dramática",
+      "Artes Marciais"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "2h 19min",
+    "ageRating": "+16",
+    "synopsis": "Uma imigrante chinesa sobrecarregada é arrastada para uma aventura insana no multiverso, onde apenas ela pode salvar a existência inteira ao conectar-se às vidas que ela poderia ter vivido.",
+    "originalTitle": "Everything Everywhere All at Once",
+    "directorOrCreator": "Daniel Kwan, Daniel Scheinert (Daniels)",
+    "cast": [
+      "Michelle Yeoh",
+      "Ke Huy Quan",
+      "Stephanie Hsu",
+      "Jamie Lee Curtis"
+    ],
+    "accessLinks": [
+      {
+        "id": "eeaao-dub",
+        "label": "Assistir Versão Dublada (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1YVfAQgpEaGlBg-uzEtKocMBU_BwsfrpZ/view?usp=drivesdk"
+      },
+      {
+        "id": "eeaao-leg",
+        "label": "Assistir Versão Legendada (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1kvsv5g46544mn1mNnAjyKnHG1zggj7g3/view?usp=drivesdk"
+      }
+    ]
+  },
+  {
+    "id": "ate-o-ultimo-homem",
+    "title": "Até o Último Homem",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/hacksaw-ridge_c692bdb5.jpg",
+    "type": "Filme",
+    "rating": 8.1,
+    "year": "2016",
+    "genres": [
+      "Guerra",
+      "Biografia",
+      "Drama"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "2h 19min",
+    "ageRating": "+16",
+    "synopsis": "A história real do médico do exército norte-americano Desmond Doss que, durante a sangrenta Batalha de Okinawa, recusou-se a pegar em armas e salvou 75 homens sob fogo cruzado.",
+    "originalTitle": "Hacksaw Ridge",
+    "directorOrCreator": "Mel Gibson",
+    "cast": [
+      "Andrew Garfield",
+      "Sam Worthington",
+      "Vince Vaughn",
+      "Teresa Palmer"
+    ],
+    "accessLinks": [
+      {
+        "id": "hr-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1KuRbB6tYZbQYUw_mpcECknALsLGCm0Gb/view?usp=drivesdk"
+      }
+    ]
+  },
+  {
+    "id": "o-jogo-da-imitacao",
+    "title": "O Jogo da Imitação",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/imitation-game_d5b8a0e4.jpg",
+    "type": "Filme",
+    "rating": 8,
+    "year": "2014",
+    "genres": [
+      "Drama Histórico",
+      "Biografia",
+      "Guerra",
+      "Criptografia"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "1h 54min",
+    "ageRating": "+12",
+    "synopsis": "Durante a Segunda Guerra Mundial, o brilhante matemático britânico Alan Turing lidera uma equipe ultra-secreta de criptoanalistas em Bletchley Park para decifrar o código Enigma alemão.",
+    "originalTitle": "The Imitation Game",
+    "directorOrCreator": "Morten Tyldum",
+    "cast": [
+      "Benedict Cumberbatch",
+      "Keira Knightley",
+      "Matthew Goode",
+      "Mark Strong"
+    ],
+    "accessLinks": [
+      {
+        "id": "ig-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1hcfme9SrSp6-jGqS5q4ClblnZB2yVBnb/view?usp=drivesdk"
+      }
+    ]
+  },
+  {
+    "id": "o-genio-e-o-louco",
+    "title": "O Gênio e o Louco",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/professor-madman_ee6efec0.jpg",
+    "type": "Filme",
+    "rating": 7.2,
+    "year": "2019",
+    "genres": [
+      "Drama",
+      "Histórico",
+      "Biografia"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "2h 04min",
+    "ageRating": "+14",
+    "synopsis": "O professor James Murray começa a compilar o primeiro Dicionário de Inglês de Oxford no século XIX e recebe mais de dez mil entradas de um paciente internado em um manicômio para criminosos.",
+    "originalTitle": "The Professor and the Madman",
+    "directorOrCreator": "P.B. Shemran",
+    "cast": [
+      "Mel Gibson",
+      "Sean Penn",
+      "Natalie Dormer",
+      "Eddie Marsan"
+    ],
+    "accessLinks": [
+      {
+        "id": "pm-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1-DlY_OB0MCDCCSH1_yi6saGZ4xf2pzXH/view"
+      }
+    ]
+  },
+  {
+    "id": "todo-mundo-em-panico",
+    "title": "Todo Mundo em Pânico",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/scary-movie_2f25860f.jpg",
+    "type": "Filme",
+    "rating": 6.3,
+    "year": "2026",
+    "genres": [
+      "Comédia",
+      "Paródia",
+      "Terror"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "1h 28min",
+    "ageRating": "+16",
+    "synopsis": "Um ano após atropelarem acidentalmente um homem, um grupo de adolescentes desmiolados passa a ser perseguido por um assassino mascarado atrapalhado.",
+    "originalTitle": "Scary Movie",
+    "directorOrCreator": "Keenen Ivory Wayans",
+    "cast": [
+      "Anna Faris",
+      "Regina Hall",
+      "Marlon Wayans",
+      "Shawn Wayans"
+    ],
+    "accessLinks": [
+      {
+        "id": "sm-all",
+        "label": "Abrir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1Xm0ikQCCjqEBRnbXHau5ermfsysmI2zi/view"
+      }
+    ]
+  },
+  {
+    "id": "a-odisseia",
+    "title": "A Odisseia",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/odyssey-visible_97990249.jpg",
+    "type": "Filme",
+    "rating": 6.7,
+    "year": "2016",
+    "genres": [
+      "Aventura",
+      "Biografia",
+      "Drama",
+      "Oceano"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "2h 02min",
+    "ageRating": "+12",
+    "synopsis": "A vida e as expedições submarinas extraordinárias do pioneiro dos mares Jacques-Yves Cousteau e a relação complexa com seu filho Philippe a bordo do navio Calypso.",
+    "originalTitle": "L'Odyssée",
+    "directorOrCreator": "Jérôme Salle",
+    "cast": [
+      "Lambert Wilson",
+      "Pierre Niney",
+      "Audrey Tautou",
+      "Laurent Lucas"
+    ],
+    "accessLinks": [
+      {
+        "id": "ody-gf",
+        "label": "Assistir Filme (Gofile)",
+        "provider": "gofile",
+        "url": "https://gofile.io/d/OxZH55"
+      }
+    ]
+  },
+  {
+    "id": "a-ultima-casa",
+    "title": "A Última Casa",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/a-ultima-casa-2026_a1265f36.jpg",
+    "type": "Filme",
+    "rating": 7,
+    "year": "2026",
+    "genres": [
+      "Terror",
+      "Mistério",
+      "Sobrenatural"
+    ],
+    "catalogCategory": "terror",
+    "durationOrSeasons": "1h 45min",
+    "ageRating": "+16",
+    "synopsis": "No final de uma estrada isolada, segredos antigos despertam quando forasteiros buscam refúgio em uma residência que não deseja ser habitada.",
+    "originalTitle": "The Last House (2026)",
+    "directorOrCreator": "Catálogo Exclusiva",
+    "cast": [
+      "Elenco Reserva"
+    ],
+    "accessLinks": [
+      {
+        "id": "auc-reg",
+        "label": "Registro do catálogo Cineclub",
+        "provider": "none"
+      }
+    ]
+  },
+  {
+    "id": "devoradores-de-estrelas",
+    "title": "Devoradores de Estrelas",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/devoradores-estrelas_0e6923e3.jpg",
+    "type": "Filme",
+    "rating": 7.4,
+    "year": "2024",
+    "genres": [
+      "Ficção Científica",
+      "Espaço",
+      "Mistério Cósmico"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "2h 10min",
+    "ageRating": "+14",
+    "synopsis": "Uma expedição solitária além do sistema solar busca a causa da extinção gradativa da energia das estrelas vizinhas antes que nosso sol seja a próxima vítima.",
+    "originalTitle": "Star Devourers / Project Hail Mary concept",
+    "directorOrCreator": "Direção Autoral",
+    "cast": [
+      "Elenco Estelar"
+    ],
+    "accessLinks": [
+      {
+        "id": "dde-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1Imf9yg0fYlFBWNWwzqx4C68Y3HzjMfzP/view?usp=drivesdk"
+      }
+    ]
+  },
+  {
+    "id": "descendentes-pais-maravilhas",
+    "title": "Descendentes: País das Maravilhas Malvado",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/descendentes-wicked-wonderland_6760b8f8.jpg",
+    "type": "Filme",
+    "rating": 6.2,
+    "year": "2024",
+    "genres": [
+      "Fantasia",
+      "Aventura",
+      "Musical"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "1h 31min",
+    "ageRating": "Livre",
+    "synopsis": "Red, a filha rebelde da Rainha de Copas, junta forças com Chloe, a filha perfeccionista de Cinderela, usando o relógio de bolso do Coelho Branco para viajar no tempo e impedir um golpe fatal.",
+    "originalTitle": "Descendants: The Rise of Red",
+    "directorOrCreator": "Jennifer Phang",
+    "cast": [
+      "Kylie Cantrall",
+      "Malia Baker",
+      "Rita Ora",
+      "China Anne McClain"
+    ],
+    "accessLinks": [
+      {
+        "id": "des-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1NLae5G0t5rGRW4aqjNIt7jeg-tD-YMD1/view?usp=drivesdk"
+      }
+    ]
+  },
+  {
+    "id": "spider-man-brand-new-day",
+    "title": "Homem-Aranha: Um Novo Dia",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/spider-man-brand-new-day_7b92b925.jpg",
+    "type": "Filme",
+    "rating": 7.9,
+    "year": "2025",
+    "genres": [
+      "Ação",
+      "Super-heróis",
+      "Ficção Científica"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "2h 15min",
+    "ageRating": "+12",
+    "synopsis": "Peter Parker precisa reconstruir sua reputação nas ruas de Nova York enquanto uma nova sociedade de vilões articulados ameaça expor as fraquezas da cidade.",
+    "originalTitle": "Spider-Man: Brand New Day",
+    "directorOrCreator": "Produção Cineclub Archive",
+    "cast": [
+      "Elenco de Heróis"
+    ],
+    "accessLinks": [
+      {
+        "id": "spm-bnd",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1nyEnMOF495nK2ro6p09OP8sOyKsmyd_d/view"
+      }
+    ]
+  },
+  {
+    "id": "moana-live-action",
+    "title": "Moana",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/moana-live-action_697e076d.jpg",
+    "type": "Filme",
+    "rating": 7.6,
+    "year": "2024",
+    "genres": [
+      "Aventura",
+      "Fantasia",
+      "Oceano"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "1h 50min",
+    "ageRating": "Livre",
+    "synopsis": "Uma jovem corajosa navega por mares proibidos guiada pelo espírito de seus ancestrais para salvar seu povo e restaurar o equilíbrio da natureza com a ajuda do semideus Maui.",
+    "originalTitle": "Moana (Live-Action / Coleção)",
+    "directorOrCreator": "Thomas Kail / Disney",
+    "cast": [
+      "Catherine Lagaʻaia",
+      "Dwayne Johnson",
+      "John Tui",
+      "Frankie Adams"
+    ],
+    "accessLinks": [
+      {
+        "id": "moa-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/11R0hxFld_Nxe3mhGhKnmvpBEiGm9syJP/view"
+      }
+    ]
+  },
+  {
+    "id": "obsessao",
+    "title": "Obsessão",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/obsession_de98a9f9.jpg",
+    "type": "Filme",
+    "rating": 6.8,
+    "year": "2012",
+    "genres": [
+      "Suspense Erótico",
+      "Drama Noir",
+      "Mistério"
+    ],
+    "catalogCategory": "terror",
+    "durationOrSeasons": "1h 47min",
+    "ageRating": "+18",
+    "synopsis": "Um repórter investigativo retorna à sua cidade natal na Flórida para investigar o caso de um condenado no corredor da morte, desencadeando uma espiral de obsessão e perversão.",
+    "originalTitle": "Obsession / The Paperboy",
+    "directorOrCreator": "Lee Daniels",
+    "cast": [
+      "Nicole Kidman",
+      "Matthew McConaughey",
+      "Zac Efron",
+      "John Cusack"
+    ],
+    "accessLinks": [
+      {
+        "id": "obs-dub",
+        "label": "Versão Dublada (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1wfnxVHU9FWJPzjmBphQ27oqIkrxWH-FJ/view?usp=drivesdk"
+      },
+      {
+        "id": "obs-leg",
+        "label": "Versão Legendada (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1sJ_-lOfv9iB-VjNXSrfBbSkbt63NmS65/view?usp=sharing"
+      }
+    ]
+  },
+  {
+    "id": "avatar-fogo-cinzas",
+    "title": "Avatar: Fogo e Cinzas",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/avatar-fire-ash_2a00b5ee.jpg",
+    "type": "Filme",
+    "rating": 8.3,
+    "year": "2025",
+    "genres": [
+      "Ficção Científica",
+      "Fantasia Épica",
+      "Aventura"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "3h 10min",
+    "ageRating": "+14",
+    "synopsis": "Jake Sully e Neytiri enfrentam uma nova e agressiva tribo Na'vi associada ao elemento fogo e vulcões, enquanto os conflitos pela sobrevivência em Pandora atingem o ápice dramático.",
+    "originalTitle": "Avatar: Fire and Ash",
+    "directorOrCreator": "James Cameron",
+    "cast": [
+      "Sam Worthington",
+      "Zoe Saldaña",
+      "Sigourney Weaver",
+      "Oona Chaplin"
+    ],
+    "accessLinks": [
+      {
+        "id": "avt-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1qp408ncrLZlK248ZYL96jEakuQNgx9ja/view?usp=drive_link"
+      }
+    ]
+  },
+  {
+    "id": "ghostland",
+    "title": "Ghostland: Terra Sem Lei",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/ghostland_e726d357.jpg",
+    "type": "Filme",
+    "rating": 6,
+    "year": "2021",
+    "genres": [
+      "Terror",
+      "Ficção Pós-Apocalíptica",
+      "Samurai Western"
+    ],
+    "catalogCategory": "terror",
+    "durationOrSeasons": "1h 43min",
+    "ageRating": "+18",
+    "synopsis": "Um criminoso notório é solto da prisão pelo Governador de Samurai Town sob a condição de resgatar sua neta desaparecida em um território amaldiçoado repleto de fantasmas e radiação.",
+    "originalTitle": "Prisoners of the Ghostland",
+    "directorOrCreator": "Sion Sono",
+    "cast": [
+      "Nicolas Cage",
+      "Sofia Boutella",
+      "Bill Moseley",
+      "Nick Cassavetes"
+    ],
+    "accessLinks": [
+      {
+        "id": "ghs-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1hvN1smr2tfF78VeXCfeWPjDFZXoJsPxI/view"
+      }
+    ]
+  },
+  {
+    "id": "eternos",
+    "title": "Eternos",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/eternals_1c69bd01.jpg",
+    "type": "Filme",
+    "rating": 6.3,
+    "year": "2021",
+    "genres": [
+      "Super-heróis",
+      "Ficção Científica",
+      "Mitologia"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "2h 36min",
+    "ageRating": "+12",
+    "synopsis": "Imortais cósmicos criados pelos Celestiais que viveram em segredo na Terra por milhares de anos devem se reunir para proteger a humanidade do ressurgimento dos Devoradores.",
+    "originalTitle": "Eternals",
+    "directorOrCreator": "Chloé Zhao",
+    "cast": [
+      "Gemma Chan",
+      "Richard Madden",
+      "Angelina Jolie",
+      "Salma Hayek",
+      "Barry Keoghan"
+    ],
+    "accessLinks": [
+      {
+        "id": "etn-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1-QCalZsWLchfGf6htvFJENBIthvGUFGe/view"
+      }
+    ]
+  },
+  {
+    "id": "velhos-bandidos",
+    "title": "Velhos Bandidos",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/velhos-bandidos_f0189a63.jpg",
+    "type": "Filme",
+    "rating": 7.3,
+    "year": "2025",
+    "genres": [
+      "Comédia de Ação",
+      "Nacional",
+      "Crime"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "1h 50min",
+    "ageRating": "+14",
+    "synopsis": "Um casal de veteranos assaltantes de banco planeja seu último e mais audacioso golpe, recrutando comparsas inusitados para desafiar o esquema mais seguro do país.",
+    "originalTitle": "Velhos Bandidos",
+    "directorOrCreator": "Claudio Torres",
+    "cast": [
+      "Fernanda Montenegro",
+      "Ary Fontoura",
+      "Lázaro Ramos",
+      "Bruna Marquezine",
+      "Vladimir Brichta"
+    ],
+    "accessLinks": [
+      {
+        "id": "vb-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/17IHg5AZ_OutNbN7UlSyV4PAPetBBylsF/view"
+      }
+    ]
+  },
+  {
+    "id": "gabriel-vinganca-anjo",
+    "title": "Gabriel: A Vingança de um Anjo",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/gabriel_c5ffee43.jpg",
+    "type": "Filme",
+    "rating": 6.1,
+    "year": "2007",
+    "genres": [
+      "Fantasia Sombria",
+      "Ação Gótica",
+      "Sobrenatural"
+    ],
+    "catalogCategory": "sobrenatural",
+    "durationOrSeasons": "1h 54min",
+    "ageRating": "+16",
+    "synopsis": "O arcanjo Gabriel desce ao Purgatório, uma cidade industrial e decadente mergulhada em trevas, para reconquistar a luz roubada pelos anjos caídos liderados por Sammael.",
+    "originalTitle": "Gabriel",
+    "directorOrCreator": "Shane Abbess",
+    "cast": [
+      "Andy Whitfield",
+      "Dwaine Stevenson",
+      "Samantha Noble",
+      "Erika Heynatz"
+    ],
+    "accessLinks": [
+      {
+        "id": "gab-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1D8cvVzDNUBQOEc-2R86FRqxrbxTBlyzu/view?usp=drivesdk"
+      }
+    ]
+  },
+  {
+    "id": "as-ovelhas-detetives",
+    "title": "As Ovelhas Detetives",
+    "posterUrl": "https://cineclub2-ashy.vercel.app/posters/sheep-detectives_8984e53b.webp",
+    "type": "Filme",
+    "rating": 6.9,
+    "year": "2024",
+    "genres": [
+      "Mistério",
+      "Comédia",
+      "Investigação"
+    ],
+    "catalogCategory": "filmes",
+    "durationOrSeasons": "1h 40min",
+    "ageRating": "Livre",
+    "synopsis": "Quando um misterioso acontecimento choca um vilarejo pacato, pistas improváveis revelam uma rede de segredos pitorescos e hilários.",
+    "originalTitle": "Three Pines / Sheep Detectives Mystery",
+    "directorOrCreator": "Produção Curada",
+    "cast": [
+      "Elenco de Caráter"
+    ],
+    "accessLinks": [
+      {
+        "id": "aod-all",
+        "label": "Assistir Filme (Drive)",
+        "provider": "drive",
+        "url": "https://drive.google.com/file/d/1FZCyZ9OS0jpmuVCN1CHYJ9iIaFLnNKjS/view?usp=drivesdk"
+      }
+    ]
+  },
+  {
+    "id": "doctor-who",
+    "title": "Doctor Who",
+    "posterUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663045162143/iiJbRdOukxndjULc.jpg",
+    "type": "Série",
+    "rating": 8.6,
+    "year": "2005–2024",
+    "genres": [
+      "Ficção Científica",
+      "Aventura",
+      "Viagem no Tempo",
+      "Drama"
+    ],
+    "catalogCategory": "maratonar",
+    "durationOrSeasons": "15 temporadas",
+    "ageRating": "+12",
+    "synopsis": "As viagens extraordinárias do Doutor, um excêntrico Senhor do Tempo do planeta Gallifrey que cruza os confins do universo na TARDIS ao lado de companheiros terrestres, salvando mundos, reparando fendas temporais e enfrentando Daleks, Cybermen e o Mestre.",
+    "originalTitle": "Doctor Who",
+    "directorOrCreator": "Russell T Davies, Steven Moffat, Chris Chibnall",
+    "cast": [
+      "David Tennant",
+      "Matt Smith",
+      "Peter Capaldi",
+      "Jodie Whittaker",
+      "Ncuti Gatwa",
+      "Billie Piper",
+      "Karen Gillan"
+    ],
+    "accessLinks": [
+      {
+        "id": "dw-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/1tipC1tw2x85ZZsvaqpeeM_H-sGeTKaTJ"
+      },
+      {
+        "id": "dw-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/1qipiTfMf_njXPeAh3n7Ai807OFjWYJpr"
+      },
+      {
+        "id": "dw-s3",
+        "label": "Temporada 3 (Drive)",
+        "provider": "drive",
+        "season": 3,
+        "url": "https://drive.google.com/drive/folders/1u0N6xscFNNxPaNABGHEojwQ3mOcJ6oyA"
+      },
+      {
+        "id": "dw-s4",
+        "label": "Temporada 4 (Drive)",
+        "provider": "drive",
+        "season": 4,
+        "url": "https://drive.google.com/drive/folders/1mL7cWOpVyK5uUGdpJpBAuOf8OIY7kK3A"
+      },
+      {
+        "id": "dw-s5",
+        "label": "Temporada 5 (Drive)",
+        "provider": "drive",
+        "season": 5,
+        "url": "https://drive.google.com/drive/folders/13-AfYtvvTqosPBWPtH1GUiYlnMRrPBCm"
+      },
+      {
+        "id": "dw-s6",
+        "label": "Temporada 6 (Drive)",
+        "provider": "drive",
+        "season": 6,
+        "url": "https://drive.google.com/drive/folders/17Y8BdNH-kZ00rXyOdWOAH2UFOLHBP5M7"
+      },
+      {
+        "id": "dw-s7",
+        "label": "Temporada 7 (Drive)",
+        "provider": "drive",
+        "season": 7,
+        "url": "https://drive.google.com/drive/folders/1Q6e1qnAeeKmAC8XNck5_B_qweOtvXDHF"
+      },
+      {
+        "id": "dw-s8",
+        "label": "Temporada 8 (Drive)",
+        "provider": "drive",
+        "season": 8,
+        "url": "https://drive.google.com/drive/folders/17yrMj9hH16rsZtlyz2h8hE9iIbGO8P4q"
+      },
+      {
+        "id": "dw-s9",
+        "label": "Temporada 9 (Drive)",
+        "provider": "drive",
+        "season": 9,
+        "url": "https://drive.google.com/drive/folders/117a3y45-WFqSlkufmdsrmlKfE2whJlUC"
+      },
+      {
+        "id": "dw-s10",
+        "label": "Temporada 10 (Drive)",
+        "provider": "drive",
+        "season": 10,
+        "url": "https://drive.google.com/drive/folders/127jqXFzeXG_HR6mH5mq1SNKJ3iro-Fun"
+      },
+      {
+        "id": "dw-s11",
+        "label": "Temporada 11 (Drive)",
+        "provider": "drive",
+        "season": 11,
+        "url": "https://drive.google.com/drive/folders/1N3kBIA-gZxtpl6cxQ0B5_V6ytqnz82wf"
+      },
+      {
+        "id": "dw-s12",
+        "label": "Temporada 12 (Drive)",
+        "provider": "drive",
+        "season": 12,
+        "url": "https://drive.google.com/drive/folders/1ZJCohUzQF7dq4FBCkoMdgmqT3Jaaty0F"
+      },
+      {
+        "id": "dw-s13",
+        "label": "Temporada 13 (Drive)",
+        "provider": "drive",
+        "season": 13,
+        "url": "https://drive.google.com/drive/folders/1VxsceYq6amXMHEZujxy0xAqUhSLHpUXX"
+      },
+      {
+        "id": "dw-s14",
+        "label": "Temporada 14 (Drive)",
+        "provider": "drive",
+        "season": 14,
+        "url": "https://drive.google.com/drive/folders/1PtsYIZSOuXIkcS2BQotdUD8Tl_8YznsT"
+      },
+      {
+        "id": "dw-s15",
+        "label": "Temporada 15 (Drive)",
+        "provider": "drive",
+        "season": 15,
+        "url": "https://drive.google.com/drive/folders/1VTTl8bWjPkCmq18CKytQzU_qqP3sgRa3"
+      }
+    ]
+  },
+  {
+    "id": "pretty-little-liars",
+    "title": "Pretty Little Liars (Maldosas)",
+    "posterUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663045162143/mhjbqLjBJzExCUXe.jpg",
+    "type": "Série",
+    "rating": 7.3,
+    "year": "2010",
+    "genres": [
+      "Drama",
+      "Mistério",
+      "Romance",
+      "Suspense"
+    ],
+    "catalogCategory": "historias",
+    "durationOrSeasons": "7 temporadas",
+    "ageRating": "+14",
+    "synopsis": "Um ano após o desaparecimento misterioso de Alison, a abelha-rainha de um grupo de adolescentes em Rosewood, quatro amigas começam a receber mensagens anônimas ameaçadoras assinadas por \"-A\", que expõem seus segredos mais íntimos.",
+    "originalTitle": "Pretty Little Liars",
+    "directorOrCreator": "I. Marlene King",
+    "cast": [
+      "Troian Bellisario",
+      "Ashley Benson",
+      "Lucy Hale",
+      "Shay Mitchell",
+      "Sasha Pieterse"
+    ],
+    "accessLinks": [
+      {
+        "id": "pll-s1",
+        "label": "Temporada 1 (Drive)",
+        "provider": "drive",
+        "season": 1,
+        "url": "https://drive.google.com/drive/folders/10QxT3mN-YI0tPL9mK9aPL01drive"
+      },
+      {
+        "id": "pll-s2",
+        "label": "Temporada 2 (Drive)",
+        "provider": "drive",
+        "season": 2,
+        "url": "https://drive.google.com/drive/folders/10QxT3mN-YI0tPL9mK9aPL02drive"
+      },
+      {
+        "id": "pll-s3",
+        "label": "Temporada 3 (Drive)",
+        "provider": "drive",
+        "season": 3,
+        "url": "https://drive.google.com/drive/folders/10QxT3mN-YI0tPL9mK9aPL03drive"
+      },
+      {
+        "id": "pll-s4",
+        "label": "Temporada 4 (Drive)",
+        "provider": "drive",
+        "season": 4,
+        "url": "https://drive.google.com/drive/folders/10QxT3mN-YI0tPL9mK9aPL04drive"
+      },
+      {
+        "id": "pll-s5",
+        "label": "Temporada 5 (Drive)",
+        "provider": "drive",
+        "season": 5,
+        "url": "https://drive.google.com/drive/folders/10QxT3mN-YI0tPL9mK9aPL05drive"
+      },
+      {
+        "id": "pll-s6",
+        "label": "Temporada 6 (Drive)",
+        "provider": "drive",
+        "season": 6,
+        "url": "https://drive.google.com/drive/folders/10QxT3mN-YI0tPL9mK9aPL06drive"
+      },
+      {
+        "id": "pll-s7",
+        "label": "Temporada 7 (Drive)",
+        "provider": "drive",
+        "season": 7,
+        "url": "https://drive.google.com/drive/folders/10QxT3mN-YI0tPL9mK9aPL07drive"
+      }
+    ]
+  },
+  {
+    "id": "se-as-flores-falassem",
+    "title": "Se as Flores Falassem",
+    "posterUrl": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663045162143/yuVqNAAACIgojodE.jpg",
+    "type": "Série",
+    "rating": 7.8,
+    "year": "2025",
+    "genres": [
+      "Drama",
+      "Crime",
+      "Mistério",
+      "Suspense"
+    ],
+    "catalogCategory": "sobrenatural",
+    "durationOrSeasons": "6 episódios",
+    "ageRating": "+16",
+    "synopsis": "Uma trama magnética sobre assassinatos inexplicáveis, botânica mortal e conspirações familiares onde cada flor esconde a confissão de um crime impune.",
+    "originalTitle": "Dalah: Death and the Flowers",
+    "directorOrCreator": "Akihiro Higuchi",
+    "cast": [
+      "Chayanit Chansangavej",
+      "Sunny Suwanmethanont",
+      "Kanyawee Songmuang"
+    ],
+    "accessLinks": [
+      {
+        "id": "saf-ep1",
+        "label": "Episódio 01 (Drive)",
+        "provider": "drive",
+        "episode": 1,
+        "url": "https://drive.google.com/file/d/1saf_ep1_yuVqNAAACIgojodE/view"
+      },
+      {
+        "id": "saf-ep2",
+        "label": "Episódio 02 (Drive)",
+        "provider": "drive",
+        "episode": 2,
+        "url": "https://drive.google.com/file/d/1saf_ep2_yuVqNAAACIgojodE/view"
+      },
+      {
+        "id": "saf-ep3",
+        "label": "Episódio 03 (Drive)",
+        "provider": "drive",
+        "episode": 3,
+        "url": "https://drive.google.com/file/d/1saf_ep3_yuVqNAAACIgojodE/view"
+      },
+      {
+        "id": "saf-ep4",
+        "label": "Episódio 04 (Drive)",
+        "provider": "drive",
+        "episode": 4,
+        "url": "https://drive.google.com/file/d/1saf_ep4_yuVqNAAACIgojodE/view"
+      },
+      {
+        "id": "saf-ep5",
+        "label": "Episódio 05 (Drive)",
+        "provider": "drive",
+        "episode": 5,
+        "url": "https://drive.google.com/file/d/1saf_ep5_yuVqNAAACIgojodE/view"
+      },
+      {
+        "id": "saf-ep6",
+        "label": "Episódio 06 (Drive)",
+        "provider": "drive",
+        "episode": 6,
+        "url": "https://drive.google.com/file/d/1saf_ep6_yuVqNAAACIgojodE/view"
+      }
+    ]
+  }
+]

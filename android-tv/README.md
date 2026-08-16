@@ -1,8 +1,8 @@
 # Cineclub TV — casca nativa Android TV
 
-Este módulo gera o aplicativo nativo **Cineclub TV**. A interface é construída com views Android e o player usa AndroidX Media3/ExoPlayer; **não existe WebView no fluxo do aplicativo**. O conteúdo M3U/M3U8 é baixado, interpretado e reproduzido diretamente no dispositivo, com a tela do player ocupando a área inteira da TV.
+Este módulo gera o aplicativo nativo **Cineclub TV**. A interface é construída com views Android e o player usa AndroidX Media3/ExoPlayer; **não existe WebView no fluxo do aplicativo**. A tela inicial apresenta o catálogo Cineclub com destaque, adicionados recentemente, filmes, séries, terror, acervo, Minha lista, detalhes e links do conteúdo. A Nuvem M3U/M3U8 aparece como uma aba complementar, não como a tela principal.
 
-A atividade foi preparada para televisores e dispositivos Android TV com `LEANBACK_LAUNCHER`, orientação horizontal, foco navegável pelo controle remoto, importação por URL ou arquivo e botão Voltar para sair do player e retornar ao catálogo. O parser separa canais, filmes e séries, aceita atributos `tvg-*`, grupos, URLs relativas e padrões de temporada/episódio.
+A atividade foi preparada para televisores e dispositivos Android TV com `LEANBACK_LAUNCHER`, orientação horizontal, foco navegável pelo controle remoto, cards de pôster, importação da Nuvem por URL ou arquivo e botão Voltar para sair do player e retornar ao catálogo. O parser separa canais, filmes e séries, aceita atributos `tvg-*`, grupos, URLs relativas e padrões de temporada/episódio.
 
 ## Compilação
 

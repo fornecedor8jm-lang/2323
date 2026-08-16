@@ -2,8 +2,11 @@ package com.cineclub.tv
 
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
@@ -16,6 +19,8 @@ import android.view.WindowManager
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
+import android.widget.HorizontalScrollView
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
@@ -24,218 +29,272 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
 import java.net.HttpURLConnection
 import java.net.URL
+import java.util.concurrent.Executors
 
 class MainActivity : Activity() {
     private lateinit var root: FrameLayout
-    private lateinit var contentList: LinearLayout
-    private lateinit var status: TextView
-    private var items: List<M3uItem> = emptyList()
-    private var selectedType: ContentType? = null
+    private lateinit var page: LinearLayout
+    private var catalog = emptyList<CatalogItem>()
+    private var cloudItems = emptyList<M3uItem>()
+    private var currentTab = "home"
     private var player: ExoPlayer? = null
     private var playerView: PlayerView? = null
     private val mainHandler = Handler(Looper.getMainLooper())
+    private val imageExecutor = Executors.newFixedThreadPool(4)
     private val fileRequestCode = 4101
+    private val prefs by lazy { getSharedPreferences("cineclub", Context.MODE_PRIVATE) }
+
+    private val bg = Color.rgb(8, 10, 14)
+    private val surface = Color.rgb(20, 23, 30)
+    private val accent = Color.rgb(220, 92, 98)
+    private val textColor = Color.rgb(246, 243, 238)
+    private val muted = Color.rgb(164, 169, 180)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
         window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
-        showCatalog()
+        catalog = CatalogRepository.load(this)
+        showHome()
     }
 
-    private fun showCatalog() {
-        root = FrameLayout(this).apply { setBackgroundColor(Color.rgb(10, 11, 16)) }
-        val page = LinearLayout(this).apply {
-            orientation = LinearLayout.VERTICAL
-            setPadding(48, 32, 48, 28)
-        }
-        val title = TextView(this).apply {
-            text = "CINECLUB"
-            textSize = 30f
-            setTextColor(Color.WHITE)
-            setTypeface(typeface, android.graphics.Typeface.BOLD)
-        }
-        val subtitle = TextView(this).apply {
-            text = "Nuvem M3U — catálogo pessoal"
-            textSize = 17f
-            setTextColor(Color.LTGRAY)
-            setPadding(0, 4, 0, 20)
-        }
-        val actions = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
-        actions.addView(tvButton("Adicionar URL") { askForPlaylistUrl() })
-        actions.addView(tvButton("Abrir arquivo") { openPlaylistFile() })
-        actions.addView(tvButton("Todos") { selectedType = null; renderItems() })
-        actions.addView(tvButton("Canais") { selectedType = ContentType.CHANNEL; renderItems() })
-        actions.addView(tvButton("Filmes") { selectedType = ContentType.MOVIE; renderItems() })
-        actions.addView(tvButton("Séries") { selectedType = ContentType.SERIES; renderItems() })
-        status = TextView(this).apply {
-            text = "Adicione uma lista M3U ou M3U8 para começar."
-            textSize = 16f
-            setTextColor(Color.rgb(190, 190, 200))
-            setPadding(0, 20, 0, 14)
-        }
-        contentList = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
-        val scroll = ScrollView(this).apply { addView(contentList) }
-        page.addView(title)
-        page.addView(subtitle)
-        page.addView(actions)
-        page.addView(status)
-        page.addView(scroll, LinearLayout.LayoutParams(-1, 0, 1f))
-        root.addView(page)
+    private fun showHome() {
+        root = FrameLayout(this).apply { setBackgroundColor(bg) }
+        page = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(48, 28, 48, 20) }
+        root.addView(page, FrameLayout.LayoutParams(-1, -1))
         setContentView(root)
-        renderItems()
+        buildChrome()
+        renderTab()
     }
 
-    private fun tvButton(label: String, action: () -> Unit): Button = Button(this).apply {
+    private fun buildChrome() {
+        val header = LinearLayout(this).apply { gravity = Gravity.CENTER_VERTICAL }
+        val brand = TextView(this).apply {
+            text = "CINECLUB"
+            textSize = 29f
+            setTextColor(textColor)
+            setTypeface(Typeface.DEFAULT, Typeface.BOLD)
+            letterSpacing = 0.08f
+        }
+        header.addView(brand, LinearLayout.LayoutParams(0, 62, 1f))
+        header.addView(navButton("Início", "home"))
+        header.addView(navButton("Filmes", "movies"))
+        header.addView(navButton("Séries", "series"))
+        header.addView(navButton("Terror", "terror"))
+        header.addView(navButton("Acervo", "catalog"))
+        header.addView(navButton("Nuvem", "cloud"))
+        header.addView(navButton("Minha lista", "watchlist"))
+        header.addView(navButton("Sobre", "about"))
+        page.addView(header)
+        val divider = View(this).apply { setBackgroundColor(Color.rgb(45, 48, 58)) }
+        page.addView(divider, LinearLayout.LayoutParams(-1, 1))
+    }
+
+    private fun navButton(label: String, tab: String) = Button(this).apply {
         text = label
-        isFocusable = true
-        isFocusableInTouchMode = true
-        setOnClickListener { action() }
-        val params = LinearLayout.LayoutParams(-2, 58)
-        params.setMargins(0, 0, 10, 0)
+        textSize = 14f
+        isAllCaps = false
+        minHeight = 58
+        minWidth = 0
+        setPadding(22, 0, 22, 0)
+        setTextColor(if (currentTab == tab) textColor else muted)
+        setOnClickListener { currentTab = tab; renderTab() }
+        val params = LinearLayout.LayoutParams(-2, 62)
+        params.setMargins(4, 0, 4, 0)
         layoutParams = params
     }
 
-    private fun askForPlaylistUrl() {
-        val input = EditText(this).apply {
-            hint = "https://servidor.exemplo/lista.m3u8"
-            setSingleLine(true)
-            setTextColor(Color.WHITE)
-            setHintTextColor(Color.GRAY)
+    private fun renderTab() {
+        while (page.childCount > 2) page.removeViewAt(2)
+        val content = when (currentTab) {
+            "movies" -> catalogPage("Filmes", catalog.filter { it.type.equals("Filme", true) })
+            "series" -> catalogPage("Séries", catalog.filter { it.type.equals("Série", true) })
+            "terror" -> catalogPage("Terror", catalog.filter { it.genres.any { genre -> genre.contains("terror", true) } })
+            "catalog" -> catalogPage("Acervo", catalog)
+            "watchlist" -> catalogPage("Minha lista", catalog.filter { prefs.getBoolean("saved_${it.id}", false) })
+            "cloud" -> cloudPage()
+            "about" -> aboutPage()
+            else -> homePage()
         }
-        AlertDialog.Builder(this)
-            .setTitle("Adicionar Nuvem M3U")
-            .setMessage("Cole a URL completa da lista. O Cineclub aceita M3U e M3U8.")
-            .setView(input)
-            .setNegativeButton("Cancelar", null)
-            .setPositiveButton("Importar") { _, _ -> importFromUrl(input.text.toString().trim()) }
-            .show()
+        page.addView(content, LinearLayout.LayoutParams(-1, 0, 1f))
+    }
+
+    private fun homePage(): View {
+        val content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        val featured = catalog.firstOrNull { it.id == "the-boys" } ?: catalog.firstOrNull()
+        if (featured != null) content.addView(hero(featured))
+        addSection(content, "Adicionados recentemente", "Novos títulos no catálogo Cineclub", catalog.takeLast(10).reversed())
+        addSection(content, "Para maratonar", "Séries e histórias para assistir em sequência", catalog.filter { it.type.equals("Série", true) }.take(10))
+        addSection(content, "Filmes", "Filmes do acervo Cineclub", catalog.filter { it.type.equals("Filme", true) }.take(10))
+        return scroll(content)
+    }
+
+    private fun catalogPage(title: String, items: List<CatalogItem>): View {
+        val content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL }
+        val heading = TextView(this).apply { text = title; textSize = 30f; setTextColor(textColor); setTypeface(typeface, Typeface.BOLD); setPadding(0, 22, 0, 10) }
+        content.addView(heading)
+        val search = Button(this).apply { text = "Buscar nesta seção"; isAllCaps = false; minHeight = 56; setOnClickListener { askSearch(items, title) } }
+        content.addView(search, LinearLayout.LayoutParams(-2, 56))
+        addSection(content, title, "${items.size} títulos disponíveis", items)
+        return scroll(content)
+    }
+
+    private fun addSection(parent: LinearLayout, title: String, subtitle: String, items: List<CatalogItem>) {
+        if (items.isEmpty()) return
+        val heading = TextView(this).apply { text = title; textSize = 23f; setTextColor(textColor); setTypeface(typeface, Typeface.BOLD); setPadding(0, 24, 0, 2) }
+        val sub = TextView(this).apply { text = subtitle; textSize = 15f; setTextColor(muted); setPadding(0, 0, 0, 10) }
+        parent.addView(heading)
+        parent.addView(sub)
+        val row = LinearLayout(this).apply { orientation = LinearLayout.HORIZONTAL }
+        items.forEach { row.addView(card(it)) }
+        val horizontal = HorizontalScrollView(this).apply { isHorizontalScrollBarEnabled = false; addView(row) }
+        parent.addView(horizontal, LinearLayout.LayoutParams(-1, 290))
+    }
+
+    private fun card(item: CatalogItem): View {
+        val card = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; isFocusable = true; isFocusableInTouchMode = true; setPadding(4, 4, 12, 4) }
+        val image = ImageView(this).apply { scaleType = ImageView.ScaleType.CENTER_CROP; setBackgroundColor(surface); contentDescription = item.title }
+        card.addView(image, LinearLayout.LayoutParams(150, 220))
+        val title = TextView(this).apply { text = item.title; textSize = 14f; setTextColor(textColor); maxLines = 1; ellipsize = android.text.TextUtils.TruncateAt.END; setPadding(2, 6, 2, 0) }
+        card.addView(title, LinearLayout.LayoutParams(150, 34))
+        card.setOnFocusChangeListener { view, focused -> view.setBackgroundColor(if (focused) Color.rgb(64, 38, 45) else Color.TRANSPARENT) }
+        card.setOnClickListener { showDetails(item) }
+        loadImage(item.posterUrl, image)
+        return card
+    }
+
+    private fun hero(item: CatalogItem): View {
+        val hero = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(0, 18, 0, 8) }
+        val eyebrow = TextView(this).apply { text = "DESTAQUE CINECLUB"; textSize = 13f; setTextColor(accent); letterSpacing = 0.12f }
+        val title = TextView(this).apply { text = item.title; textSize = 38f; setTextColor(textColor); setTypeface(typeface, Typeface.BOLD); setPadding(0, 4, 0, 2) }
+        val meta = TextView(this).apply { text = "${item.type}  •  ${item.year}  •  ${item.ageRating}  •  IMDb ${item.rating}"; textSize = 16f; setTextColor(muted) }
+        val synopsis = TextView(this).apply { text = item.synopsis; textSize = 16f; setTextColor(Color.rgb(205, 207, 214)); maxLines = 2; setPadding(0, 8, 0, 8) }
+        val button = Button(this).apply { text = "Ver detalhes"; isAllCaps = false; minHeight = 58; setOnClickListener { showDetails(item) } }
+        hero.addView(eyebrow); hero.addView(title); hero.addView(meta); hero.addView(synopsis); hero.addView(button, LinearLayout.LayoutParams(-2, 58))
+        return hero
+    }
+
+    private fun showDetails(item: CatalogItem) {
+        val box = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(28, 18, 28, 12) }
+        val poster = ImageView(this).apply { scaleType = ImageView.ScaleType.CENTER_CROP; setBackgroundColor(surface); contentDescription = item.title }
+        box.addView(poster, LinearLayout.LayoutParams(120, 176))
+        loadImage(item.posterUrl, poster)
+        val title = TextView(this).apply { text = item.title; textSize = 28f; setTextColor(Color.WHITE); setTypeface(typeface, Typeface.BOLD) }
+        val meta = TextView(this).apply { text = "${item.type}  •  ${item.year}  •  ${item.ageRating}  •  IMDb ${item.rating}"; textSize = 15f; setTextColor(Color.LTGRAY); setPadding(0, 8, 0, 10) }
+        val synopsis = TextView(this).apply { text = item.synopsis; textSize = 16f; setTextColor(Color.WHITE); setPadding(0, 4, 0, 10) }
+        val save = Button(this).apply { text = if (prefs.getBoolean("saved_${item.id}", false)) "Remover da Minha lista" else "Adicionar à Minha lista"; isAllCaps = false; setOnClickListener { prefs.edit().putBoolean("saved_${item.id}", !prefs.getBoolean("saved_${item.id}", false)).apply(); dismissAndRefresh() } }
+        box.addView(title); box.addView(meta); box.addView(synopsis); box.addView(save)
+        item.accessLinks.take(12).forEach { link ->
+            val open = Button(this).apply { text = link.label; isAllCaps = false; setOnClickListener { openExternal(link.url) } }
+            box.addView(open)
+        }
+        AlertDialog.Builder(this).setView(box).setNegativeButton("Fechar", null).show()
+    }
+
+    private fun dismissAndRefresh() { renderTab() }
+
+    private fun cloudPage(): View {
+        val content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(0, 18, 0, 0) }
+        val title = TextView(this).apply { text = "Nuvem"; textSize = 30f; setTextColor(textColor); setTypeface(typeface, Typeface.BOLD) }
+        val subtitle = TextView(this).apply { text = "Sua fonte pessoal de canais, filmes e séries M3U/M3U8"; textSize = 16f; setTextColor(muted); setPadding(0, 4, 0, 16) }
+        val actions = LinearLayout(this)
+        actions.addView(actionButton("Adicionar URL") { askForPlaylistUrl() })
+        actions.addView(actionButton("Abrir arquivo") { openPlaylistFile() })
+        content.addView(title); content.addView(subtitle); content.addView(actions)
+        val count = TextView(this).apply { text = if (cloudItems.isEmpty()) "Nenhuma Nuvem adicionada" else "${cloudItems.size} itens na Nuvem"; textSize = 17f; setTextColor(Color.LTGRAY); setPadding(0, 20, 0, 12) }
+        content.addView(count)
+        if (cloudItems.isNotEmpty()) {
+            addCloudSection(content, "Canais", ContentType.CHANNEL)
+            addCloudSection(content, "Filmes", ContentType.MOVIE)
+            addCloudSection(content, "Séries", ContentType.SERIES)
+        }
+        return scroll(content)
+    }
+
+    private fun addCloudSection(parent: LinearLayout, title: String, type: ContentType) {
+        val items = cloudItems.filter { it.type == type }
+        if (items.isEmpty()) return
+        val heading = TextView(this).apply { text = title; textSize = 22f; setTextColor(textColor); setTypeface(typeface, Typeface.BOLD); setPadding(0, 18, 0, 6) }
+        parent.addView(heading)
+        items.take(100).forEach { item ->
+            val row = Button(this).apply { text = item.title; isAllCaps = false; minHeight = 58; setOnClickListener { play(item.streamUrl, item.title) } }
+            parent.addView(row, LinearLayout.LayoutParams(-1, 58))
+        }
+    }
+
+    private fun aboutPage(): View {
+        val content = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(0, 30, 0, 0) }
+        content.addView(TextView(this).apply { text = "Sobre o Cineclub"; textSize = 30f; setTextColor(textColor); setTypeface(typeface, Typeface.BOLD) })
+        content.addView(TextView(this).apply { text = "O Cineclub é uma plataforma de filmes e séries com catálogo próprio e uma Nuvem complementar para listas M3U/M3U8 do usuário.\n\nA Nuvem não substitui o catálogo Cineclub. Ela é apenas uma fonte adicional de conteúdo."; textSize = 18f; setTextColor(Color.LTGRAY); setPadding(0, 18, 0, 0) })
+        return content
+    }
+
+    private fun actionButton(label: String, action: () -> Unit) = Button(this).apply { text = label; isAllCaps = false; minHeight = 58; setOnClickListener { action() }; layoutParams = LinearLayout.LayoutParams(-2, 58).apply { setMargins(0, 0, 12, 0) } }
+
+    private fun askSearch(items: List<CatalogItem>, section: String) {
+        val input = EditText(this).apply { hint = "Título, gênero ou ano"; setSingleLine(true) }
+        AlertDialog.Builder(this).setTitle("Buscar em $section").setView(input).setNegativeButton("Cancelar", null).setPositiveButton("Buscar") { _, _ ->
+            val query = input.text.toString().trim()
+            val filtered = items.filter { it.title.contains(query, true) || it.genres.any { genre -> genre.contains(query, true) } || it.year.contains(query, true) }
+            val result = catalogPage("Resultados", filtered)
+            while (page.childCount > 2) page.removeViewAt(2)
+            page.addView(result, LinearLayout.LayoutParams(-1, 0, 1f))
+        }.show()
+    }
+
+    private fun openExternal(url: String) { runCatching { startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url))) } }
+
+    private fun scroll(view: View) = ScrollView(this).apply { isFillViewport = true; addView(view) }
+
+    private fun loadImage(url: String, target: ImageView) {
+        imageExecutor.execute {
+            val bitmap = runCatching {
+                val connection = URL(url).openConnection() as HttpURLConnection
+                connection.connectTimeout = 10000; connection.readTimeout = 15000; connection.connect()
+                connection.inputStream.use { BitmapFactory.decodeStream(it) }
+            }.getOrNull()
+            if (bitmap != null) mainHandler.post { target.setImageBitmap(bitmap) }
+        }
+    }
+
+    private fun askForPlaylistUrl() {
+        val input = EditText(this).apply { hint = "https://servidor.exemplo/lista.m3u8"; setSingleLine(true) }
+        AlertDialog.Builder(this).setTitle("Adicionar Nuvem M3U").setMessage("Cole a URL completa da lista M3U ou M3U8.").setView(input).setNegativeButton("Cancelar", null).setPositiveButton("Importar") { _, _ -> importFromUrl(input.text.toString().trim()) }.show()
     }
 
     private fun openPlaylistFile() {
-        startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            addCategory(Intent.CATEGORY_OPENABLE)
-            type = "*/*"
-        }, fileRequestCode)
+        startActivityForResult(Intent(Intent.ACTION_OPEN_DOCUMENT).apply { addCategory(Intent.CATEGORY_OPENABLE); type = "*/*" }, fileRequestCode)
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode != fileRequestCode || resultCode != RESULT_OK) return
         val uri = data?.data ?: return
-        Thread {
-            val content = runCatching { contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() } }.getOrNull()
-            mainHandler.post { if (content.isNullOrBlank()) showStatus("Não foi possível ler o arquivo.") else applyPlaylist(content, uri.toString()) }
-        }.start()
+        Thread { val content = runCatching { contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() } }.getOrNull(); mainHandler.post { if (content != null) applyCloud(content, uri.toString()) } }.start()
     }
 
     private fun importFromUrl(url: String) {
-        if (!url.startsWith("http://") && !url.startsWith("https://")) {
-            showStatus("Informe uma URL HTTP ou HTTPS válida.")
-            return
-        }
-        showStatus("Baixando a lista…")
         Thread {
-            val content = runCatching {
-                (URL(url).openConnection() as HttpURLConnection).apply {
-                    connectTimeout = 15000
-                    readTimeout = 30000
-                    requestMethod = "GET"
-                    setRequestProperty("User-Agent", "CineclubTV/1.0")
-                }.let { connection ->
-                    if (connection.responseCode !in 200..299) error("HTTP ${connection.responseCode}")
-                    connection.inputStream.bufferedReader(Charsets.UTF_8).use { it.readText() }
-                }
-            }.getOrNull()
-            mainHandler.post { if (content.isNullOrBlank()) showStatus("Falha ao buscar a lista. Verifique a URL e o acesso do servidor.") else applyPlaylist(content, url) }
+            val content = runCatching { (URL(url).openConnection() as HttpURLConnection).apply { connectTimeout = 15000; readTimeout = 30000; setRequestProperty("User-Agent", "CineclubTV/1.0") }.let { it.inputStream.bufferedReader().use { reader -> reader.readText() } } }.getOrNull()
+            mainHandler.post { if (content != null) applyCloud(content, url) }
         }.start()
     }
 
-    private fun applyPlaylist(content: String, sourceUrl: String?) {
-        val parsed = runCatching { M3uParser.parse(content, sourceUrl) }.getOrNull().orEmpty().toMutableList()
-        if (parsed.isEmpty() && sourceUrl != null && sourceUrl.substringBefore('?').lowercase().endsWith(".m3u8")) {
-            parsed += M3uItem(sourceUrl.substringAfterLast('/').substringBefore('?').ifBlank { "Canal M3U8" }, sourceUrl, "M3U8", ContentType.CHANNEL)
-        }
-        items = parsed
-        selectedType = null
-        status.text = if (parsed.isEmpty()) "Lista lida, mas nenhum stream válido foi encontrado." else "${parsed.size} itens importados."
-        renderItems()
-    }
+    private fun applyCloud(content: String, source: String?) { cloudItems = M3uParser.parse(content, source); currentTab = "cloud"; renderTab() }
 
-    private fun renderItems() {
-        if (!::contentList.isInitialized) return
-        contentList.removeAllViews()
-        val visible = selectedType?.let { type -> items.filter { it.type == type } } ?: items
-        if (visible.isEmpty()) {
-            contentList.addView(TextView(this).apply {
-                text = "Nenhum conteúdo nesta categoria."
-                textSize = 18f
-                setTextColor(Color.LTGRAY)
-                setPadding(0, 20, 0, 20)
-            })
-            return
-        }
-        visible.take(500).forEach { item ->
-            val row = TextView(this).apply {
-                text = "${typeLabel(item.type)}  ${item.title}${if (item.type == ContentType.SERIES) "  • T${item.season ?: 1} E${item.episode ?: 1}" else ""}\n${item.group}"
-                textSize = 18f
-                setTextColor(Color.WHITE)
-                setPadding(22, 16, 22, 16)
-                isFocusable = true
-                isFocusableInTouchMode = true
-                setOnClickListener { play(item) }
-                setOnFocusChangeListener { view, focused -> view.setBackgroundColor(if (focused) Color.rgb(90, 45, 55) else Color.TRANSPARENT) }
-            }
-            contentList.addView(row, LinearLayout.LayoutParams(-1, 82))
-        }
-    }
-
-    private fun typeLabel(type: ContentType) = when (type) {
-        ContentType.CHANNEL -> "CANAL"
-        ContentType.MOVIE -> "FILME"
-        ContentType.SERIES -> "SÉRIE"
-    }
-
-    private fun play(item: M3uItem) {
+    private fun play(streamUrl: String, title: String) {
         player?.release()
-        player = ExoPlayer.Builder(this).build().also { exo ->
-            exo.setMediaItem(MediaItem.fromUri(Uri.parse(item.streamUrl)))
-            exo.prepare()
-            exo.playWhenReady = true
-        }
-        playerView = PlayerView(this).apply {
-            useController = true
-            player = this@MainActivity.player
-            setBackgroundColor(Color.BLACK)
-            requestFocus()
-        }
+        player = ExoPlayer.Builder(this).build().also { it.setMediaItem(MediaItem.fromUri(streamUrl)); it.prepare(); it.playWhenReady = true }
+        playerView = PlayerView(this).apply { player = this@MainActivity.player; useController = true; setBackgroundColor(Color.BLACK); contentDescription = title; requestFocus() }
         setContentView(playerView)
-        hideSystemUi()
-    }
-
-    private fun hideSystemUi() {
-        window.decorView.systemUiVisibility = (View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE)
-    }
-
-    private fun showStatus(message: String) {
-        if (::status.isInitialized) status.text = message
+        window.decorView.systemUiVisibility = 5894
     }
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (keyCode == KeyEvent.KEYCODE_BACK && playerView != null) {
-            player?.release()
-            player = null
-            playerView = null
-            showCatalog()
-            return true
-        }
+        if (keyCode == KeyEvent.KEYCODE_BACK && playerView != null) { player?.release(); player = null; playerView = null; showHome(); return true }
         return super.onKeyDown(keyCode, event)
     }
 
-    override fun onDestroy() {
-        player?.release()
-        player = null
-        super.onDestroy()
-    }
+    override fun onDestroy() { player?.release(); imageExecutor.shutdownNow(); super.onDestroy() }
 }
