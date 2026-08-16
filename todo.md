@@ -71,3 +71,34 @@
 - [x] Preservar a regra sem WebView e o launcher Android TV
 - [ ] Integrar QR Code, legendas e fallback de links externos
 - [x] Compilar e validar o APK resultante
+
+# Falha de importação M3U relatada
+
+- [ ] Reproduzir o erro com uma playlist que funciona na versão anterior
+- [ ] Aceitar URL M3U/M3U8 com parâmetros, autenticação e redirecionamento
+- [ ] Melhorar mensagem de erro para diferenciar rede, CORS, formato e autorização
+- [ ] Gerar APK corrigido e testar a importação na TV
+
+# Playlist de teste fornecida
+
+- [ ] Testar a playlist autenticada fornecida pelo usuário sem expor credenciais
+- [ ] Corrigir a importação específica do formato get.php m3u
+- [ ] Validar categorias, itens e reprodução com essa fonte
+
+# Suporte a Canais M3U
+
+- [x] Exibir a categoria Canais na Nuvem
+- [x] Classificar streams ao vivo por grupo, extensão e metadados
+- [x] Manter Filmes e Séries separados dos Canais
+- [x] Reproduzir canais ao vivo pelo player nativo
+- [x] Validar com a playlist pública de 467 canais
+
+# Versão Cineclub TV 1.0.6
+
+- [x] Atualizar versionCode e versionName para 1.0.6
+- [x] Adicionar canal à playlist de demonstração
+- [x] Impedir fallback silencioso para demo após falha de URL
+- [x] Mostrar Canais, Filmes e Séries conforme os itens importados
+- [x] Melhorar mensagens de erro HTTP e formato inválido
+- [x] Testar com a playlist pública de 467 canais
+- [x] Compilar e validar o APK 1.0.6

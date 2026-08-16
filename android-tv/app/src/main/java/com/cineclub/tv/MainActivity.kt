@@ -25,6 +25,7 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.PlayerView
@@ -301,14 +302,40 @@ class MainActivity : Activity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode != fileRequestCode || resultCode != RESULT_OK) return
         val uri = data?.data ?: return
-        Thread { val content = runCatching { contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() } }.getOrNull(); mainHandler.post { if (content != null) applyCloud(content, uri.toString()) } }.start()
+        Thread {
+            val result = runCatching { contentResolver.openInputStream(uri)?.bufferedReader()?.use { it.readText() } ?: error("Não foi possível ler o arquivo") }
+                .mapCatching { validatePlaylist(it) }
+            mainHandler.post { result.onSuccess { content -> applyCloud(content, uri.toString()) }.onFailure { showCloudError(it.message ?: "Arquivo M3U inválido") } }
+        }.start()
     }
 
     private fun importFromUrl(url: String) {
+        if (url.isBlank()) { showCloudError("Informe uma URL M3U ou M3U8"); return }
         Thread {
-            val content = runCatching { (URL(url).openConnection() as HttpURLConnection).apply { connectTimeout = 15000; readTimeout = 30000; setRequestProperty("User-Agent", "CineclubTV/1.0") }.let { it.inputStream.bufferedReader().use { reader -> reader.readText() } } }.getOrNull()
-            mainHandler.post { if (content != null) applyCloud(content, url) }
+            val result = runCatching {
+                val connection = (URL(url).openConnection() as HttpURLConnection).apply {
+                    instanceFollowRedirects = true
+                    connectTimeout = 15000
+                    readTimeout = 30000
+                    setRequestProperty("User-Agent", "CineclubTV/1.0")
+                    setRequestProperty("Accept", "audio/x-mpegurl, application/vnd.apple.mpegurl, text/plain, */*")
+                }
+                val status = connection.responseCode
+                if (status !in 200..299) error("Servidor recusou a playlist (HTTP $status)")
+                connection.inputStream.bufferedReader().use { it.readText() }.let(::validatePlaylist)
+            }
+            mainHandler.post { result.onSuccess { content -> applyCloud(content, url) }.onFailure { showCloudError(it.message ?: "Não foi possível carregar a playlist") } }
         }.start()
+    }
+
+    private fun validatePlaylist(content: String): String {
+        val normalized = content.removePrefix("\uFEFF").trim()
+        if (!normalized.startsWith("#EXTM3U", ignoreCase = true) && !normalized.contains("#EXTINF:", ignoreCase = true)) error("A resposta não é uma playlist M3U válida")
+        return normalized
+    }
+
+    private fun showCloudError(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_LONG).show()
     }
 
     private fun applyCloud(content: String, source: String?) { cloudItems = M3uParser.parse(content, source); currentTab = "cloud"; renderTab() }
