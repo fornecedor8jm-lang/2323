@@ -1,6 +1,6 @@
-import { getSessionByCode, handleOptions, jsonResponse, maskPasswordInUrl } from '../../_lib/pairing';
+const { getSessionByCode, handleOptions, jsonResponse, maskPasswordInUrl } = require('../../../_lib/pairing');
 
-export default function handler(req: any, res: any) {
+module.exports = function handler(req, res) {
   if (req.method === 'OPTIONS') return handleOptions(res);
   if (req.method !== 'POST') return jsonResponse(res, { error: 'Método não permitido' }, 405);
 
@@ -29,4 +29,4 @@ export default function handler(req: any, res: any) {
     message: 'Nuvem enviada para a TV. Você já pode voltar para a tela da televisão.',
     maskedUrl: maskPasswordInUrl(finalUrl),
   });
-}
+};

@@ -1,13 +1,13 @@
-import { handleOptions, jsonResponse } from '../_lib/pairing';
+const { handleOptions, jsonResponse } = require('../_lib/pairing');
 
-export default async function handler(req: any, res: any) {
+module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') return handleOptions(res);
   if (req.method !== 'GET') return jsonResponse(res, { error: 'Método não permitido' }, 405);
 
   const target = String(req.query?.url || '').trim();
   if (!target) return jsonResponse(res, { error: 'URL da lista M3U não informada.' }, 400);
 
-  let targetUrl: URL;
+  let targetUrl;
   try {
     targetUrl = new URL(target);
     if (!['http:', 'https:'].includes(targetUrl.protocol)) throw new Error('protocol');
@@ -24,10 +24,7 @@ export default async function handler(req: any, res: any) {
       redirect: 'follow',
     });
 
-    if (!upstream.ok) {
-      return jsonResponse(res, { error: `O servidor da lista respondeu com HTTP ${upstream.status}.` }, 502);
-    }
-
+    if (!upstream.ok) return jsonResponse(res, { error: `O servidor da lista respondeu com HTTP ${upstream.status}.` }, 502);
     const text = await upstream.text();
     if (!text.trim()) return jsonResponse(res, { error: 'O servidor retornou uma lista vazia.' }, 502);
 
@@ -40,4 +37,4 @@ export default async function handler(req: any, res: any) {
       error: 'Não foi possível conectar ao servidor da lista. Verifique a URL, a rede e se o provedor permite acesso externo.',
     }, 502);
   }
-}
+};

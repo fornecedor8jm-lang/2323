@@ -1,6 +1,6 @@
-import { deleteSession, getSession, handleOptions, jsonResponse } from '../../../_lib/pairing';
+const { deleteSession, getSession, handleOptions, jsonResponse } = require('../../../../_lib/pairing');
 
-export default function handler(req: any, res: any) {
+module.exports = function handler(req, res) {
   if (req.method === 'OPTIONS') return handleOptions(res);
   if (req.method !== 'GET') return jsonResponse(res, { error: 'Método não permitido' }, 405);
 
@@ -24,4 +24,4 @@ export default function handler(req: any, res: any) {
     sessionId: session.sessionId,
     expiresInSeconds: Math.max(0, Math.ceil((session.expiresAt - Date.now()) / 1000)),
   });
-}
+};

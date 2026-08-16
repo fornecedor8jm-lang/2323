@@ -1,6 +1,6 @@
-import { createPairSession, handleOptions, jsonResponse } from '../../_lib/pairing';
+const { createPairSession, handleOptions, jsonResponse } = require('../../../_lib/pairing');
 
-export default function handler(req: any, res: any) {
+module.exports = function handler(req, res) {
   if (req.method === 'OPTIONS') return handleOptions(res);
   if (req.method !== 'POST') return jsonResponse(res, { error: 'Método não permitido' }, 405);
 
@@ -19,4 +19,4 @@ export default function handler(req: any, res: any) {
   } catch {
     return jsonResponse(res, { error: 'Não foi possível criar a sessão do QR Code. Tente novamente.' }, 500);
   }
-}
+};
