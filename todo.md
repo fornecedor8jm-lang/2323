@@ -63,3 +63,11 @@
 - [x] Compilar todos os módulos e assets do APK
 - [x] Validar assinatura e manifesto do APK gerado
 - [x] Entregar o APK compilado ao usuário
+
+# Migração da base cineclub-tv-android
+
+- [x] Criar backup da base Android TV atual
+- [x] Migrar catálogo, interface, player e Nuvem da versão privada
+- [x] Preservar a regra sem WebView e o launcher Android TV
+- [ ] Integrar QR Code, legendas e fallback de links externos
+- [x] Compilar e validar o APK resultante

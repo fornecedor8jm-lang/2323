@@ -2,6 +2,8 @@ package com.cineclub.tv
 
 import android.content.Context
 import org.json.JSONArray
+import java.net.HttpURLConnection
+import java.net.URL
 
 
 data class CatalogLink(
@@ -16,6 +18,7 @@ data class CatalogItem(
     val id: String,
     val title: String,
     val posterUrl: String,
+    val localPoster: String?,
     val heroUrl: String?,
     val type: String,
     val rating: Double,
@@ -32,11 +35,34 @@ data class CatalogItem(
 )
 
 object CatalogRepository {
+    private const val REMOTE_CATALOG = "https://cineclub2-ashy.vercel.app/catalog.json"
+
     fun load(context: Context): List<CatalogItem> {
         return runCatching {
             val json = context.assets.open("catalog.json").bufferedReader().use { it.readText() }
             parse(JSONArray(json))
         }.getOrDefault(emptyList())
+    }
+
+    fun refreshRemote(onResult: (List<CatalogItem>?) -> Unit) {
+        Thread {
+            val remote = runCatching {
+                val connection = URL("$REMOTE_CATALOG?t=${System.currentTimeMillis()}").openConnection() as HttpURLConnection
+                connection.connectTimeout = 12000
+                connection.readTimeout = 18000
+                connection.setRequestProperty("User-Agent", "CineclubTV/1.0")
+                connection.inputStream.use { JSONArray(it.bufferedReader().use { reader -> reader.readText() }) }
+            }.getOrNull()
+            onResult(remote?.let(::parse))
+        }.start()
+    }
+
+    private fun localPosterFor(id: String): String? = when (id) {
+        "ratched" -> "ratched-poster.jpg"
+        "pretty-little-liars" -> "pretty-little-liars-poster.jpg"
+        "se-as-flores-falassem" -> "se-as-flores-falassem-poster.jpg"
+        "a-ultima-casa-2026" -> "a-ultima-casa-poster.jpg"
+        else -> null
     }
 
     private fun parse(array: JSONArray): List<CatalogItem> = buildList {
@@ -62,6 +88,7 @@ object CatalogRepository {
                 id = item.optString("id"),
                 title = item.optString("title", "Sem título"),
                 posterUrl = item.optString("posterUrl"),
+                localPoster = localPosterFor(item.optString("id")),
                 heroUrl = item.optString("heroUrl").ifBlank { null },
                 type = item.optString("type", "Filme"),
                 rating = item.optDouble("rating", 0.0),

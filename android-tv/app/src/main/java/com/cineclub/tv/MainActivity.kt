@@ -58,6 +58,9 @@ class MainActivity : Activity() {
         window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN)
         catalog = CatalogRepository.load(this)
         showHome()
+        CatalogRepository.refreshRemote { remote ->
+            if (!remote.isNullOrEmpty()) mainHandler.post { catalog = remote; renderTab() }
+        }
     }
 
     private fun showHome() {
@@ -174,7 +177,7 @@ class MainActivity : Activity() {
         card.addView(title, LinearLayout.LayoutParams(150, 34))
         card.setOnFocusChangeListener { view, focused -> view.setBackgroundColor(if (focused) Color.rgb(64, 38, 45) else Color.TRANSPARENT) }
         card.setOnClickListener { showDetails(item) }
-        loadImage(item.posterUrl, image)
+        loadImage(item.posterUrl, image, item.localPoster)
         return card
     }
 
@@ -193,7 +196,7 @@ class MainActivity : Activity() {
         val box = LinearLayout(this).apply { orientation = LinearLayout.VERTICAL; setPadding(28, 18, 28, 12) }
         val poster = ImageView(this).apply { scaleType = ImageView.ScaleType.CENTER_CROP; setBackgroundColor(surface); contentDescription = item.title }
         box.addView(poster, LinearLayout.LayoutParams(120, 176))
-        loadImage(item.posterUrl, poster)
+        loadImage(item.posterUrl, poster, item.localPoster)
         val title = TextView(this).apply { text = item.title; textSize = 28f; setTextColor(Color.WHITE); setTypeface(typeface, Typeface.BOLD) }
         val meta = TextView(this).apply { text = "${item.type}  •  ${item.year}  •  ${item.ageRating}  •  IMDb ${item.rating}"; textSize = 15f; setTextColor(Color.LTGRAY); setPadding(0, 8, 0, 10) }
         val synopsis = TextView(this).apply { text = item.synopsis; textSize = 16f; setTextColor(Color.WHITE); setPadding(0, 4, 0, 10) }
@@ -274,13 +277,13 @@ class MainActivity : Activity() {
 
     private fun scroll(view: View) = ScrollView(this).apply { isFillViewport = true; addView(view) }
 
-    private fun loadImage(url: String, target: ImageView) {
+    private fun loadImage(url: String, target: ImageView, localPoster: String? = null) {
         imageExecutor.execute {
             val bitmap = runCatching {
                 val connection = URL(url).openConnection() as HttpURLConnection
                 connection.connectTimeout = 10000; connection.readTimeout = 15000; connection.connect()
                 connection.inputStream.use { BitmapFactory.decodeStream(it) }
-            }.getOrNull()
+            }.getOrNull() ?: localPoster?.let { assetName -> runCatching { assets.open("posters/$assetName").use { BitmapFactory.decodeStream(it) } }.getOrNull() }
             if (bitmap != null) mainHandler.post { target.setImageBitmap(bitmap) }
         }
     }
