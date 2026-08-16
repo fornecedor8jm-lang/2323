@@ -101,7 +101,7 @@ export const MediaCard: React.FC<MediaCardProps> = ({
             className="w-full flex items-center justify-center gap-1.5 py-1.5 px-3 bg-[#0d1f28] hover:bg-[#142e3b] text-[#ded3c1] text-xs font-medium uppercase tracking-wider rounded-sm border border-[#1e3c4d] transition-colors"
           >
             <Info className="w-3.5 h-3.5 text-[#6de0d6]" />
-            <span>Dossiê</span>
+            <span>Ver detalhes</span>
           </button>
         </div>
       </div>

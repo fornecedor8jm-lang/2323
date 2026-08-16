@@ -128,14 +128,14 @@ export const HeroBanner: React.FC<HeroBannerProps> = ({
                 <span>Assistir / Acessar Título</span>
               </button>
 
-              {/* View Details / Dossier */}
+              {/* View Details Button */}
               <button
                 id="hero-details-btn"
                 onClick={() => onOpenDetails(featuredItem)}
                 className="flex items-center gap-2 px-5 py-3 bg-[#0d1d26]/80 hover:bg-[#142d3b] text-[#ded6c7] hover:text-white font-sans font-medium text-sm uppercase tracking-wider rounded-sm border border-[#1e3e50] transition-all"
               >
                 <Info className="w-4 h-4 text-[#6de0d6]" />
-                <span>Dossiê & Detalhes</span>
+                <span>Ver detalhes</span>
               </button>
 
               {/* Watchlist Toggle */}

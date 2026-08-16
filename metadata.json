@@ -1,6 +1,6 @@
 {
   "name": "Cineclub",
-  "description": "Streaming independente e catálogo editorial com estética de cinema autoral, horror gótico e revista cinematográfica.",
+  "description": "Plataforma de streaming independente e catálogo de filmes e séries com acesso direto a servidores, sinopses detalhadas e lista personalizada.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

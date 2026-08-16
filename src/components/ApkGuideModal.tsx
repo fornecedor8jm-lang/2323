@@ -45,10 +45,10 @@ export const ApkGuideModal: React.FC<ApkGuideModalProps> = ({ isOpen, onClose })
           {/* Visual Identity Summary Card */}
           <div className="p-4 sm:p-5 bg-[#08151c] border-l-4 border-[#8B1E1E] rounded-r-sm space-y-2">
             <h3 className="font-display font-bold text-base text-[#f5ecd8]">
-              Diretriz Visual Oficial do APK
+              Diretriz Visual Oficial do Streaming Mobile
             </h3>
             <p className="font-editorial text-lg text-[#b8cbd6] italic">
-              “O aplicativo mantém estritamente a mesma linguagem visual: fundo escuro (petróleo e preto azulado), pôsteres verticais em alto contraste, títulos editoriais grandes, navegação simples por gestos, filtros por gênero, Minha Lista offline e a revista de artigos críticos e bastidores integrados.”
+              “A plataforma mantém estritamente a mesma experiência de streaming: fundo escuro em alto contraste, pôsteres verticais, navegação ágil por temporadas e episódios, filtros por gênero, Minha Lista persistente e acesso direto aos servidores de transmissão.”
             </p>
           </div>
 
@@ -74,7 +74,7 @@ export const ApkGuideModal: React.FC<ApkGuideModalProps> = ({ isOpen, onClose })
                 </h4>
               </div>
               <p className="text-xs text-[#8ca2b0]">
-                Armazenamento local persistente de títulos favoritos, progresso de episódios e acesso instantâneo com um toque.
+                Armazenamento local persistente de títulos favoritos e acesso instantâneo com um toque para continuar assistindo.
               </p>
             </div>
 
@@ -82,11 +82,11 @@ export const ApkGuideModal: React.FC<ApkGuideModalProps> = ({ isOpen, onClose })
               <div className="flex items-center gap-2 text-[#f58a8a]">
                 <BookOpen className="w-4 h-4" />
                 <h4 className="font-display font-semibold text-xs uppercase tracking-wider text-[#eee3d1]">
-                  Dossiê & Bastidores Críticos
+                  Informações & Sinopse Detalhada
                 </h4>
               </div>
               <p className="text-xs text-[#8ca2b0]">
-                Seção editorial completa com ensaios sobre terror gótico, análises de cena e material exclusivo sobre os títulos do acervo.
+                Fichas completas com notas IMDb, elenco, temporadas, episódios, anos de lançamento e classificação indicativa.
               </p>
             </div>
 
@@ -94,11 +94,11 @@ export const ApkGuideModal: React.FC<ApkGuideModalProps> = ({ isOpen, onClose })
               <div className="flex items-center gap-2 text-[#5ae88a]">
                 <Shield className="w-4 h-4" />
                 <h4 className="font-display font-semibold text-xs uppercase tracking-wider text-[#eee3d1]">
-                  Acesso Direto aos 90+ Servidores
+                  Acesso Direto a 100+ Servidores
                 </h4>
               </div>
               <p className="text-xs text-[#8ca2b0]">
-                Integração com pastas de Google Drive, Google Photos, YouTube e Gofile para reprodução em alta qualidade sem anúncios invasivos.
+                Pastas organizadas de Google Drive, Google Photos, YouTube e servidores em nuvem para reprodução rápida em alta definição.
               </p>
             </div>
           </div>

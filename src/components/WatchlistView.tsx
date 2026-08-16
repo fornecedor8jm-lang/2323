@@ -30,7 +30,7 @@ export const WatchlistView: React.FC<WatchlistViewProps> = ({
 
   const handleShareList = () => {
     const titleNames = watchlistItems.map((item) => `• ${item.title} (${item.type})`).join('\n');
-    const text = `🎬 Minha Lista Curada no Cineclub:\n${titleNames}\n\nAcesse no Cineclub Streaming: ${window.location.href}`;
+    const text = `🎬 Minha Lista no Cineclub:\n${titleNames}\n\nAcesse no Cineclub Streaming: ${window.location.href}`;
     navigator.clipboard.writeText(text);
     setCopiedShare(true);
     setTimeout(() => setCopiedShare(false), 2500);
@@ -49,14 +49,14 @@ export const WatchlistView: React.FC<WatchlistViewProps> = ({
           <div className="flex items-center gap-2 text-[#8B1E1E]">
             <Bookmark className="w-5 h-5 fill-current" />
             <span className="text-xs uppercase font-mono-code tracking-[0.25em] font-bold">
-              Espaço Personalizado
+              Minha Lista
             </span>
           </div>
           <h1 className="font-display font-black text-3xl sm:text-4xl text-[#f5ebd9] tracking-tight">
-            Minha Lista de Curadoria
+            Títulos Salvos para Assistir
           </h1>
           <p className="font-editorial text-lg text-[#90a3ae] italic">
-            Seus títulos favoritos, prontos para maratonar a qualquer momento.
+            Suas séries e filmes favoritos reunidos em um só lugar para maratonar.
           </p>
         </div>
 

@@ -199,7 +199,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                     : 'text-[#7e95a3] hover:text-[#ded5c5]'
                 }`}
               >
-                Links de Acesso ({item.accessLinks.length})
+                Links & Episódios ({item.accessLinks.length})
               </button>
               <button
                 onClick={() => setActiveTab('synopsis')}
@@ -209,7 +209,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                     : 'text-[#7e95a3] hover:text-[#ded5c5]'
                 }`}
               >
-                Sinopse & Curadoria
+                Sinopse & Detalhes
               </button>
               <button
                 onClick={() => setActiveTab('cast')}
@@ -233,10 +233,10 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
                 <div>
                   <h3 className="font-display font-bold text-lg text-[#f4eee3] flex items-center gap-2">
                     <FolderOpen className="w-4 h-4 text-[#8B1E1E]" />
-                    <span>Servidores de Transmissão & Pastas Públicas</span>
+                    <span>Servidores & Pastas de Transmissão</span>
                   </h3>
                   <p className="text-xs text-[#728c9b]">
-                    Links verificados pela curadoria Cineclub para reprodução imediata.
+                    Links diretos organizados por temporadas e episódios para reprodução imediata.
                   </p>
                 </div>
 
@@ -459,7 +459,7 @@ export const MediaDetailModal: React.FC<MediaDetailModalProps> = ({
             <div className="pt-6 border-t border-[#12232d] space-y-3">
               <h4 className="font-display font-bold text-sm text-[#e6ddcd] uppercase tracking-wider flex items-center gap-2">
                 <Sparkles className="w-3.5 h-3.5 text-[#8B1E1E]" />
-                <span>Títulos Relacionados na Curadoria</span>
+                <span>Títulos Recomendados</span>
               </h4>
 
               <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
