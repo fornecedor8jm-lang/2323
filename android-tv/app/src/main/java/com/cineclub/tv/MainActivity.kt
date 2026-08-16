@@ -100,7 +100,7 @@ class MainActivity : Activity() {
     private fun askForPlaylistUrl() {
         val input = EditText(this).apply {
             hint = "https://servidor.exemplo/lista.m3u8"
-            singleLine = true
+            setSingleLine(true)
             setTextColor(Color.WHITE)
             setHintTextColor(Color.GRAY)
         }
